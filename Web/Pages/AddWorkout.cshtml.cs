@@ -19,10 +19,10 @@ namespace Web.Pages
         {
             _workoutService = workoutService;
         }
-        public async Task<IActionResult> OnPostAsync(string workoutName)
+        public async Task<IActionResult> OnPostAsync()
         {
-            ChosenWorkoutName = workoutName;
-            _workoutService.AddWorkout(workoutName);
+            ChosenWorkoutName = workout.Name;
+            _workoutService.AddWorkout(ChosenWorkoutName);
 
 
             return Page();
