@@ -21,6 +21,7 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnPostAsync(string workoutName)
         {
+            ChosenWorkoutName = workoutName;
             _workoutService.AddWorkout(workoutName);
 
 

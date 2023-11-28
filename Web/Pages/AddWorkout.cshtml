@@ -1,12 +1,12 @@
 ﻿@page
 @using Core.Models
 @model Web.Pages.AddWorkoutModel
-@* @inject SignInManager<IdentityUser> SignInManager
+@inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Add workout";
     var user = await UserManager.GetUserAsync(User);
-} *@
+} 
 
 <h1>New workout</h1>
 
@@ -17,7 +17,7 @@
             <div class="form-group">
                 <p>Workout Name</p>
                 <input asp-for="@Model.workout.Name" class="form-control" placeholder="Enter workoutname" />
-                <button type="submit" value="create" class="btn btn-primary" name="ChosenWorkoutName" id="ChosenWorkoutName" />
+                <button type="submit" class="btn btn-primary">Create</button>
                 <span asp-validation-for="@Model.workout.Name" class="text-danger"></span>
             </div>
             @* <div class="form-group">

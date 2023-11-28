@@ -23,7 +23,7 @@ namespace Web
             builder.Services.AddRazorPages();
 
             //Add our services
-            builder.Services.AddTransient<IWorkoutService, WorkoutService>();
+            builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 
             var app = builder.Build();
 
