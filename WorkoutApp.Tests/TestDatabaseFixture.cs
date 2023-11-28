@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Library.Data;
+﻿using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 namespace WorkoutApp.Tests;
 
 #region TestDatabaseFixture

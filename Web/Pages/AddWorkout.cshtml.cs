@@ -2,8 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.CodeDom;
 using System.Reflection.Metadata;
-using Library.Models;
-using WorkoutApp.ApplicationLogic.Interfaces;
+using Core.Models;
+using Core.Interfaces;
 namespace Web.Pages
 {
     public class AddWorkoutModel : PageModel

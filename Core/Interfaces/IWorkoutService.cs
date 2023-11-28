@@ -1,5 +1,4 @@
-﻿
-namespace WorkoutApp.ApplicationLogic.Interfaces
+﻿namespace Core.Interfaces
 {
     public interface IWorkoutService
     {

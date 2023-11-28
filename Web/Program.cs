@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Library.Data;
-using WorkoutApp.ApplicationLogic.Interfaces;
-using WorkoutApp.ApplicationLogic;
+using Infrastructure.Data;
+using Core.Interfaces;
+using Infrastructure.Services;
 
 namespace Web
 {

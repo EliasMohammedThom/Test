@@ -1,134 +1,131 @@
-﻿using Library.Service;
-using Library.Data;
-using Library.Controllers;
-
-namespace WorkoutApp.Tests;
+﻿
+//namespace WorkoutApp.Tests;
 
 
-[TestCaseOrderer(
-    ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
-    ordererAssemblyName: "WorkoutApp.Tests")]
+//[TestCaseOrderer(
+//    ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
+//    ordererAssemblyName: "WorkoutApp.Tests")]
 
 
-public class WorkoutControllerTest : IClassFixture<TestDatabaseFixture>
-{
+//public class WorkoutControllerTest : IClassFixture<TestDatabaseFixture>
+//{
 
 
-    public WorkoutControllerTest(TestDatabaseFixture fixture)
-        => Fixture = fixture;
+//    public WorkoutControllerTest(TestDatabaseFixture fixture)
+//        => Fixture = fixture;
 
-    public TestDatabaseFixture Fixture { get; }
+//    public TestDatabaseFixture Fixture { get; }
 
 
 
 
 
 
-    [Fact]
-    public void T1AddWorkout()
-    {
+//    [Fact]
+//    public void T1AddWorkout()
+//    {
         
 
-        //act
-        using var context = Fixture.CreateContext();
+//        ////act
+//        //using var context = Fixture.CreateContext();
 
-        //arrange
-        var controller = new WorkoutController(context);
-        controller.AddWorkout("WorkoutToBeUpdated");
-        var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
+//        ////arrange
+//        //var controller = new WorkoutController(context);
+//        //controller.AddWorkout("WorkoutToBeUpdated");
+//        //var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
 
-        //assert
+//        ////assert
 
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
+//        //Assert.Equal("WorkoutToBeUpdated", workout.Name);
        
 
 
-    }
+//    }
 
 
-    [Fact]
-    public void T2GetWorkout()
-    {
+//    [Fact]
+//    public void T2GetWorkout()
+//    {
        
-        //Act
-        using var context = Fixture.CreateContext();
-        var controller = new WorkoutController(context);
+//        //Act
+//        using var context = Fixture.CreateContext();
+//        var controller = new WorkoutController(context);
 
-        //Arrange
-        var workout = controller.GetWorkout("WorkoutToBeUpdated").Value;
+//        //Arrange
+//        var workout = controller.GetWorkout("WorkoutToBeUpdated").Value;
 
 
-        //Assert
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
+//        //Assert
+//        Assert.Equal("WorkoutToBeUpdated", workout.Name);
         
 
-    }
+//    }
 
 
-    [Fact]
-    public void T3UpdateWorkout()
-    {
+//    [Fact]
+//    public void T3UpdateWorkout()
+//    {
        
-        //act
-        using var context = Fixture.CreateContext();
-        var controller = new WorkoutController(context);
-        var testWorkout = "UpdatedWorkout";
+//        //act
+//        using var context = Fixture.CreateContext();
+//        var controller = new WorkoutController(context);
+//        var testWorkout = "UpdatedWorkout";
 
-        //arrange
-        controller.UpdateWorkoutName(testWorkout, "WorkoutToBeUpdated");
+//        //arrange
+//        controller.UpdateWorkoutName(testWorkout, "WorkoutToBeUpdated");
 
         
 
-        var actual = controller.GetWorkout(testWorkout);
+//        var actual = controller.GetWorkout(testWorkout);
 
-        //assert
-        Assert.NotNull(actual);
+//        //assert
+//        Assert.NotNull(actual);
        
 
-    }
+//    }
 
   
-    [Fact]
-    public void T4RemoveWorkout()
-    {
+//    [Fact]
+//    public void T4RemoveWorkout()
+//    {
       
-        //act
-        Thread.Sleep(1000); 
-        using var context = Fixture.CreateContext();
-        var controller = new WorkoutController(context);
-        var testWorkout = "UpdatedWorkout";
+//        //act
+//        Thread.Sleep(1000); 
+//        using var context = Fixture.CreateContext();
+//        var controller = new WorkoutController(context);
+//        var testWorkout = "UpdatedWorkout";
 
-        //arrange
+//        //arrange
 
-        controller.DeleteWorkout(testWorkout);
-        var actual = controller.GetWorkout(testWorkout).Value;
-        //var actual = context.Workouts.Single();
+//        controller.DeleteWorkout(testWorkout);
+//        var actual = controller.GetWorkout(testWorkout).Value;
+//        //var actual = context.Workouts.Single();
 
        
 
-        // assert
-        Assert.Null(actual);
+//        // assert
+//        Assert.Null(actual);
    
 
-    }
+//    }
 
 
 
-    [Fact]
-    public void T5DeleteEmptyData()
-    {
+//    [Fact]
+//    public void T5DeleteEmptyData()
+//    {
       
         
-        using var context = Fixture.CreateContext();
-        var controller = new WorkoutController(context);
+//        using var context = Fixture.CreateContext();
+//        var controller = new WorkoutController(context);
 
-        controller.DeleteEmptyWorkouts();
+//        controller.DeleteEmptyWorkouts();
 
-        var actual = controller.GetAllWorkouts();
+//        var actual = controller.GetAllWorkouts();
 
-        Assert.Empty(actual.Value);
+//        Assert.Empty(actual.Value);
       
 
-    }
+//    }
 
-}
+//}

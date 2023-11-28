@@ -1,12 +1,12 @@
 ﻿@page
-@using Library.Models
+@using Core.Models
 @model Web.Pages.AddWorkoutModel
-@inject SignInManager<IdentityUser> SignInManager
+@* @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Add workout";
     var user = await UserManager.GetUserAsync(User);
-}
+} *@
 
 <h1>New workout</h1>
 

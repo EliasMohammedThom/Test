@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Models;
+using Core.Interfaces;
+using Core.Models;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
-using WorkoutApp.ApplicationLogic.Interfaces;
 
-namespace WorkoutApp.ApplicationLogic
+namespace Infrastructure.Services
 {
     public class WorkoutService : IWorkoutService
     {
-        private readonly DbContext _workoutContext;
+        private readonly ApplicationDbContext _workoutContext;
 
-        public WorkoutService(DbContext workoutContext)
+        public WorkoutService(ApplicationDbContext workoutContext)
         {
             _workoutContext = workoutContext;
         }

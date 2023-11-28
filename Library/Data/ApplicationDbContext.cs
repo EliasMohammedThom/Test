@@ -1,12 +1,9 @@
-﻿using System;
-
-using System.Reflection.Metadata;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Library.Models;
+using Core.Models;
 
 
-namespace Library.Data;
+namespace Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {
