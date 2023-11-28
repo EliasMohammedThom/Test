@@ -11,6 +11,8 @@ namespace Web.Pages
         {
             _logger = logger;
         }
+        //Sonarcloud fix
+        public ILogger<IndexModel> Logger => _logger;
 
         public void OnGet()
         {
