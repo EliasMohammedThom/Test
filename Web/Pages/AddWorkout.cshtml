@@ -17,7 +17,7 @@
             <div class="form-group">
                 <p>Workout Name</p>
                 <input asp-for="@Model.workout.Name" class="form-control" placeholder="Enter workoutname" />
-                <input asp-for="@Model.workout.Name" type="submit" value="create" class="btn btn-primary" name="ChosenWorkoutName" />
+                <button type="submit" value="create" class="btn btn-primary" name="ChosenWorkoutName" id="ChosenWorkoutName" />
                 <span asp-validation-for="@Model.workout.Name" class="text-danger"></span>
             </div>
             @* <div class="form-group">

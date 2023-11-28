@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Library.Data;
 using Library.Models;
-using Library.Service;
+using Microsoft.EntityFrameworkCore;
 using WorkoutApp.ApplicationLogic.Interfaces;
 
 namespace WorkoutApp.ApplicationLogic
 {
     public class WorkoutService : IWorkoutService
     {
-        private readonly ServiceContext _workoutContext;
+        private readonly DbContext _workoutContext;
 
-        public WorkoutService(ServiceContext workoutContext)
+        public WorkoutService(DbContext workoutContext)
         {
-            this._workoutContext = workoutContext;
+            _workoutContext = workoutContext;
         }
-        public void AddWorkout(Workout workout)
+        public void AddWorkout(string name)
         {
-         
+            var workout = new Workout { Name = name };
             _workoutContext.Add(workout);
             _workoutContext.SaveChanges();
         }

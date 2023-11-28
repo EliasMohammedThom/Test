@@ -1,30 +1,27 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Library.Service;
-using Library.Controllers;
 using System.CodeDom;
 using System.Reflection.Metadata;
 using Library.Models;
+using WorkoutApp.ApplicationLogic.Interfaces;
 namespace Web.Pages
 {
     public class AddWorkoutModel : PageModel
     {
-        private readonly ServiceContext context;
+        private readonly IWorkoutService _workoutService;
+
+        [BindProperty]
         public string ChosenWorkoutName { get; set; }
 
         [BindProperty]
         public Workout workout { get; set; } = default!;
-        public WorkoutController workoutController { get; set; }
-        public AddWorkoutModel()
+        public AddWorkoutModel(IWorkoutService workoutService)
         {
-            context = new ServiceContext();
-            var controllers = new WorkoutController(context);
-            workoutController = controllers;
+            _workoutService = workoutService;
         }
         public async Task<IActionResult> OnPostAsync(string workoutName)
         {
-            ChosenWorkoutName = workoutName;
-            workoutController.AddWorkout(workoutName);
+            _workoutService.AddWorkout(workoutName);
 
 
             return Page();

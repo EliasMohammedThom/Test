@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Library.Service;
+using Library.Data;
 namespace WorkoutApp.Tests;
 
 #region TestDatabaseFixture
@@ -26,9 +26,9 @@ public class TestDatabaseFixture
         }
     }
 
-    public ServiceContext CreateContext()
-        => new ServiceContext(
-            new DbContextOptionsBuilder<ServiceContext>()
+    public ApplicationDbContext CreateContext()
+        => new ApplicationDbContext(
+            new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseSqlServer(ConnectionString)
                 .Options);
 }

@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Library.Data;
-using Library.Service;
 
 #nullable disable
 
 namespace WorkoutApp.Migrations
 {
-    [DbContext(typeof(ServiceContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class WorkoutContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

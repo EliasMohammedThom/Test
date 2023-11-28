@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Library.Data;
+using WorkoutApp.ApplicationLogic.Interfaces;
+using WorkoutApp.ApplicationLogic;
 
 namespace Web
 {
@@ -19,6 +21,9 @@ namespace Web
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
+
+            //Add our services
+            builder.Services.AddTransient<IWorkoutService, WorkoutService>();
 
             var app = builder.Build();
 
