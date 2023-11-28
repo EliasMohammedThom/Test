@@ -57,21 +57,21 @@ namespace WorkoutApp.Tests
 
         }
 
-        [Fact]
-        public void CanSaveScheduleToDataBase()
-        {
-            // Arrange
-            //var sut = new Domain.Schedule();
+        //[Fact]
+        //public void CanSaveScheduleToDataBase()
+        //{
+        //    // Arrange
+        //    //var sut = new Domain.Schedule();
 
-            //var mockDB = new Mock<WorkoutAppDbContext>();
+        //    //var mockDB = new Mock<WorkoutAppDbContext>();
 
-            //var sut = new Domain.Schedule(mockDB.Object);
-            // Act
+        //    //var sut = new Domain.Schedule(mockDB.Object);
+        //    // Act
 
             
 
 
-            // Assert
-        }
+        //    // Assert
+        //}
     }
 }
