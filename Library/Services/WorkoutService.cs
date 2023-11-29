@@ -18,9 +18,9 @@ namespace Infrastructure.Services
         {
             _workoutContext = workoutContext;
         }
-        public void AddWorkout(string name)
+        public void AddWorkout(Workout workout)
         {
-            var workout = new Workout { Name = name };
+             
             _workoutContext.Add(workout);
             _workoutContext.SaveChanges();
         }
@@ -34,9 +34,12 @@ namespace Infrastructure.Services
         public void UpdateWorkoutName(string newName, string workoutName)
         {
             var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == workoutName);
-            workoutToUpdate.Name = newName;
-            _workoutContext.Workouts.Update(workoutToUpdate);
-            _workoutContext.SaveChanges();
+            if (workoutToUpdate != null)
+            {
+                workoutToUpdate.Name = newName;
+                _workoutContext.Workouts.Update(workoutToUpdate);
+                _workoutContext.SaveChanges();
+            }
         }
 
         public void DeleteEmptyWorkouts()

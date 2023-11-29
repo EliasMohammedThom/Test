@@ -16,6 +16,7 @@ namespace Core.Models
         public string? Name { get; set; }
 
         public int? ScheduleId { get; set; }
+        public string?  UserId { get; set; }
 
         public ICollection<ExercisesAPI> ExercisesAPIs { get; set; } = null!;
         
