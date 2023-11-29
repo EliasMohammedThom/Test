@@ -27,19 +27,25 @@ namespace Infrastructure.Services
 
         public Workout GetWorkout(string name)
         {
-            var workout = _workoutContext.Workouts.FirstOrDefault(b => b.Name == name);
+            var workout = _workoutContext.Workouts.FirstOrDefault(b => b.Title == name);
             return workout;
         }
 
         public void UpdateWorkoutName(string newName, string workoutName)
         {
-            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == workoutName);
+            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Title == workoutName);
             if (workoutToUpdate != null)
             {
-                workoutToUpdate.Name = newName;
+                workoutToUpdate.Title = newName;
                 _workoutContext.Workouts.Update(workoutToUpdate);
                 _workoutContext.SaveChanges();
             }
+        }
+        public void UpdateWorkout(Workout workout)
+        {
+            _workoutContext.Update(workout);
+            _workoutContext.SaveChanges();
+
         }
 
         public void DeleteEmptyWorkouts()
@@ -52,12 +58,14 @@ namespace Infrastructure.Services
 
         public void DeleteWorkout(string name)
         {
-            var workouttodelete = _workoutContext.Workouts.Where(x => x.Name == name);
+            var workouttodelete = _workoutContext.Workouts.Where(x => x.Title == name);
             _workoutContext.Workouts.RemoveRange(workouttodelete);
             _workoutContext.SaveChanges();
         }
+
+
         public List<Workout> GetAllWorkouts()
-            => _workoutContext.Workouts.OrderBy(b => b.Name).ToList();
+            => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
         public List<Workout> GetWorkoutById(int workoutid)
            => _workoutContext.Workouts.OrderBy(s => s.Id == workoutid).ToList();

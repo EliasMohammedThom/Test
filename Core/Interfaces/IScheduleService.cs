@@ -12,6 +12,8 @@ namespace Core.Interfaces
         public List<Schedule> GetAllSchedules();
         public List<Workout> GetWorkoutById();
         public void AddSchedule(Schedule schedule);
+        public void UpdateSchedule(Schedule schedule);
+
     }
 
 }

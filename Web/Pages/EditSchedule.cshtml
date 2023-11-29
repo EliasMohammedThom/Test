@@ -4,50 +4,73 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    ViewData["Title"] = "Create Schedule";
+    ViewData["Title"] = "Edit Schedule";
     var user = await UserManager.GetUserAsync(User);
+    var sortedWorkoutList = Model.WorkoutList.Where(x => x.UserId == user.Id);
+    var sortedScheduleList = Model.ScheduleList;
 }
 
 
 <h1>Edit Schedule</h1>
 
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input asp-for="@Model.Schedule.Title" class="form-control" placeholder="Enter your schedule title..." />
-                @*< button type="submit" class="btn btn-primary">Create</button>
+@if (SignInManager.IsSignedIn(User))
+{
+ 
+
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input asp-for="@Model.Schedule.Title" class="form-control" placeholder="Enter your schedule title..." />
+                    @*< button type="submit" class="btn btn-primary">Create</button>
                 <span asp-validation-for="@Model.workout.Name" class="text-danger"></span> *@
+                </div>
+
+                <br />
+
+                @*   <div class="form-group">
+            <input asp-for="@Model.Schedule.Description" class="form-control" placeholder="Enter a description for your schedule..." />
+            </div> *@
+
+                <br />
+
+                   <div class="form-group">
+            <input asp-for="@Model.Workout.Date" type="datetime" type="date" class="form-control" />
+            <p>Choose a date where you would like to have your workout</p>
             </div>
 
-            <br />
+                <br />
 
-            <div class="form-group">
-               <input asp-for="@Model.Schedule.Description" class="form-control" placeholder="Enter a description for your schedule..." />
-            </div>
+                <div class="form-group">
+                    @foreach (var workout in sortedWorkoutList)
+                    {
+                        foreach(var schedule in sortedScheduleList)
+                        {
+                            @* <p>
+                @workout.Title
+                <button type="submit" name="workoutID" value="@workout.Id,@user.Id" class="btn btn-primary">
+                Add workout to schedule
+                </button>
+                </p> *@
+                            
+                                @workout.Title
+                                <input type="hidden" name="workoutId" value="@workout.Id" />
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <input type="hidden" name="scheduleId" value="@schedule.Id" />
+                                <button type="submit" class="btn btn-primary">Add workout to schedule</button>
+                            
+                        }
+       
 
-            <br />
-
-            <div class="form-group">
-                <input asp-for="@Model.Schedule.Date" type="datetime" type="date" class="form-control" />
-                <p>Choose a date where you would like to have your workout</p>
-            </div>
-
-            <br />
-
-            <div class="form-group">
-                @foreach (var workout in Model.WorkoutList)
-                {
-                    <p>@workout.Name <button type="submit" name="selectedWorkouts" value="@workout.Id" class="btn btn-primary">Add workout to schedule</button></p>
-                }
-                <span asp-validation-for="@Model.Schedule.Workouts"></span>
-            </div>
+                    }
+                    @* <span asp-validation-for="@Model.Schedule.Workouts"></span> *@
+                </div>
 
 
 
 
-            @* <div class="form-group">
+                @* <div class="form-group">
 
             <label asp-for="Blog.Date" class="control-label"></label>
 
@@ -71,6 +94,7 @@
             <input type="file" class="form-control" name="UploadedImage">
             <input type="submit" value="Skapa" class="btn btn-primary" />
             </div> *@
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+}

@@ -26,12 +26,14 @@ namespace Web.Pages
 
           
         }
-        public void OnPost(int userId) 
+        public async Task<IActionResult> OnPost(string userId) 
         {
 
             Schedule schedule = new Schedule { UserId = userId };
 
             _scheduleService.AddSchedule(schedule);
+
+            return Redirect("/EditSchedule");
         }
         public void CreateSchedule()
         {

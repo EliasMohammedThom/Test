@@ -47,7 +47,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
 
         //Assert
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
+        Assert.Equal("WorkoutToBeUpdated", workout.Title);
 
 
     }

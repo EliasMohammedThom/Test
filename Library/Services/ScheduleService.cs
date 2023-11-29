@@ -28,6 +28,12 @@ namespace Infrastructure.Services
         {
             _scheduleContext.Schedules.Add(schedule);
             _scheduleContext.SaveChanges();
+
+        }
+        public void UpdateSchedule(Schedule schedule) 
+        {
+            _scheduleContext.Update(schedule);
+            _scheduleContext.SaveChanges();
         }
 
     }
