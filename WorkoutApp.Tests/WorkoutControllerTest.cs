@@ -23,12 +23,14 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         //act
         using var context = Fixture.CreateContext();
 
+
         //arrange
 
         Workout testworkout = new Workout { Name = "WorkoutToBeUpdated"};
         var service = new WorkoutService(context);
         service.AddWorkout(testworkout);
         var workout = context.Workouts.SingleOrDefault(b => b.Name == "WorkoutToBeUpdated");
+
 
         //assert
 
