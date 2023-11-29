@@ -30,11 +30,11 @@ namespace WorkoutApp.Tests
                     string content = await responseMessage.Content.ReadAsStringAsync();
                     Assert.False(string.IsNullOrWhiteSpace(content), "No exercises returned.");
 
-                    Console.WriteLine(content);
+                    //Console.WriteLine(content);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    //Console.WriteLine($"Error: {ex.Message}");
                     Assert.False(true, $"Exception thrown: {ex.Message}");
                 }
             }
@@ -63,11 +63,11 @@ namespace WorkoutApp.Tests
                     string content = await responseMessage.Content.ReadAsStringAsync();
                     Assert.False(string.IsNullOrWhiteSpace(content), "No exercises returned.");
 
-                    Console.WriteLine(content);
+                    //Console.WriteLine(content);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    //Console.WriteLine($"Error: {ex.Message}");
                     Assert.False(true, $"Exception thrown: {ex.Message}");
                 }
             }
@@ -96,11 +96,11 @@ namespace WorkoutApp.Tests
                     string content = await responseMessage.Content.ReadAsStringAsync();
                     Assert.False(string.IsNullOrWhiteSpace(content), "No exercises returned.");
 
-                    Console.WriteLine(content);
+                    //Console.WriteLine(content);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
+                    //Console.WriteLine($"Error: {ex.Message}");
                     Assert.False(true, $"Exception thrown: {ex.Message}");
                 }
             }
