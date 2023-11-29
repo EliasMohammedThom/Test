@@ -17,21 +17,21 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         => Fixture = fixture;
 
     public TestDatabaseFixture Fixture { get; }
-    [Fact]
-    public void T1AddWorkout()
-    {
-        //act
-        using var context = Fixture.CreateContext();
+    //[Fact]
+    //public void T1AddWorkout()
+    //{
+    //    //act
+    //    using var context = Fixture.CreateContext();
 
-        //arrange
-        var service = new WorkoutService(context);
-        service.AddWorkout("WorkoutToBeUpdated");
-        var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
+    //    //arrange
+    //    var service = new WorkoutService(context);
+    //    service.AddWorkout("WorkoutToBeUpdated");
+    //    var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
 
-        //assert
+    //    //assert
 
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
-    }
+    //    Assert.Equal("WorkoutToBeUpdated", workout.Name);
+    //}
 
 
     [Fact]

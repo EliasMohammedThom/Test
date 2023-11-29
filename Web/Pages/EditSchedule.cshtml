@@ -9,7 +9,7 @@
 }
 
 
-<h1>Create Schedule</h1>
+<h1>Edit Schedule</h1>
 
 <div class="row">
     <div class="col-md-4">
@@ -30,18 +30,18 @@
             <br />
 
             <div class="form-group">
-                <input asp-for="@Model.Schedule.Week" type="datetime" type="date" class="form-control" />
+                <input asp-for="@Model.Schedule.Date" type="datetime" type="date" class="form-control" />
                 <p>Choose a date where you would like to have your workout</p>
             </div>
 
             <br />
 
             <div class="form-group">
-
-                @foreach(var workout in Model.WorkoutList)
+                @foreach (var workout in Model.WorkoutList)
                 {
-                    <p>@workout.Name <button>Add workout to schedule</button></p>
+                    <p>@workout.Name <button type="submit" name="selectedWorkouts" value="@workout.Id" class="btn btn-primary">Add workout to schedule</button></p>
                 }
+                <span asp-validation-for="@Model.Schedule.Workouts"></span>
             </div>
 
 
