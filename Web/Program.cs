@@ -24,6 +24,7 @@ namespace Web
 
             //Add our services
             builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+            builder.Services.AddHttpClient();
 
             var app = builder.Build();
 
