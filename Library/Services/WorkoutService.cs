@@ -18,9 +18,9 @@ namespace Infrastructure.Services
         {
             _workoutContext = workoutContext;
         }
-        public void AddWorkout(string name)
+        public void AddWorkout(Workout workout)
         {
-            var workout = new Workout { Name = name };
+             
             _workoutContext.Add(workout);
             _workoutContext.SaveChanges();
         }
