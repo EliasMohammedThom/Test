@@ -34,9 +34,20 @@ namespace Infrastructure.Services
         public void UpdateWorkoutName(string newName, string workoutName)
         {
             var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == workoutName);
-            workoutToUpdate.Name = newName;
-            _workoutContext.Workouts.Update(workoutToUpdate);
-            _workoutContext.SaveChanges();
+            try
+            {
+                if (workoutToUpdate != null)
+                {
+                    workoutToUpdate.Name = newName;
+                    _workoutContext.Workouts.Update(workoutToUpdate);
+                    _workoutContext.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.ToString());
+            }
+
         }
 
         public void DeleteEmptyWorkouts()
