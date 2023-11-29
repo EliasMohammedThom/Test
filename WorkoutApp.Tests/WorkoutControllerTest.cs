@@ -28,7 +28,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         Workout testworkout = new Workout { Name = "WorkoutToBeUpdated"};
         var service = new WorkoutService(context);
         service.AddWorkout(testworkout);
-        var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
+        var workout = context.Workouts.SingleOrDefault(b => b.Name == "WorkoutToBeUpdated");
 
         //assert
 
