@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Library.Models
+namespace Core.Models
 {
     public class Workout
     {

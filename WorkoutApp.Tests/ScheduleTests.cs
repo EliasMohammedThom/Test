@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Library.Models;
-using Moq;
-
+﻿
 namespace WorkoutApp.Tests
 {
     public class Schedule
@@ -15,7 +7,7 @@ namespace WorkoutApp.Tests
         public void CanCreateScheduleIfTrueReturnSchedule()
         {
             // Arrange
-            var schedule = new Library.Models.Schedule();
+            var schedule = new Core.Models.Schedule();
 
             // Act
 
@@ -34,7 +26,7 @@ namespace WorkoutApp.Tests
         public void CanAddContentToCreatedSchedule()
         {
             // Arrange 
-            var sut = new Library.Models.Schedule()
+            var sut = new Core.Models.Schedule()
             {
                 Id = 1,
                 Title = "Test",
