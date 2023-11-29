@@ -24,5 +24,36 @@ namespace Infrastructure.Services
             _workoutContext.Add(workout);
             _workoutContext.SaveChanges();
         }
+
+        public Workout GetWorkout(string name)
+        {
+            var workout = _workoutContext.Workouts.FirstOrDefault(b => b.Name == name);
+            return workout;
+        }
+
+        public void UpdateWorkoutName(string newName, string workoutName)
+        {
+            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == workoutName);
+            workoutToUpdate.Name = newName;
+            _workoutContext.Workouts.Update(workoutToUpdate);
+            _workoutContext.SaveChanges();
+        }
+
+        public void DeleteEmptyWorkouts()
+
+        {
+            var emptyWorkout = _workoutContext.Workouts.Where(X => X.ScheduleId == null);
+            _workoutContext.Workouts.RemoveRange(emptyWorkout);
+            _workoutContext.SaveChanges();
+        }
+
+        public void DeleteWorkout(string name)
+        {
+            var workouttodelete = _workoutContext.Workouts.Where(x => x.Name == name);
+            _workoutContext.Workouts.RemoveRange(workouttodelete);
+            _workoutContext.SaveChanges();
+        }
+        public List<Workout> GetAllWorkouts()
+            => _workoutContext.Workouts.OrderBy(b => b.Name).ToList();
     }
 }
