@@ -1,6 +1,6 @@
 ﻿
 using Infrastructure.Services;
-
+using Core.Models;
 namespace WorkoutApp.Tests;
 
 
@@ -24,8 +24,10 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         using var context = Fixture.CreateContext();
 
         //arrange
+
+        Workout testworkout = new Workout { Name = "WorkoutToBeUpdated"};
         var service = new WorkoutService(context);
-        service.AddWorkout("WorkoutToBeUpdated");
+        service.AddWorkout(testworkout);
         var workout = context.Workouts.Single(b => b.Name == "WorkoutToBeUpdated");
 
         //assert
@@ -112,8 +114,11 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
         service.DeleteEmptyWorkouts();
 
-        var actual = service.GetAllWorkouts();
 
+
+        var actual = service.GetAllWorkouts().Where(X=>X.UserId == null);
+
+        
         Assert.Empty(actual);
 
 

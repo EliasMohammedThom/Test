@@ -45,7 +45,7 @@ namespace Infrastructure.Services
         public void DeleteEmptyWorkouts()
 
         {
-            var emptyWorkout = _workoutContext.Workouts.Where(X => X.ScheduleId == null);
+            var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null);
             _workoutContext.Workouts.RemoveRange(emptyWorkout);
             _workoutContext.SaveChanges();
         }
