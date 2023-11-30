@@ -14,8 +14,7 @@ namespace Core.Models
 
         [Key]
         public int Id { get; set; }
-
-        public Workout Workout { get; set; } = null!;
+        public int? WorkoutId { get; set; }
 
         [JsonPropertyName("name")]
         public string? Name { get; set; }

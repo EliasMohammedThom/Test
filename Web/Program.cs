@@ -25,6 +25,8 @@ namespace Web
             //Add our services
             builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 
+            builder.Services.AddScoped<IExerciseService, ExerciseService>();
+
             builder.Services.AddHttpClient();
 
             builder.Services.AddTransient<IScheduleService, ScheduleService>();

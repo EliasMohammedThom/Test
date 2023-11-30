@@ -5,26 +5,56 @@ using System.Text.Json;
 using Core;
 using Newtonsoft.Json;
 using Core.Models;
+using Core.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Infrastructure.Services;
 
 namespace Web.Pages
 {
     public class ExerciseAPICallModel : PageModel
     {
-       
+        private readonly IWorkoutService _workoutService;
+        private readonly IExerciseService _exerciseService;
+        private readonly UserManager<IdentityUser> _userManager;
+        private IdentityUser currentUser;
 
         [BindProperty]
-        public List<Core.Models.ExercisesAPI> Exercises { get; set; }
+        public List<ExercisesAPI> Exercises { get; set; }
+        [BindProperty]
+        public string SelectedItemExercise { get; set; }
+        [BindProperty]
+        public string SelectedItemWorkout { get; set; }
+        [BindProperty]
+        public Workout Workout { get; set; }
+        [BindProperty]
+        public ExercisesAPI ExercisesAPI { get; set; }
+        [BindProperty]
+        public List<Workout> WorkoutList { get; set; }
 
-
-        public async Task OnGet()
+        public ExerciseAPICallModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI)
         {
-           
-           var  response =  APICalls.GetAPICall();
+            _workoutService = workoutService;
+            _userManager = userManager;
+            _exerciseService = exercisesAPI;
+        }
+
+        public async Task OnGetAsync()
+        {
+            var  response =  APICalls.GetAPICall();
             string result = await response.Result.Content.ReadAsStringAsync();
             List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
             Exercises  = JsonConvert.DeserializeObject <List<ExercisesAPI>> (result);
 
+            currentUser = await _userManager.GetUserAsync(User);
+            WorkoutList = _workoutService.GetAllWorkouts().Where(X => X.UserId == currentUser.Id).ToList();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            Workout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout);
 
+            ExercisesAPI.WorkoutId = Workout.Id;
+
+            return Page();
         }
     }
 }
