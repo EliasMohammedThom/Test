@@ -1,49 +1,49 @@
 ﻿@page
 @model Web.Pages.ExerciseAPICallModel
 @{
+
 }
 <h1>Exercise List</h1>
 
+  <form method="post" enctype="multipart/form-data">
 <div class="form-group">
     <label>Select exercisetype:</label>
     <br />
-    <select asp-for="SelectedItemExercise" name="SelectedItem">
+    <select asp-for="SelectedItemExerciseName" name="SelectedItemExerciseName">
         @foreach (var item in Model.Exercises)
         {
             <option value="@item.Name"> @item.Name</option>
         }
     </select>
-    <span asp-validation-for="SelectedItemExercise" class="text-danger"></span>
+    <span asp-validation-for="SelectedItemExerciseName" class="text-danger"></span>
 </div>
 
 <div class="form-group">
     <label>Select a workout to add to your schedule:</label>
     <br />
-    <select asp-for="SelectedItemWorkout" name="SelectedItem">
+    <select asp-for="SelectedItemWorkout" name="SelectedItemWorkout">
+    
         @foreach (var item in Model.WorkoutList)
         {
             <option value="@item.Title"> @item.Title</option>
         }
     </select>
     <span asp-validation-for="SelectedItemWorkout" class="text-danger"></span>
+
 </div>
 
-@if (Model.Exercises != null && Model.Exercises.Any())
-{
-    <ul>
-        @foreach (var exercise in Model.Exercises)
-        {
-            <li>
-                <strong>Name:</strong> @exercise.Name      <button class="btn btn-primary">Add exercise to workout</button><br />
-                <strong>Type:</strong> @exercise.Type <br />
-                <strong>Muscle:</strong> @exercise.Muscle <br />
-                <strong>Instructions:</strong> @exercise.Instructions <br />
-                <strong>Difficulty:</strong> @exercise.Difficulty <br />
-            </li>
-        }
-    </ul>
-}
-else
-{
-    <p>No exercises available.</p>
-}
+    <div class="form-group">
+        
+        <input asp-for="SelectedItemExercise.Sets" class="form-control" placeholder="Enter Sets" />
+       
+        </div>
+    <div class="form-group">
+        
+        <input asp-for="SelectedItemExercise.Repetitions" class="form-control" placeholder="Enter Reps" />
+
+    </div>
+
+
+
+    <button type="submit" value="save" class="btn btn-primary">Create</button>
+</form>

@@ -21,7 +21,12 @@ namespace Web.Pages
         [BindProperty]
         public List<ExercisesAPI> Exercises { get; set; }
         [BindProperty]
-        public string SelectedItemExercise { get; set; }
+        public string SelectedItemExerciseName { get; set; }
+
+        [BindProperty]
+
+        public ExercisesAPI SelectedItemExercise { get; set; }
+
         [BindProperty]
         public string SelectedItemWorkout { get; set; }
         [BindProperty]
@@ -50,9 +55,24 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
+
+            var response = APICalls.GetAPICall();
+            string result = await response.Result.Content.ReadAsStringAsync();
+            List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
+            Exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
+
+
+            ExercisesAPI = Exercises.Where(X=>X.Name == SelectedItemExerciseName).Single();
+
             Workout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout);
 
             ExercisesAPI.WorkoutId = Workout.Id;
+            ExercisesAPI.Sets = SelectedItemExercise.Sets;
+            ExercisesAPI.Repetitions = SelectedItemExercise.Repetitions;
+
+            _exerciseService.AddExercise(ExercisesAPI);
+           
+            
 
             return Page();
         }

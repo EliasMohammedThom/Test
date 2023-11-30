@@ -12,7 +12,7 @@ namespace Core
     {
         public static async Task<HttpResponseMessage> GetAPICall()
         {
-            string apiUrl = "https://api.api-ninjas.com/v1/exercises?muscle=";
+            string apiUrl = "https://api.api-ninjas.com/v1/exercises?muscle=biceps";
             string apiKey = "7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg";
             using (HttpClient client = new HttpClient())
             {

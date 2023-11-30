@@ -16,4 +16,3 @@ document.getElementById('datePicker').min = today;
 document.getElementById('datePicker').value = today;
 
 
-
