@@ -42,15 +42,16 @@ namespace Web.Pages
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
-            SortedScheduleList = _scheduleService.GetAllSchedules();
+            SortedScheduleList = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).ToList();
+
             //Sort schedule list so you only get schedules with the current Users UserId
-            SortedScheduleList.Where(X => X.UserId == identityUser.Id);
+            //SortedScheduleList.Where(X => X.UserId == identityUser.Id);
 
             CurrentUserScheduleId = _scheduleService.GetAllSchedules()?.SingleOrDefault(x => x.UserId == identityUser.Id)?.Id;
 
-            SortedWorkoutList = _workoutService.GetAllWorkouts();
-            //Sort workouts so you only get workouts with the current users ScheduleId
-            SortedWorkoutList.Where(X => X.ScheduleId == CurrentUserScheduleId);
+            SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.ScheduleId == CurrentUserScheduleId).ToList();
+
+
 
 
 
