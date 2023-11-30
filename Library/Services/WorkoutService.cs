@@ -31,9 +31,13 @@ namespace Infrastructure.Services
             return workout;
         }
 
-        public void UpdateWorkoutName(string newName, string workoutName)
+        public void UpdateWorkoutName(string newName, string oldName)
         {
-            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Title == workoutName);
+
+          
+
+            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == oldName);
+
             if (workoutToUpdate != null)
             {
                 workoutToUpdate.Title = newName;
@@ -51,7 +55,7 @@ namespace Infrastructure.Services
         public void DeleteEmptyWorkouts()
 
         {
-            var emptyWorkout = _workoutContext.Workouts.Where(X => X.ScheduleId == null);
+            var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null);
             _workoutContext.Workouts.RemoveRange(emptyWorkout);
             _workoutContext.SaveChanges();
         }

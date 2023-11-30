@@ -1,0 +1,23 @@
+﻿@page
+@model Web.Pages.ExerciseAPICallModel
+@{
+}
+<h1>Exercise List</h1>
+
+@if (Model.Exercises != null && Model.Exercises.Any())
+{
+    <ul>
+        @foreach (var exercise in Model.Exercises)
+        {
+            <li>    
+                <strong>Name:</strong> @exercise.Name <br />
+                <strong>Type:</strong> @exercise.Type <br />
+                <strong>Muscle:</strong> @exercise.Muscle <br />
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p>No exercises available.</p>
+}

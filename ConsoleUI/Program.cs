@@ -1,10 +1,14 @@
-﻿namespace ConsoleUI
+﻿using Core.Models;
+using Newtonsoft.Json;
+
+namespace ConsoleUI
 {
     internal class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello, World!");
+        static async Task Main(string[] args)
+
         }
+
+       
     }
 }
