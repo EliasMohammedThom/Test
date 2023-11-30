@@ -24,7 +24,15 @@ namespace Web.Pages
       
         public async Task<IActionResult> OnPostAsync()
         {
-           
+
+            var listofworkouts = _workoutService.GetAllWorkouts().Where(X => X.Title == workout.Title).ToList();
+
+            if(listofworkouts.Count >= 2 ) 
+            {
+            
+            }
+            
+
              _workoutService.AddWorkout(workout);
             
             return Page();

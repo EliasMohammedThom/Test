@@ -62,7 +62,7 @@ namespace Web.Pages
            Workout.Date = SelectedDate;
            Workout.Description = Description;
 
-            _workoutService.UpdateWorkout(Workout);
+           _workoutService.UpdateWorkout(Workout);
           
             return Page();
 
