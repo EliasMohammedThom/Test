@@ -5,6 +5,7 @@ using Core.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Infrastructure.Services;
 using Humanizer;
+using Microsoft.AspNetCore.Identity;
 
 namespace Web.Pages
 {
@@ -23,56 +24,44 @@ namespace Web.Pages
         public List<Workout> NewWorkoutList { get; set; }
 
         [BindProperty]
+        public DateTime SelectedDate { get; set; }
+
+        [BindProperty]
         public Schedule Schedule { get; set; } = default!;
         [BindProperty]
         public Workout Workout { get; set; } = default!;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public CreateScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService)
+     
+        public CreateScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _workoutService = workoutService;
             _scheduleService = scheduleService;
+            _userManager = userManager;
         }
-        public void OnPost(int workoutID, string userId, int scheduleId)
+    
+        public async Task OnGetAsync()
         {
-            Workout.ScheduleId = scheduleId;
-            Schedule.WorkoutId = workoutID;
-            Schedule.UserId = userId;
+
+
+            IdentityUser currentUser = await _userManager.GetUserAsync(User);
+
+            WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == currentUser.Id).ToList();
+          
+
+
+        }
+
+        public void OnPost(string userId, int scheduleId, string title)
+        {
             
+            //Schedule.UserId = userId;
+
 
             _workoutService.UpdateWorkout(Workout);
-            _scheduleService.UpdateSchedule(Schedule);
-            
-            
-        }
-        public void OnGet()
-        {
-            ScheduleList = _scheduleService.GetAllSchedules();
-            WorkoutList = _workoutService.GetAllWorkouts();
+            //_scheduleService.UpdateSchedule(Schedule);
 
 
-            //public IActionResult OnPost(List<int> selectedWorkouts)
-            //{
-            //    foreach (var workout in selectedWorkouts)
-            //    { 
-            //        _scheduleService.AddSchedule()
-            //    }
-
-
-            //    //WorkoutList = _workoutService.GetAllWorkouts();
-            //    //Schedule.Workouts ??= new List<Workout>();
-
-            //    //foreach (var workoutId in selectedWorkouts)
-            //    //{
-            //    //    var selectedWorkout = _workoutService.GetWorkoutById(workoutId);
-            //    //    if (selectedWorkout != null)
-            //    //    {
-            //    //        Schedule.Workouts.Add(selectedWorkout);
-            //    //    }
-
-            //    //}
-
-            //    return RedirectToPage("/Index"); 
-            //}
         }
     }
 

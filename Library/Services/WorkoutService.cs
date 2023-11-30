@@ -67,8 +67,8 @@ namespace Infrastructure.Services
         public List<Workout> GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
-        public List<Workout> GetWorkoutById(int workoutid)
-           => _workoutContext.Workouts.OrderBy(s => s.Id == workoutid).ToList();
+        public Workout GetWorkoutById(int workoutid)
+           => _workoutContext.Workouts.Where(s => s.Id == workoutid).SingleOrDefault();
 
     }
 }
