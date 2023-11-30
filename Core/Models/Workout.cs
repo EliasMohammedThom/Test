@@ -12,13 +12,13 @@ namespace Core.Models
     {
         [Key]
         public int Id { get; set; }
-
-        public string? Name { get; set; }
-
         public int? ScheduleId { get; set; }
-        public string?  UserId { get; set; }
+        public string? UserId { get; set; }
+        public DateOnly Date { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
 
-        public ICollection<ExercisesAPI> ExercisesAPIs { get; set; } = null!;
+        public ICollection<ExercisesAPI>? ExercisesAPIs { get; set; } = null!;
         
 
     }

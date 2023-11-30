@@ -1,10 +1,23 @@
 ﻿@page
 @model IndexModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Home page";
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+
 </div>
+
+<form method="post">
+    <input type="hidden" name="userId" value="@user.Id" />
+    <button type="submit" class="btn btn-primary">Create Schedule</button>
+    
+   @*  <a class="btn btn-primary" asp-page="/ViewForumPost" asp-route-id="@Model.ScopedData.Blogs[i].Id">Se inlägg</a> *@
+</form>
+<a class="btn btn-primary" asp-page="/AddWorkout" >Create Workout</a>

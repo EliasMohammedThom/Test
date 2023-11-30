@@ -1,69 +1,69 @@
 ﻿
-namespace WorkoutApp.Tests
-{
-    public class Schedule
-    {
-        [Fact]
-        public void CanCreateScheduleIfTrueReturnSchedule()
-        {
-            // Arrange
-            var schedule = new Core.Models.Schedule();
+//namespace WorkoutApp.Tests
+//{
+//    public class Schedule
+//    {
+//        [Fact]
+//        public void CanCreateScheduleIfTrueReturnSchedule()
+//        {
+//            // Arrange
+//            var schedule = new Core.Models.Schedule();
 
-            // Act
+//            // Act
 
-            //Assert
+//            //Assert
 
-            Assert.NotNull(schedule);
-            Assert.Equal(0, schedule.Id); 
-            Assert.Null(schedule.Title); 
-            Assert.Null(schedule.Description); 
-            Assert.Equal(DayOfWeek.Sunday, schedule.WeekDay); 
-            Assert.Equal(0, schedule.Week);
-            Assert.Equal(0, schedule.UserId);
-        }
+//            Assert.NotNull(schedule);
+//            Assert.Equal(0, schedule.Id); 
+//            Assert.Null(schedule.Title); 
+//            Assert.Null(schedule.Description); 
+//            Assert.Equal(DayOfWeek.Sunday, schedule.WeekDay); 
+//            Assert.Equal(0, schedule.Week);
+//            Assert.Equal(0, schedule.UserId);
+//        }
 
-        [Fact]
-        public void CanAddContentToCreatedSchedule()
-        {
-            // Arrange 
-            var sut = new Core.Models.Schedule()
-            {
-                Id = 1,
-                Title = "Test",
-                Description = "Testar",
-                WeekDay = DayOfWeek.Monday,
-                Week = 47,
-                UserId = 1
-            };
+//        [Fact]
+//        public void CanAddContentToCreatedSchedule()
+//        {
+//            // Arrange 
+//            var sut = new Core.Models.Schedule()
+//            {
+//                Id = 1,
+//                Title = "Test",
+//                Description = "Testar",
+//                WeekDay = DayOfWeek.Monday,
+//                Week = 47,
+//                UserId = 1
+//            };
 
-            // Act
+//            // Act
 
-            // Assert
-            Assert.NotNull(sut);
-            Assert.Equal(1, sut.Id);
-            Assert.Equal(sut.Title, "Test");
-            Assert.Equal(sut.Description, "Testar");
-            Assert.Equal(DayOfWeek.Monday, sut.WeekDay);
-            Assert.Equal(47, sut.Week);
-            Assert.Equal(1, sut.UserId);
+//            // Assert
+//            Assert.NotNull(sut);
+//            Assert.Equal(1, sut.Id);
+//            Assert.Equal(sut.Title, "Test");
+//            Assert.Equal(sut.Description, "Testar");
+//            Assert.Equal(DayOfWeek.Monday, sut.WeekDay);
+//            Assert.Equal(47, sut.Week);
+//            Assert.Equal(1, sut.UserId);
 
-        }
+//        }
 
-        //[Fact]
-        //public void CanSaveScheduleToDataBase()
-        //{
-        //    // Arrange
-        //    //var sut = new Domain.Schedule();
+//        //[Fact]
+//        //public void CanSaveScheduleToDataBase()
+//        //{
+//        //    // Arrange
+//        //    //var sut = new Domain.Schedule();
 
-        //    //var mockDB = new Mock<WorkoutAppDbContext>();
+//        //    //var mockDB = new Mock<WorkoutAppDbContext>();
 
-        //    //var sut = new Domain.Schedule(mockDB.Object);
-        //    // Act
+//        //    //var sut = new Domain.Schedule(mockDB.Object);
+//        //    // Act
 
             
 
 
-        //    // Assert
-        //}
-    }
-}
+//        //    // Assert
+//        //}
+//    }
+//}

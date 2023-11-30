@@ -15,6 +15,9 @@ namespace Web.Pages
         [BindProperty]
         public Workout workout { get; set; } = default!;
 
+        [BindProperty]
+        public string ReplyToUser { get; set; } = default!;
+
         
         public AddWorkoutModel(IWorkoutService workoutService)
         {
@@ -24,8 +27,20 @@ namespace Web.Pages
       
         public async Task<IActionResult> OnPostAsync()
         {
-           
-            _workoutService.AddWorkout(workout);
+
+            var listofworkouts = _workoutService.GetAllWorkouts().Where(X => X.Title == workout.Title).ToList();
+
+            if(listofworkouts.Count >= 1 ) 
+            {
+                ReplyToUser = "This workout name already exists, please choose something else";
+            }
+            else
+            {
+                _workoutService.AddWorkout(workout);
+            }
+            
+
+
             
             return Page();
         }

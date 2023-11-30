@@ -21,6 +21,21 @@ namespace Infrastructure.Services
         public List<Schedule> GetAllSchedules()
             => _scheduleContext.Schedules.OrderBy(s => s.Title).ToList();
 
+        public List<Workout> GetWorkoutById()
+            => _scheduleContext.Workouts.OrderBy(s => s.Id).ToList();
+
+        public void AddSchedule(Schedule schedule)
+        {
+            _scheduleContext.Schedules.Add(schedule);
+            _scheduleContext.SaveChanges();
+
+        }
+        public void UpdateSchedule(Schedule schedule) 
+        {
+            _scheduleContext.Update(schedule);
+            _scheduleContext.SaveChanges();
+        }
+
     }
 
 }

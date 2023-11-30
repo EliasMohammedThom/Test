@@ -17,6 +17,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         => Fixture = fixture;
 
     public TestDatabaseFixture Fixture { get; }
+    
     [Fact]
     public void T1AddWorkout()
     {
@@ -30,6 +31,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         var service = new WorkoutService(context);
         service.AddWorkout(testworkout);
         var workout = context.Workouts.SingleOrDefault(b => b.Name == "WorkoutToBeUpdated");
+
 
 
         //assert
@@ -51,7 +53,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
 
         //Assert
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
+        Assert.Equal("WorkoutToBeUpdated", workout.Title);
 
 
     }

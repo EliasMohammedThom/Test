@@ -1,3 +1,5 @@
+using Core.Interfaces;
+using Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -5,19 +7,36 @@ namespace Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IScheduleService _scheduleService;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IScheduleService scheduleService)
         {
-            _logger = logger;
+            _scheduleService = scheduleService;
         }
-        //Sonarcloud fix
-        public ILogger<IndexModel> Logger => _logger;
-
         public void OnGet()
         {
 
-           //skall fyllas i eventuellt
+          
+        }
+        public async Task<IActionResult> OnPost(string userId) 
+        {
+            var singledSchedule = _scheduleService.GetAllSchedules().Where(X => X.UserId == userId);
+
+            if (singledSchedule == null) 
+            
+            {
+                Schedule schedule = new Schedule { UserId = userId };
+                _scheduleService.AddSchedule(schedule);
+            }
+          
+
+
+            return Redirect("/EditSchedule");
+        }
+        public void CreateSchedule()
+        {
+
+
         }
     }
 }
