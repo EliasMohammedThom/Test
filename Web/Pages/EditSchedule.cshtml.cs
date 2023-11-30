@@ -15,13 +15,7 @@ namespace Web.Pages
         private readonly IScheduleService _scheduleService;
 
         [BindProperty]
-        public List<Schedule> ScheduleList { get; set; } = default!;
-
-        [BindProperty]
         public List<Workout> WorkoutList { get; set; }
-
-        [BindProperty]
-        public List<Workout> NewWorkoutList { get; set; }
 
         [BindProperty]
         public DateOnly SelectedDate{ get; set; }
@@ -29,9 +23,9 @@ namespace Web.Pages
         [BindProperty]
         public string SelectedItem { get; set; }
 
-
         [BindProperty]
-        public Schedule Schedule { get; set; } = default!;
+        public string Description { get; set; }
+
         [BindProperty]
         public Workout Workout { get; set; }
         private readonly UserManager<IdentityUser> _userManager;
@@ -48,39 +42,28 @@ namespace Web.Pages
         public async Task OnGetAsync()
         {
 
-
             currentUser = await _userManager.GetUserAsync(User);
 
             WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == currentUser.Id).ToList();
 
 
-          
-
+         
 
         }
 
         public async Task<IActionResult>  OnPostAsync()
         {
 
-            IdentityUser identityUser = await _userManager.GetUserAsync(User);
+           IdentityUser identityUser = await _userManager.GetUserAsync(User);
 
            Workout = _workoutService.GetWorkoutByTitle(SelectedItem);
 
            Workout.ScheduleId = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).SingleOrDefault().Id;
            Workout.Date = SelectedDate;
-           
-
-
-
-
-
-
-            //Schedule.UserId = userId;
-
-
+           Workout.Description = Description;
 
             _workoutService.UpdateWorkout(Workout);
-            //_scheduleService.UpdateSchedule(Schedule);
+          
             return Page();
 
 

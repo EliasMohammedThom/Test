@@ -25,7 +25,7 @@ namespace Web.Pages
         public async Task<IActionResult> OnPostAsync()
         {
            
-            _workoutService.AddWorkout(workout);
+             _workoutService.AddWorkout(workout);
             
             return Page();
         }
