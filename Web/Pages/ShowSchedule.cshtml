@@ -1,0 +1,35 @@
+﻿@page
+@model Web.Pages.ShowScheduleModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Show Schedule";
+    var user = await UserManager.GetUserAsync(User);
+
+}
+@if (Model.CurrentUserScheduleId is null)
+{
+    <strong>You need to create a schedule before comming here please press <bold asp-action="/EditSchedule">Here</bold></strong>
+}
+else
+{
+
+    @foreach (var schedule in Model.SortedScheduleList)
+    {
+        <p>Current workouts in your schedule:</p>
+
+        <div class="workout-container">
+            @foreach (var workout in Model.SortedWorkoutList)
+            {
+                <div class="workout-box">
+                    <strong>@workout.Title</strong>
+                    <p>@workout.Date</p>
+                    <p>@workout.Description</p>
+                </div>
+            }
+        </div>
+    }
+
+}
+
+@* <a class="btn btn-primary" asp-page="/ShowSchedule">My Schedules</a> *@

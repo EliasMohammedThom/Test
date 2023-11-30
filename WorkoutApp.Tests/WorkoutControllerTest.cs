@@ -27,16 +27,16 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
         //arrange
 
-        Workout testworkout = new Workout { Name = "WorkoutToBeUpdated"};
+        Workout testworkout = new Workout { Title = "WorkoutToBeUpdated"};
         var service = new WorkoutService(context);
         service.AddWorkout(testworkout);
-        var workout = context.Workouts.SingleOrDefault(b => b.Name == "WorkoutToBeUpdated");
+        var workout = context.Workouts.SingleOrDefault(b => b.Title == "WorkoutToBeUpdated");
 
 
 
         //assert
 
-        Assert.Equal("WorkoutToBeUpdated", workout.Name);
+        Assert.Equal("WorkoutToBeUpdated", workout.Title);
     }
 
 
