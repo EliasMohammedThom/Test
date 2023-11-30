@@ -16,54 +16,34 @@
 {
 
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="datePicker">Select Date:</label>
-            <input asp-for="@Model.SelectedDate" type="date" id="datePicker" class="form-control" />
+            <input asp-for="SelectedDate" type="date" id="datePicker" class="form-control" />
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
 
-    @foreach(var item  in Model.WorkoutList)
-    {
-        <p> @item.Title</p>
+        <div class="form-group">
+        <label>Select a workout to add to your schedule:</label>
+        <select asp-for="SelectedItem" name="SelectedItem">
+            @foreach (var item in Model.WorkoutList)
+            {
+                <option value="@item.Title"> @item.Title</option>
+            }
+            </select>
+        <span asp-validation-for="SelectedItem" class="text-danger"></span>
+        </div>
+            <br>
+        <button type="submit" value="save" class="btn btn-primary">Submit</button>
+        </form>
+
         
-    }
-
-  @*   <div class="row">
-        <div class="col-md-4">
-            <form method="post" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <input asp-for="Schedule.Title" class="form-control" placeholder="Enter your schedule title..." />
-                <br />
-                </div>
-                   <div class="form-group">
-            <input asp-for="Workout.Date" type="datetime" type="date" class="form-control" />
-
-            <p>Choose a date where you would like to have your workout</p>
-            </div>
-
-                <br />
-
-                <div class="form-group">
-
-                    @foreach (var workout in sortedWorkoutList)
-                    {
-                        @workout.Title
-                        <input type="hidden" name="workoutId" value="@workout.Id" />
-                        <input type="hidden" name="userId" value="@user.Id" />
-                        <input type="hidden" name="scheduleId" value="@sortedScheduleList.FirstOrDefault().Id" />
-                        <button type="submit" class="btn btn-primary">Add workout to schedule</button>
-                        
-                        }
-                </div>
-            </form>
 
 
+      
 
 
-        </div>
-    </div> *@
+   
+
+
 }

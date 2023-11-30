@@ -70,5 +70,11 @@ namespace Infrastructure.Services
         public Workout GetWorkoutById(int workoutid)
            => _workoutContext.Workouts.Where(s => s.Id == workoutid).SingleOrDefault();
 
+        public Workout GetWorkoutByUserId(string userId)
+          => _workoutContext.Workouts.Where(s => s.UserId == userId).SingleOrDefault();
+        public Workout GetWorkoutByTitle(string title)
+        => _workoutContext.Workouts.Where(s => s.Title == title).SingleOrDefault();
+
+
     }
 }
