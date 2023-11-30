@@ -17,6 +17,7 @@
             <div class="form-group">
                 <p>Workout Name</p>
                 <input asp-for="workout.Title" class="form-control" placeholder="Enter workoutname" />
+                <p class="danger alert-danger">@Model.ReplyToUser</p>
                 <button type="submit" class="btn btn-primary">Create</button>
                 <span asp-validation-for="workout.Title" class="text-danger"></span>
 

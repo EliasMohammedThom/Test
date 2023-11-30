@@ -25,6 +25,7 @@
 
         <div class="form-group">
         <label>Select a workout to add to your schedule:</label>
+        <br />
         <select asp-for="SelectedItem" name="SelectedItem">
             @foreach (var item in Model.WorkoutList)
             {
@@ -40,7 +41,7 @@
        </div>
        
             <br>
-        <button type="submit" value="save" class="btn btn-primary">Submit</button>
+        <button type="submit" value="save" class="btn btn-primary">Create</button>
         </form>
 
         
