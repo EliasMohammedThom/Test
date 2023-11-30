@@ -46,7 +46,7 @@ namespace Web.Pages
             //Sort schedule list so you only get schedules with the current Users UserId
             SortedScheduleList.Where(X => X.UserId == identityUser.Id);
 
-            CurrentUserScheduleId = _scheduleService.GetAllSchedules().Where(x => x.UserId == identityUser.Id).SingleOrDefault().Id;
+            CurrentUserScheduleId = _scheduleService.GetAllSchedules()?.SingleOrDefault(x => x.UserId == identityUser.Id)?.Id;
 
             SortedWorkoutList = _workoutService.GetAllWorkouts();
             //Sort workouts so you only get workouts with the current users ScheduleId
