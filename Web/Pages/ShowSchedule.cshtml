@@ -9,7 +9,7 @@
 }
 @if (Model.CurrentUserScheduleId is null)
 {
-    <strong>You need to create a schedule before comming here please press <bold asp-action="/EditSchedule">Here</bold></strong>
+    <p>You need to create a workout and a schedule before coming here! please press <a class="btn btn-primary" asp-page="/Addworkout">Here</a> to continiue</p>
 }
 else
 {
