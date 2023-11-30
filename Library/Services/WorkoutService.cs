@@ -36,7 +36,7 @@ namespace Infrastructure.Services
 
           
 
-            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Name == oldName);
+            var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Title == oldName);
 
             if (workoutToUpdate != null)
             {
