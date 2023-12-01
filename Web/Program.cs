@@ -26,6 +26,7 @@ namespace Web
             builder.Services.AddScoped<IWorkoutService, WorkoutService>();
 
             builder.Services.AddScoped<IExerciseService, ExerciseService>();
+            builder.Services.AddScoped<IExerciseListService, ExerciseListService>();
 
             builder.Services.AddHttpClient();
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using Core;
 
 namespace WorkoutApp.Tests
 {
@@ -106,5 +107,7 @@ namespace WorkoutApp.Tests
             }
             // Act
         }
+
+
     }
 }

@@ -16,16 +16,20 @@ namespace Web.Pages
     {
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseService _exerciseService;
+        private readonly IExerciseListService _exerciseListService;
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser currentUser;
 
         [BindProperty]
-        public List<ExercisesAPI>? Exercises { get; set; }
+        public List<ExerciseList>? Exercises { get; set; }
+
+        [BindProperty]
+        public ExerciseList SelectedExercise { get; set; }
+
         [BindProperty]
         public string SelectedItemExerciseName { get; set; }
 
         [BindProperty]
-
         public ExercisesAPI SelectedItemExercise { get; set; }
 
         [BindProperty]
@@ -38,23 +42,12 @@ namespace Web.Pages
         [BindProperty]
         public List<Workout> WorkoutList { get; set; }
 
-        [BindProperty]
-        public List<string> ExerciseTypes { get; set; }
-
-        [BindProperty]
-        public List<string> MuscleCategories { get; set; }
-
-        [BindProperty] 
-        public  List<string>  DifficultyCategory { get; set; }
-
-        [BindProperty] 
-        public ExerciseSelecter ExerciseSelecter { get; set; }
-
-        public ExerciseAPICallModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI)
+        public ExerciseAPICallModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI, IExerciseListService exerciseList)
         {
             _workoutService = workoutService;
             _userManager = userManager;
             _exerciseService = exercisesAPI;
+            _exerciseListService = exerciseList;
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -63,77 +56,29 @@ namespace Web.Pages
             currentUser = await _userManager.GetUserAsync(User);
             WorkoutList = _workoutService.GetAllWorkouts().Where(X => X.UserId == currentUser.Id).ToList();
 
-
-            ExerciseTypes = new List<string> {
-                "cardio",
-                "olympic_weightlifting",
-                "plyometrics",
-                "powerlifting",
-                "strength",
-                "stretching",
-                "strongman"
-            };
-
-            MuscleCategories = new List<string> {
-                "abdominals",
-                "abductors",
-                "adductors",
-                "biceps",
-                "calves",
-                "chest",
-                "forearms",
-                "glutes",
-                "hamstrings",
-                "lats",
-                "lower_back",
-                "middle_back",
-                "neck",
-                "quadriceps",
-                "traps",
-                "triceps"  
-            };
-
-            DifficultyCategory = new List<string>
-            {
-                "beginner",
-                "intermediate",
-                "expert"
-            };
-
-            return Page();
-
-
-        }
-
-
-
-        public async Task<IActionResult> OnPostChooseExerciseAsync()
-        {
-
-            var response = APICalls.GetAPICall(ExerciseSelecter.Type, ExerciseSelecter.Muscle, ExerciseSelecter.Difficulty);
-            string result = await response.Result.Content.ReadAsStringAsync();
-           
-            Exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
-
+            Exercises =  _exerciseListService.GetAllExerciseLists();
+        
             return Page();
         }
 
+
+
+   
 
         public async Task<IActionResult> OnPostAsync()
         {
 
-           
-
-
-            ExercisesAPI = Exercises.Where(X=>X.Name == SelectedItemExerciseName).Single();
 
             Workout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout);
 
             ExercisesAPI.WorkoutId = Workout.Id;
+            ExercisesAPI.Name = SelectedExercise.Name;
+
             ExercisesAPI.Sets = SelectedItemExercise.Sets;
             ExercisesAPI.Repetitions = SelectedItemExercise.Repetitions;
 
             _exerciseService.AddExercise(ExercisesAPI);
+
 
             return Page();
 
