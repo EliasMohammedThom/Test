@@ -16,20 +16,42 @@ else
 
     @foreach (var schedule in Model.SortedScheduleList)
     {
-        <p>Current workouts in your schedule:</p>
+        <strong class="CenterText">Current workouts in your schedule:</strong>
 
         <div class="workout-container">
             @foreach (var workout in Model.SortedWorkoutList)
             {
-                <div class="workout-box">
+                <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@workout.ExercisesAPIs')">
                     <strong>@workout.Title</strong>
                     <p>@workout.Date</p>
                     <p>@workout.Description</p>
+                    
                 </div>
             }
         </div>
     }
 
-}
+    <div id="workoutPopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2 id="popupTitle"></h2>
+            <p id="popupDate"></p>
+            <p id="popupDescription"></p>
+        </div>
+    </div>
 
+
+}
+<script>
+    function showPopup(title, date, description) {
+        document.getElementById('popupTitle').innerText = title;
+        document.getElementById('popupDate').innerText = date;
+        document.getElementById('popupDescription').innerText = description;
+        document.getElementById('workoutPopup').style.display = 'block';
+    }
+
+    function closePopup() {
+        document.getElementById('workoutPopup').style.display = 'none';
+    }
+</script>
 @* <a class="btn btn-primary" asp-page="/ShowSchedule">My Schedules</a> *@
