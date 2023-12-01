@@ -66,7 +66,15 @@ namespace Infrastructure.Services
             _workoutContext.Workouts.RemoveRange(workouttodelete);
             _workoutContext.SaveChanges();
         }
+        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout)
+        {
+            workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).SingleOrDefault();
 
+            workout.ScheduleId = null;
+
+            _workoutContext.Update(workout);
+            _workoutContext.SaveChanges();
+        }
 
         public List<Workout> GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
@@ -80,5 +88,24 @@ namespace Infrastructure.Services
         => _workoutContext.Workouts.Where(s => s.Title == title).SingleOrDefault();
 
 
+
+
+        //public void RemoveWorkoutFromSchedule(int ScheduleID, Workout workout)
+        //{
+        //    workout = _workoutContext.GetAllWorkouts().Where(X => X.ScheduleId == ScheduleID).SingleOrDefault();
+        //    workout = _workoutContext.
+
+        //    workout.ScheduleId = null;
+
+        //    _workoutService.UpdateWorkout(workout);
+
+
+        //    //if(ScheduleID != null)
+        //    //{
+        //    //    schedule.Id = ScheduleID;
+        //    //}
+        //    //_scheduleContext.Update(schedule); 
+        //    //_scheduleContext.SaveChanges();
+        //}
     }
 }

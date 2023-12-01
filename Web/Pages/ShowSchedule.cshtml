@@ -22,14 +22,23 @@ else
             @foreach (var workout in Model.SortedWorkoutList)
             {
                 <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@workout.ExercisesAPIs')">
-                    <strong>@workout.Title</strong>
+                    <strong>@workout.Title</strong> 
                     <p>@workout.Date</p>
                     <p>@workout.Description</p>
                     
                 </div>
+                <form method="post">
+                    <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                    <button type="submit" class="btn btn-outline-danger">X</button>
+                </form>
+                
             }
+            @*Ta ScheduleID på en workout och sätt den som NULL för att ta bort den ifrån en users schedule*@
         </div>
     }
+
+    @*     <input asp-for="workout.UserId" value="@user.Id" readonly class="form-control" type="hidden" />
+                <span asp-validation-for="workout.UserId" class="text-danger"></span>*@
 
     <div id="workoutPopup" class="popup">
         <div class="popup-content">
@@ -42,7 +51,3 @@ else
 
 
 }
-<script>
-
-</script>
-@* <a class="btn btn-primary" asp-page="/ShowSchedule">My Schedules</a> *@

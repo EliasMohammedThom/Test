@@ -1,5 +1,7 @@
 using Core.Interfaces;
 using Core.Models;
+using Humanizer;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,6 +16,11 @@ namespace Web.Pages
         private IdentityUser currentUser;
 
         #region Public_Fields
+        public Workout workout { get; set; }
+
+        [BindProperty]
+        public int SelectedWorkoutToRemove { get; set; }
+
         [BindProperty]
         public string ReplyToUser { get; set; } = default!;
         [BindProperty]
@@ -44,20 +51,27 @@ namespace Web.Pages
 
             SortedScheduleList = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).ToList();
 
-            //Sort schedule list so you only get schedules with the current Users UserId
-            //SortedScheduleList.Where(X => X.UserId == identityUser.Id);
-
             CurrentUserScheduleId = _scheduleService.GetAllSchedules()?.SingleOrDefault(x => x.UserId == identityUser.Id)?.Id;
 
             SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.ScheduleId == CurrentUserScheduleId).OrderBy(X => X.Date).ToList();
 
-
-
-
-
-
-
             return Page();
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            IdentityUser? identityUser = await _userManager.GetUserAsync(User);
+
+         
+            //int? workoutIdToRemove = _workoutService.GetAllWorkouts().Where(X => X.Id == SelectedWorkoutToRemove).SingleOrDefault().Id;
+
+            
+
+
+            //var ScheduleIdToRemove = SelectedWorkoutToRemove;
+
+            _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, workout);
+           
+            return Redirect("/ShowSchedule");
         }
     }
 }
