@@ -19,7 +19,7 @@ namespace Infrastructure.Services
         }
 
         public List<Schedule> GetAllSchedules()
-            => _scheduleContext.Schedules.OrderBy(s => s.Title).ToList();
+            => _scheduleContext.Schedules.OrderBy(s => s.UserId).ToList();
 
         public List<Workout> GetWorkoutById()
             => _scheduleContext.Workouts.OrderBy(s => s.Id).ToList();

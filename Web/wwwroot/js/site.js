@@ -17,3 +17,14 @@ document.getElementById('datePicker').value = today;
 
 
 
+
+function showPopup(title, date, description) {
+    document.getElementById('popupTitle').innerText = title;
+    document.getElementById('popupDate').innerText = date;
+    document.getElementById('popupDescription').innerText = description;
+    document.getElementById('workoutPopup').style.display = 'block';
+}
+
+function closePopup() {
+    document.getElementById('workoutPopup').style.display = 'none';
+}

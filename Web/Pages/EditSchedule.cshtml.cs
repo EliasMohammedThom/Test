@@ -41,10 +41,10 @@ namespace Web.Pages
     
         public async Task OnGetAsync()
         {
-
+            IdentityUser identityUser = await _userManager.GetUserAsync(User);
             currentUser = await _userManager.GetUserAsync(User);
 
-            WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == currentUser.Id).ToList();
+            WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == identityUser.Id).ToList();
 
 
          
