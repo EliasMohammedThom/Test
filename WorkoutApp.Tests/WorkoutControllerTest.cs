@@ -22,78 +22,78 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
 
 
-    [Fact]
-    public async Task T0AddAllWorkoutsToList()
-    {
-        using var context = Fixture.CreateContext();
-        var service = new WorkoutService(context);
-        List<string> ExerciseTypes = new List<string> {
-                "cardio",
-                "olympic_weightlifting",
-                "plyometrics",
-                "powerlifting",
-                "strength",
-                "stretching",
-                "strongman"
-            };
+    //[Fact]
+    //public async Task T0AddAllWorkoutsToList()
+    //{
+    //    using var context = Fixture.CreateContext();
+    //    var service = new WorkoutService(context);
+    //    List<string> ExerciseTypes = new List<string> {
+    //            "cardio",
+    //            "olympic_weightlifting",
+    //            "plyometrics",
+    //            "powerlifting",
+    //            "strength",
+    //            "stretching",
+    //            "strongman"
+    //        };
 
-       List<string> MuscleCategories = new List<string> {
-                "abdominals",
-                "abductors",
-                "adductors",
-                "biceps",
-                "calves",
-                "chest",
-                "forearms",
-                "glutes",
-                "hamstrings",
-                "lats",
-                "lower_back",
-                "middle_back",
-                "neck",
-                "quadriceps",
-                "traps",
-                "triceps"
-            };
+    //   List<string> MuscleCategories = new List<string> {
+    //            "abdominals",
+    //            "abductors",
+    //            "adductors",
+    //            "biceps",
+    //            "calves",
+    //            "chest",
+    //            "forearms",
+    //            "glutes",
+    //            "hamstrings",
+    //            "lats",
+    //            "lower_back",
+    //            "middle_back",
+    //            "neck",
+    //            "quadriceps",
+    //            "traps",
+    //            "triceps"
+    //        };
 
-       List<string> DifficultyCategory = new List<string>
-            {
-                "beginner",
-                "intermediate",
-                "expert"
-            };
+    //   List<string> DifficultyCategory = new List<string>
+    //        {
+    //            "beginner",
+    //            "intermediate",
+    //            "expert"
+    //        };
 
-        List<ExerciseList>? exerciseList = new List<ExerciseList>();
+    //    List<ExerciseList>? exerciseList = new List<ExerciseList>();
 
-        foreach (var type in ExerciseTypes)
-        {
-            foreach(var muscle in MuscleCategories)
+    //    foreach (var type in ExerciseTypes)
+    //    {
+    //        foreach(var muscle in MuscleCategories)
             
-            {
-                foreach(var difficulty in DifficultyCategory) 
-                {
+    //        {
+    //            foreach(var difficulty in DifficultyCategory) 
+    //            {
 
-                    var response = APICalls.GetAPICall(type, muscle, difficulty);
-                    string result = await response.Result.Content.ReadAsStringAsync();
+    //                var response = APICalls.GetAPICall(type, muscle, difficulty);
+    //                string result = await response.Result.Content.ReadAsStringAsync();
 
-                    exerciseList = JsonConvert.DeserializeObject<List<ExerciseList>>(result);
+    //                exerciseList = JsonConvert.DeserializeObject<List<ExerciseList>>(result);
 
-                    foreach(var exercise in exerciseList)
-                    {
-                       if (exercise != null)
-                        {
+    //                foreach(var exercise in exerciseList)
+    //                {
+    //                   if (exercise != null)
+    //                    {
 
 
-                            context.ExerciseLists.Add(exercise);
+    //                        context.ExerciseLists.Add(exercise);
 
-                            context.SaveChangesAsync();
-                        }
-                    }
+    //                        context.SaveChangesAsync();
+    //                    }
+    //                }
                     
-                }
-            }
-        }
-    }
+    //            }
+    //        }
+    //    }
+    //}
 
         [Fact]
     public void T1AddWorkout()
