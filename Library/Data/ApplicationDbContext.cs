@@ -12,6 +12,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<ExercisesAPI> ExercisesAPIs { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
+    public DbSet<ExerciseList> ExerciseLists { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder> modelCustomizer = null)
     : base(options)
@@ -30,3 +31,4 @@ public class ApplicationDbContext : IdentityDbContext
         }
     }
 }
+

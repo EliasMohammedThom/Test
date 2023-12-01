@@ -1,23 +1,43 @@
 ﻿@page
 @model Web.Pages.ExerciseAPICallModel
 @{
+
 }
 <h1>Exercise List</h1>
 
-@if (Model.Exercises != null && Model.Exercises.Any())
-{
-    <ul>
-        @foreach (var exercise in Model.Exercises)
+
+
+<form method="post" enctype="multipart/form-data">
+<div class="form-group" >
+    <label>Select an exercise to add to your schedule</label>
+    <br />
+        <select asp-for="SelectedExerciseName" name="SelectedExerciseName">
+
+        @foreach (var item in Model.Exercises)
         {
-            <li>    
-                <strong>Name:</strong> @exercise.Name <br />
-                <strong>Type:</strong> @exercise.Type <br />
-                <strong>Muscle:</strong> @exercise.Muscle <br />
-            </li>
+            <option value="@item.Name"> @item.Name</option>
         }
-    </ul>
-}
-else
-{
-    <p>No exercises available.</p>
-}
+    </select>
+        <span asp-validation-for="SelectedExerciseName" class="text-danger"></span>
+</div>
+<div class="form-group">
+    <label>Select a workout to add to your schedule:</label>
+    <br />
+    <select asp-for="SelectedItemWorkout" name="SelectedItemWorkout">
+    
+        @foreach (var item in Model.WorkoutList)
+        {
+            <option value="@item.Title"> @item.Title</option>
+        }
+    </select>
+    <span asp-validation-for="SelectedItemWorkout" class="text-danger"></span>
+
+</div>
+    <div class="form-group">
+        <input asp-for="SelectedItemExercise.Sets" class="form-control" placeholder="Enter Sets" />
+        </div>
+    <div class="form-group">
+        <input asp-for="SelectedItemExercise.Repetitions" class="form-control" placeholder="Enter Reps" />
+    </div>
+    <button type="submit" value="save" class="btn btn-primary">Create</button>
+</form>

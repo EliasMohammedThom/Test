@@ -46,12 +46,9 @@ namespace Web.Pages
 
             WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == identityUser.Id).ToList();
 
-
-         
-
         }
 
-        public async Task<IActionResult>  OnPostAsync()
+        public async Task<IActionResult> OnPostAsync()
         {
 
            IdentityUser identityUser = await _userManager.GetUserAsync(User);

@@ -17,7 +17,6 @@ document.getElementById('datePicker').value = today;
 
 
 
-
 function showPopup(title, date, description) {
     document.getElementById('popupTitle').innerText = title;
     document.getElementById('popupDate').innerText = date;

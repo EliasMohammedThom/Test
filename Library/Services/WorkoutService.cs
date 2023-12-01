@@ -33,9 +33,6 @@ namespace Infrastructure.Services
 
         public void UpdateWorkoutName(string newName, string oldName)
         {
-
-          
-
             var workoutToUpdate = _workoutContext.Workouts.SingleOrDefault(X => X.Title == oldName);
 
             if (workoutToUpdate != null)
