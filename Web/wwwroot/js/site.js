@@ -28,3 +28,22 @@ function showPopup(title, date, description) {
 function closePopup() {
     document.getElementById('workoutPopup').style.display = 'none';
 }
+
+function removeWorkout(workoutId) {
+    // You can implement the logic to update the ScheduleId to NULL
+    // For example, you can make an AJAX request to your server to update the workout
+
+    // Example AJAX request using jQuery
+    $.ajax({
+        url: '/update-schedule-id', // Replace with your server endpoint
+        method: 'POST',
+        data: { workoutId: workoutId },
+        success: function (response) {
+            // Handle success, update UI, etc.
+            // You might want to reload the schedule or remove the workout box from the UI
+        },
+        error: function (error) {
+            // Handle error
+        }
+    });
+}

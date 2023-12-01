@@ -22,12 +22,14 @@ else
             @foreach (var workout in Model.SortedWorkoutList)
             {
                 <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@workout.ExercisesAPIs')">
-                    <strong>@workout.Title</strong>
+                    <strong>@workout.Title</strong> 
                     <p>@workout.Date</p>
                     <p>@workout.Description</p>
                     
                 </div>
+                <button type="button" class="btn btn-outline-danger" name="SelectedWorkoutToRemove" value="@workout.ScheduleId">X</button>
             }
+            @*Ta ScheduleID på en workout och sätt den som NULL för att ta bort den ifrån en users schedule*@
         </div>
     }
 
