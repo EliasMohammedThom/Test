@@ -21,7 +21,7 @@ else
         <div class="workout-container">
             @foreach (var workout in Model.SortedWorkoutList)
             {
-                <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@workout.ExercisesAPIs')">
+                <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description')">
                     <strong>@workout.Title</strong> 
                     <p>@workout.Date</p>
                     <p>@workout.Description</p>
