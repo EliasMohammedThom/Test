@@ -42,7 +42,7 @@ namespace Web.Pages
 
 
             
-            return Page();
+            return Redirect("/AddWorkout");
         }
     }
 }
