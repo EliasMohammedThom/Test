@@ -13,6 +13,12 @@
 
 
 </div>
+@if(SignInManager.IsSignedIn(User))
+{
+    <form method="post">
+        <input type="hidden" name="userId" value="@user.Id" />
+        <button type="submit" class="btn btn-primary">Create Schedule</button>
+
 
 @if(SignInManager.IsSignedIn(User))
 {
@@ -22,5 +28,9 @@
 
         @*  <a class="btn btn-primary" asp-page="/ViewForumPost" asp-route-id="@Model.ScopedData.Blogs[i].Id">Se inlägg</a> *@
     </form>
+  
+   
     <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
+    <a class="btn btn-primary" asp-page="/ShowSchedule">My Schedules</a>
+
 }

@@ -14,6 +14,8 @@ namespace Core.Interfaces
         public void AddSchedule(Schedule schedule);
         public void UpdateSchedule(Schedule schedule);
 
+
+
     }
 
 }
