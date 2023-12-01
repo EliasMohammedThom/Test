@@ -10,6 +10,8 @@ namespace Core.Interfaces
         public void UpdateWorkout(Workout workout);
         public Workout GetWorkoutByUserId(string userId);
         public Workout GetWorkoutByTitle(string title);
+        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout);
+
 
     }
 }

@@ -35,15 +35,7 @@ namespace Infrastructure.Services
             _scheduleContext.Update(schedule);
             _scheduleContext.SaveChanges();
         }
-        public void RemoveWorkoutFromSchedule(int? ScheduleID)
-        {
-            if(ScheduleID != null)
-            {
-                ScheduleID = null;
-            }
-            _scheduleContext.Update(ScheduleID); 
-            _scheduleContext.SaveChanges();
-        }
+
 
 
     }

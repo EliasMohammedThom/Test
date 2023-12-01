@@ -16,6 +16,8 @@ namespace Web.Pages
         private IdentityUser currentUser;
 
         #region Public_Fields
+        public Workout workout { get; set; }
+
         [BindProperty]
         public int SelectedWorkoutToRemove { get; set; }
 
@@ -59,16 +61,17 @@ namespace Web.Pages
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
-            //@*Ta ScheduleID på en workout och sätt den som NULL för att ta bort den ifrån en users schedule*@
-            SelectedWorkoutToRemove = _scheduleService.GetAllSchedules().SingleOrDefault(x => x.UserId == identityUser.Id).Id;
+         
+            //int? workoutIdToRemove = _workoutService.GetAllWorkouts().Where(X => X.Id == SelectedWorkoutToRemove).SingleOrDefault().Id;
 
-            var ScheduleIdToRemove = SelectedWorkoutToRemove;
-
-
+            
 
 
-            _scheduleService.RemoveWorkoutFromSchedule(ScheduleIdToRemove);
-            return Page();
+            //var ScheduleIdToRemove = SelectedWorkoutToRemove;
+
+            _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, workout);
+           
+            return Redirect("/ShowSchedule");
         }
     }
 }

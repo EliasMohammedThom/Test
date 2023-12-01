@@ -13,7 +13,7 @@ namespace Core.Interfaces
         public List<Workout> GetWorkoutById();
         public void AddSchedule(Schedule schedule);
         public void UpdateSchedule(Schedule schedule);
-        public void RemoveWorkoutFromSchedule(int? ScheduleID);
+
 
 
     }
