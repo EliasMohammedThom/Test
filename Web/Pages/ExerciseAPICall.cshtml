@@ -5,17 +5,55 @@
 }
 <h1>Exercise List</h1>
 
+
+<form method="post" id="ChooseExercise" enctype="multipart/form-data" asp-page-handler="ChooseExercise">
+
+    <label>Select exercisetype:</label>
+    <br />
+    <select asp-for="ExerciseSelecter.Difficulty" name="ExerciseSelecter">
+        @foreach (var item in Model.DifficultyCategory)
+        {
+            <option value="@item"> @item</option>
+        }
+    </select>
+
+    <select asp-for="ExerciseSelecter.Type" name="ExerciseSelecter.Type">
+        @foreach (var item in Model.ExerciseTypes)
+        {
+            <option value="@item"> @item</option>
+        }
+    </select>
+
+    <select asp-for="ExerciseSelecter.Muscle" name="ExerciseSelecter.Muscle">
+        @foreach (var item in Model.MuscleCategories)
+        {
+            <option value="@item"> @item</option>
+        }
+    </select>
+
+
+    <button type="submit" value="save" class="btn btn-primary">Create</button>
+    </form>
+
+
+
   <form method="post" enctype="multipart/form-data">
 <div class="form-group">
     <label>Select exercisetype:</label>
     <br />
     <select asp-for="SelectedItemExerciseName" name="SelectedItemExerciseName">
-        @foreach (var item in Model.Exercises)
-        {
-            <option value="@item.Name"> @item.Name</option>
+            @{
+                if (Model.Exercises != null)
+                {
+                    foreach (var item in Model.Exercises)
+                    {
+                        <option value="@item.Name"> @item.Name</option>
+                    }
+                }
         }
     </select>
     <span asp-validation-for="SelectedItemExerciseName" class="text-danger"></span>
+
 </div>
 
 <div class="form-group">

@@ -10,9 +10,9 @@ namespace Core
 {
     public class APICalls
     {
-        public static async Task<HttpResponseMessage> GetAPICall()
+        public static async Task<HttpResponseMessage> GetAPICall(string type, string muscle, string difficulty)
         {
-            string apiUrl = "https://api.api-ninjas.com/v1/exercises?muscle=biceps";
+            string apiUrl = $"https://api.api-ninjas.com/v1/exercises?muscle={muscle}&type={type}&difficulty={difficulty}";
             string apiKey = "7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg";
             using (HttpClient client = new HttpClient())
             {

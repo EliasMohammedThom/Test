@@ -8,6 +8,7 @@ using Core.Models;
 using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Infrastructure.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Web.Pages
 {
@@ -19,7 +20,7 @@ namespace Web.Pages
         private IdentityUser currentUser;
 
         [BindProperty]
-        public List<ExercisesAPI> Exercises { get; set; }
+        public List<ExercisesAPI>? Exercises { get; set; }
         [BindProperty]
         public string SelectedItemExerciseName { get; set; }
 
@@ -33,8 +34,21 @@ namespace Web.Pages
         public Workout Workout { get; set; }
         [BindProperty]
         public ExercisesAPI ExercisesAPI { get; set; }
+
         [BindProperty]
         public List<Workout> WorkoutList { get; set; }
+
+        [BindProperty]
+        public List<string> ExerciseTypes { get; set; }
+
+        [BindProperty]
+        public List<string> MuscleCategories { get; set; }
+
+        [BindProperty] 
+        public  List<string>  DifficultyCategory { get; set; }
+
+        [BindProperty] 
+        public ExerciseSelecter ExerciseSelecter { get; set; }
 
         public ExerciseAPICallModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI)
         {
@@ -43,23 +57,72 @@ namespace Web.Pages
             _exerciseService = exercisesAPI;
         }
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            var  response =  APICalls.GetAPICall();
-            string result = await response.Result.Content.ReadAsStringAsync();
-            List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
-            Exercises  = JsonConvert.DeserializeObject <List<ExercisesAPI>> (result);
-
+         
             currentUser = await _userManager.GetUserAsync(User);
             WorkoutList = _workoutService.GetAllWorkouts().Where(X => X.UserId == currentUser.Id).ToList();
+
+
+            ExerciseTypes = new List<string> {
+                "cardio",
+                "olympic_weightlifting",
+                "plyometrics",
+                "powerlifting",
+                "strength",
+                "stretching",
+                "strongman"
+            };
+
+            MuscleCategories = new List<string> {
+                "abdominals",
+                "abductors",
+                "adductors",
+                "biceps",
+                "calves",
+                "chest",
+                "forearms",
+                "glutes",
+                "hamstrings",
+                "lats",
+                "lower_back",
+                "middle_back",
+                "neck",
+                "quadriceps",
+                "traps",
+                "triceps"  
+            };
+
+            DifficultyCategory = new List<string>
+            {
+                "beginner",
+                "intermediate",
+                "expert"
+            };
+
+            return Page();
+
+
         }
+
+
+
+        public async Task<IActionResult> OnPostChooseExerciseAsync()
+        {
+
+            var response = APICalls.GetAPICall(ExerciseSelecter.Type, ExerciseSelecter.Muscle, ExerciseSelecter.Difficulty);
+            string result = await response.Result.Content.ReadAsStringAsync();
+           
+            Exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
+
+            return Page();
+        }
+
+
         public async Task<IActionResult> OnPostAsync()
         {
 
-            var response = APICalls.GetAPICall();
-            string result = await response.Result.Content.ReadAsStringAsync();
-            List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
-            Exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
+           
 
 
             ExercisesAPI = Exercises.Where(X=>X.Name == SelectedItemExerciseName).Single();
@@ -71,10 +134,10 @@ namespace Web.Pages
             ExercisesAPI.Repetitions = SelectedItemExercise.Repetitions;
 
             _exerciseService.AddExercise(ExercisesAPI);
-           
-            
 
             return Page();
+
+           
         }
     }
 }
