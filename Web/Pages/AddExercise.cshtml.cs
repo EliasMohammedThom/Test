@@ -29,7 +29,6 @@ namespace Web.Pages
         [BindProperty]
         public string SelectedExerciseName { get; set; }
 
-
         [BindProperty]
         public ExercisesAPI SelectedItemExercise { get; set; }
         [BindProperty]
@@ -78,7 +77,7 @@ namespace Web.Pages
 
             _exerciseService.AddExercise(ExercisesAPI);
 
-            return Redirect("/ExerciseAPICall");
+            return Redirect("/AddExercise");
 
            
         }
