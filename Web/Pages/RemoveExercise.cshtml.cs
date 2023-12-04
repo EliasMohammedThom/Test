@@ -33,13 +33,20 @@ namespace Web.Pages
         [BindProperty]
         public int SelectedWorkoutToUpdate { get; set; }
 
+        [BindProperty]
+        public int SelectedExerciseToRemove { get; set; }
+
+        [BindProperty]
+
+        public ExercisesAPI Randomtest {  get; set; }
+
 
 
 
         #endregion
 
 
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser identityUser = await _userManager.GetUserAsync(User);
 
@@ -59,6 +66,12 @@ namespace Web.Pages
 
             return Page();
 
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            _exerciseService.RemoveExerciseById(SelectedExerciseToRemove, Randomtest);
+
+            return Redirect("/RemoveExercise");
         }
     }
 }
