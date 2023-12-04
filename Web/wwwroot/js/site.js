@@ -15,12 +15,15 @@ document.getElementById('datePicker').min = today;
 // Set the default value of the date picker to today
 document.getElementById('datePicker').value = today;
 
+'@exercise.Name', '@exercise.Sets', '@exercise.Repetitions'
 
-
-function showPopup(title, date, description) {
+function showPopup(title, date, description, name, sets, repetitions) {
     document.getElementById('popupTitle').innerText = title;
     document.getElementById('popupDate').innerText = date;
     document.getElementById('popupDescription').innerText = description;
+    document.getElementById('popupName').innerText = name;
+    document.getElementById('popupSets').innerText = sets;
+    document.getElementById('popupRepetitions').innerText = repetitions;
     document.getElementById('workoutPopup').style.display = 'block';
 }
 

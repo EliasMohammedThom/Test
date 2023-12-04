@@ -1,0 +1,28 @@
+﻿@page
+@using Core.Models
+@model Web.Pages.RemoveExerciseModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "RemoveExercise";
+    var user = await UserManager.GetUserAsync(User);
+}
+
+@foreach(var item in Model.AllWorkoutsByCurrentUser)
+{
+    <p>@item.Title</p>
+    <p>@item.Date</p>
+    <p>@item.Description</p>
+   
+    <p>@item.UserId</p>
+    <p>@item.Id</p>
+
+    foreach(var exercise in item.Exercises)
+    {
+        <form method="post">
+            <p>@exercise.Name <button type="submit" class="btn btn-danger" name="SelectedExerciseToRemove" value="@exercise.Id">Remove</button></p>
+        </form>
+    }
+    <p>---------------------------</p>
+ 
+}

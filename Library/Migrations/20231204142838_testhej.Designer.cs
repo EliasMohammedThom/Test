@@ -4,6 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231204142838_testhej")]
+    partial class testhej
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseLists", (string)null);
+                    b.ToTable("ExerciseLists");
                 });
 
             modelBuilder.Entity("Core.Models.ExercisesAPI", b =>
@@ -104,7 +107,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("ExercisesAPIs", (string)null);
+                    b.ToTable("ExercisesAPIs");
                 });
 
             modelBuilder.Entity("Core.Models.Nutrition", b =>
@@ -158,7 +161,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "sugar_g");
 
-                    b.ToTable("Nutritions", (string)null);
+                    b.ToTable("Nutritions");
                 });
 
             modelBuilder.Entity("Core.Models.Schedule", b =>
@@ -174,7 +177,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Core.Models.Workout", b =>
@@ -202,7 +205,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workouts", (string)null);
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

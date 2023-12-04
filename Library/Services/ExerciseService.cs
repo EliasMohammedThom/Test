@@ -20,8 +20,8 @@ namespace Infrastructure.Services
         public List<ExercisesAPI> GetAllExercisesAPIs()
             => _ExercisesAPIContext.ExercisesAPIs.OrderBy(s => s.Name).ToList();
 
-        public List<ExercisesAPI> GetWorkoutById()
-            => _ExercisesAPIContext.ExercisesAPIs.OrderBy(s => s.Id).ToList();
+        public ExercisesAPI GetExerciseById(int id)
+            => _ExercisesAPIContext.ExercisesAPIs.SingleOrDefault(s => s.Id == id);
 
         public void AddExercise(ExercisesAPI ExercisesAPI)
         {
@@ -33,6 +33,14 @@ namespace Infrastructure.Services
         {
             _ExercisesAPIContext.Update(ExercisesAPI);
             _ExercisesAPIContext.SaveChanges();
+        }
+        public void RemoveExerciseById(int id, ExercisesAPI exercise)
+        {
+            exercise = GetExerciseById(id);
+
+
+            _ExercisesAPIContext.Remove(exercise);
+            _ExercisesAPIContext?.SaveChanges();
         }
     }
 }
