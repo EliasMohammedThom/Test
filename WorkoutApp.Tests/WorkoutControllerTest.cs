@@ -20,8 +20,6 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
     public TestDatabaseFixture Fixture { get; }
 
-
-
     //[Fact]
     //public async Task T0AddAllWorkoutsToList()
     //{

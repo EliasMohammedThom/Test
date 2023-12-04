@@ -1,4 +1,4 @@
-﻿using Core.Interfaces;
+﻿using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
 using System;

@@ -1,6 +1,6 @@
 ﻿using Core.Models;
 
-namespace Infrastructure.Services
+namespace Core.Interfaces.ModelServices
 {
     public interface IExerciseService
     {
@@ -9,6 +9,8 @@ namespace Infrastructure.Services
         public ExercisesAPI GetExerciseById(int id);
         void UpdateExercisesAPI(ExercisesAPI ExercisesAPI);
         public void RemoveExerciseById(int id, ExercisesAPI exercise);
+
+
 
     }
 }

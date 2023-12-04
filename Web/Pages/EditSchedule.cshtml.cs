@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Core.Models;
-using Core.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Infrastructure.Services;
 using Humanizer;
 using Microsoft.AspNetCore.Identity;
+using Core.Interfaces.ModelServices;
 
 namespace Web.Pages
 {

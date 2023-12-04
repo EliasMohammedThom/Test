@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.CodeDom;
 using System.Reflection.Metadata;
 using Core.Models;
-using Core.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Core.Interfaces.ModelServices;
 namespace Web.Pages
 {
     public class AddWorkoutModel : PageModel

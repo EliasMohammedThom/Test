@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Infrastructure.Data;
-using Core.Interfaces;
 using Infrastructure.Services;
+using Core.Interfaces.ModelServices;
+using Core.Interfaces.Commands;
+using Core.Interfaces.Commands.Exercises;
+using Core.Commands.Exercises;
 
 namespace Web
 {
@@ -24,14 +27,11 @@ namespace Web
 
             //Add our services
             builder.Services.AddScoped<IWorkoutService, WorkoutService>();
-
             builder.Services.AddScoped<IExerciseService, ExerciseService>();
             builder.Services.AddScoped<IExerciseListService, ExerciseListService>();
-
+            builder.Services.AddScoped<IScheduleService, ScheduleService>();
+            builder.Services.AddScoped<IImportValues, ImportValues>();
             builder.Services.AddHttpClient();
-
-            builder.Services.AddTransient<IScheduleService, ScheduleService>();
-
 
             var app = builder.Build();
 

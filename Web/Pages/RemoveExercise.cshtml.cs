@@ -1,6 +1,5 @@
-using Core.Interfaces;
+using Core.Interfaces.ModelServices;
 using Core.Models;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -56,13 +55,6 @@ namespace Web.Pages
                 item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
                 foreach (var exercise in item.Exercises) ;
             }
-
-              
-
-
-
-
-
 
             return Page();
 

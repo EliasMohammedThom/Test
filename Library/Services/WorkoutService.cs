@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Core.Interfaces;
+using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -64,7 +64,7 @@ namespace Infrastructure.Services
         //    _workoutContext.SaveChanges();
         //}
 
-        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout)
+        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout? workout)
         {
             workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).SingleOrDefault();
 
@@ -80,10 +80,11 @@ namespace Infrastructure.Services
         //public Workout GetWorkoutById(int workoutid)
         //   => _workoutContext.Workouts.Where(s => s.Id == workoutid).SingleOrDefault();
 
-        //public Workout GetWorkoutByUserId(string userId)
+        //public Workout GetWorkoutsByUserId(string userId)
         //  => _workoutContext.Workouts.Where(s => s.UserId == userId).SingleOrDefault();
-        public Workout GetWorkoutByTitle(string title)
+        public Workout? GetWorkoutByTitle(string title)
         => _workoutContext.Workouts.Where(s => s.Title == title).SingleOrDefault();
+        public List< Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
 
 
 
