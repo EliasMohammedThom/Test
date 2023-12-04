@@ -7,27 +7,27 @@ namespace Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {
-    private readonly Action<ApplicationDbContext, ModelBuilder> _modelCustomizer;
+    private readonly Action<ApplicationDbContext, ModelBuilder>? _modelCustomizer;
     public DbSet<Workout> Workouts {  get; set; }
     public DbSet<ExercisesAPI> ExercisesAPIs { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
     public DbSet<ExerciseList> ExerciseLists { get; set; }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder> modelCustomizer = null)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder>? modelCustomizer = null)
     : base(options)
     {
         _modelCustomizer = modelCustomizer;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        //modelBuilder.Entity<UrlResource>().HasNoKey()
+        //builder.Entity<UrlResource>().HasNoKey()
         //    .ToView("AllResources");
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
         if (_modelCustomizer is not null)
         {
-            _modelCustomizer(this, modelBuilder);
+            _modelCustomizer(this, builder);
         }
     }
 }

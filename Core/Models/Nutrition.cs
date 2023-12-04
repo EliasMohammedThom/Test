@@ -16,28 +16,28 @@ namespace Core.Models
         
             [JsonPropertyName("name")]
         
-            public string Name { get; set; }
+            public string? Name { get; set; }
             [JsonPropertyName("calories")]
-            public float Calories { get; set; }
+            public float? Calories { get; set; }
             [JsonPropertyName("serving_size_g")]
-            public float ServingSizePerGram { get; set; }
+            public float? ServingSizePerGram { get; set; }
             [JsonPropertyName("fat_total_g")]
-            public float FatTotalGram { get; set; }
+            public float? FatTotalGram { get; set; }
             [JsonPropertyName("fat_saturated_g")]
-            public float SaturatedGram { get; set; }
+            public float? SaturatedGram { get; set; }
             [JsonPropertyName("protein_g")]
-            public float ProteinGram { get; set; }
+            public float? ProteinGram { get; set; }
             [JsonPropertyName("sodium_mg")]
-            public float SodiumMilligram { get; set; }
+            public float? SodiumMilligram { get; set; }
             [JsonPropertyName("potassium_mg")]
-            public float PotassiumMilligram { get; set; }
+            public float? PotassiumMilligram { get; set; }
             [JsonPropertyName("cholesterol_mg")]
-            public float Cholesterol { get; set; }
+            public float? Cholesterol { get; set; }
             [JsonPropertyName("carbohydrates_total_g")]
-            public float CarbohydratesPerGram { get; set; }
+            public float? CarbohydratesPerGram { get; set; }
             [JsonPropertyName("fiber_g")]
-            public float FiberPerGram { get; set; }
+            public float? FiberPerGram { get; set; }
             [JsonPropertyName("sugar_g")]
-            public float Sugar { get; set; }
+            public float? Sugar { get; set; }
         }
 }

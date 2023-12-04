@@ -1,4 +1,4 @@
-using Core.Interfaces;
+using Core.Interfaces.ModelServices;
 using Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,7 +10,6 @@ namespace Web.Pages
     {
         private readonly IScheduleService _scheduleService;
         private readonly UserManager<IdentityUser> _userManager;
-        private IdentityUser currentUser;
 
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
@@ -20,7 +19,7 @@ namespace Web.Pages
         public void OnGet()
         {
 
-          
+          //Not yet implemented
         }
         public async Task<IActionResult> OnPost() 
         {
@@ -36,11 +35,6 @@ namespace Web.Pages
 
 
             return Redirect("/EditSchedule");
-        }
-        public void CreateSchedule()
-        {
-
-
         }
     }
 }

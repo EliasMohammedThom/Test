@@ -1,6 +1,6 @@
 ﻿using Core.Models;
 
-namespace Core.Interfaces
+namespace Core.Interfaces.ModelServices
 {
     public interface IWorkoutService
     {
@@ -11,6 +11,7 @@ namespace Core.Interfaces
         //public Workout GetWorkoutByUserId(string userId);
         public Workout GetWorkoutByTitle(string title);
         public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout);
+        public List<Workout>? GetWorkoutsByUserId(string userId);
         //public void UpdateWorkoutName(string newName, string oldName);
     }
 }

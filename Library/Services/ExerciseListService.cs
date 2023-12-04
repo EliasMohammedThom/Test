@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core.Interfaces.ModelServices;
+using Core.Models;
 using Infrastructure.Data;
 using System;
 using System.Collections.Generic;
@@ -18,5 +19,12 @@ namespace Infrastructure.Services
 
         public List<ExerciseList> GetAllExerciseLists()
             => _ExerciseLists.ExerciseLists.OrderBy(s => s.Name).ToList();
+
+        public ExerciseList GetExerciseListByName(string exerciseName, ExerciseList exerciseList)
+        {
+
+            GetAllExerciseLists().Where(x=>x.Name == exerciseName).SingleOrDefault();
+            return exerciseList ;
+        }
     }
 }

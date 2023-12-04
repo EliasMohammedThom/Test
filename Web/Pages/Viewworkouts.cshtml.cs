@@ -1,6 +1,5 @@
-using Core.Interfaces;
+using Core.Interfaces.ModelServices;
 using Core.Models;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,7 +10,6 @@ namespace Web.Pages
     {
 
         private readonly IWorkoutService _workoutService;
-        private readonly IScheduleService _scheduleService;
         private readonly IExerciseService _exerciseService;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -19,10 +17,9 @@ namespace Web.Pages
         public List<Workout>? SortedWorkoutList { get; set; }
         [BindProperty]
         public List <ExercisesAPI>? Exercises {  get; set; }
-        public View_workoutsModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager, IExerciseService exerciseService)
+        public View_workoutsModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exerciseService)
     {
             _workoutService = workoutService;
-            _scheduleService = scheduleService;
             _userManager = userManager;
             _exerciseService = exerciseService;
         }
