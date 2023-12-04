@@ -5,7 +5,7 @@
 
 
 // Get today's date in the format YYYY-MM-DD
-var today = new Date().toISOString().split('T')[0];
+let today = new Date().toISOString().split('T')[0];
 
 // Set the minimum date for the date picker to today
 document.getElementById('datePicker').min = today;

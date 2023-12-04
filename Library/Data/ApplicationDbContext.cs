@@ -20,14 +20,14 @@ public class ApplicationDbContext : IdentityDbContext
         _modelCustomizer = modelCustomizer;
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    protected override void OnModelCreating(ModelBuilder builder)
     {
-        //modelBuilder.Entity<UrlResource>().HasNoKey()
+        //builder.Entity<UrlResource>().HasNoKey()
         //    .ToView("AllResources");
-        base.OnModelCreating(modelBuilder);
+        base.OnModelCreating(builder);
         if (_modelCustomizer is not null)
         {
-            _modelCustomizer(this, modelBuilder);
+            _modelCustomizer(this, builder);
         }
     }
 }
