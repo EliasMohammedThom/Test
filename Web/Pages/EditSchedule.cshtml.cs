@@ -9,7 +9,7 @@ using Core.Interfaces.ModelServices;
 
 namespace Web.Pages
 {
-    public class CreateScheduleModel : PageModel
+    public class EditScheduleModel : PageModel
     {
         private readonly IWorkoutService _workoutService;
         private readonly IScheduleService _scheduleService;
@@ -32,7 +32,7 @@ namespace Web.Pages
         private IdentityUser currentUser;
 
      
-        public CreateScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
+        public EditScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _workoutService = workoutService;
             _scheduleService = scheduleService;
@@ -55,11 +55,15 @@ namespace Web.Pages
 
            Workout = _workoutService.GetWorkoutByTitle(SelectedItem);
 
-           Workout.ScheduleId = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).SingleOrDefault().Id;
-           Workout.Date = SelectedDate;
-           Workout.Description = Description;
+            if (Workout.ScheduleId!= null)
+            {
+                Workout.ScheduleId = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).SingleOrDefault().Id;
+                Workout.Date = SelectedDate;
+                Workout.Description = Description;
 
-           _workoutService.UpdateWorkout(Workout);
+                _workoutService.UpdateWorkout(Workout);
+            }
+          
           
             return Page();
 
