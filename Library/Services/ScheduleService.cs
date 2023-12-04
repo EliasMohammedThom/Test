@@ -28,16 +28,29 @@ namespace Infrastructure.Services
         {
             _scheduleContext.Schedules.Add(schedule);
             _scheduleContext.SaveChanges();
-
         }
-        public void UpdateSchedule(Schedule schedule) 
+        public Schedule? GetScheduleById(int? scheduleId)
+            => _scheduleContext.Schedules.Where(s => s.Id == scheduleId).SingleOrDefault();
+
+        public void UpdateSchedule(string oldString, string newString) 
         {
-            _scheduleContext.Update(schedule);
+            var scheduleToBeUpdates = _scheduleContext.Schedules.SingleOrDefault(x => x.UserId == oldString);
+
+            if (scheduleToBeUpdates != null)
+            {
+                scheduleToBeUpdates.UserId = newString;
+                _scheduleContext.Schedules.Update(scheduleToBeUpdates);
+                _scheduleContext.SaveChanges();
+            }
+        }
+        public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule)
+        {
+            schedule = _scheduleContext.Schedules.Where(x => x.Id == scheduleId).SingleOrDefault();
+
+            _scheduleContext.Remove(schedule);
             _scheduleContext.SaveChanges();
         }
-
-
-
+        public Schedule GetScheduleByUserId(string userId)
+        => _scheduleContext.Schedules.Where(s => s.UserId == userId).SingleOrDefault();
     }
-
 }

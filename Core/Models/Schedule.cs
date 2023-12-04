@@ -10,7 +10,5 @@ namespace Core.Models
     {
         public int Id { get; set; }
         public string? UserId { get; set; }
-
-
     }
 }

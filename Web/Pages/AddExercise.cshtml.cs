@@ -78,8 +78,6 @@ namespace Web.Pages
             _exerciseService.AddExercise(ExercisesAPI);
 
             return Redirect("/AddExercise");
-
-           
         }
     }
 }

@@ -12,10 +12,9 @@ namespace Core.Interfaces
         public List<Schedule> GetAllSchedules();
         public List<Workout> GetWorkoutById();
         public void AddSchedule(Schedule schedule);
-        public void UpdateSchedule(Schedule schedule);
-
-
-
+        public Schedule? GetScheduleById(int? scheduleId);
+        public void UpdateSchedule(string oldString, string newString);
+        public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule);
+        public Schedule GetScheduleByUserId(string userId);
     }
-
 }

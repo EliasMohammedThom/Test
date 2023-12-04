@@ -13,7 +13,7 @@ namespace WorkoutApp.Tests;
 
 public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 {
-
+    private readonly Workout _workout = new();
 
     public WorkoutServiceTest(TestDatabaseFixture fixture)
         => Fixture = fixture;
@@ -98,111 +98,79 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         [Fact]
     public void T1AddWorkout()
     {
-        //act
+        //arrange
         using var context = Fixture.CreateContext();
 
-
-        //arrange
-
-        Workout testworkout = new Workout { Title = "WorkoutToBeUpdated"};
+        //act
+        _workout.Title = "WorkoutToBeUpdated";
         var service = new WorkoutService(context);
-        service.AddWorkout(testworkout);
+        service.AddWorkout(_workout);
         var workout = context.Workouts.SingleOrDefault(b => b.Title == "WorkoutToBeUpdated");
 
-
-
         //assert
-
         Assert.Equal("WorkoutToBeUpdated", workout.Title);
     }
-
 
     [Fact]
     public void T2GetWorkout()
     {
-
-        //Act
+        //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
 
-        //Arrange
-        var workout = service.GetWorkout("WorkoutToBeUpdated");
-
+        //act
+        var workout = service.GetWorkoutByTitle("WorkoutToBeUpdated");
 
         //Assert
         Assert.Equal("WorkoutToBeUpdated", workout.Title);
-
-
     }
-
 
     [Fact]
     public void T3UpdateWorkout()
     {
-
-        //act
+        //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
-        var testWorkout = "UpdatedWorkout";
+        var updatedName = "UpdatedWorkout";
+        var workout = service.GetWorkoutByTitle("WorkoutToBeUpdated");
+        workout.Title = updatedName;
 
-        //arrange
-        service.UpdateWorkoutName(testWorkout, "WorkoutToBeUpdated");
-
-
-
-        var actual = service.GetWorkout(testWorkout);
+        //act
+        service.UpdateWorkout(workout);
+        var actual = service.GetWorkoutByTitle(updatedName);
 
         //assert
-        Assert.NotNull(actual);
-
-
+        Assert.Equal(actual.Title, updatedName);
     }
-
 
     [Fact]
-    public void T4RemoveWorkout()
+    public void T4RemoveWorkoutFromSchedule()
     {
-
-        //act
-        Thread.Sleep(1000);
+        //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
-        var testWorkout = "UpdatedWorkout";
+        var workout = service.GetWorkoutByTitle("UpdatedWorkout");
 
-        //arrange
-
-        service.DeleteWorkout(testWorkout);
-        var actual = service.GetWorkout(testWorkout);
-        //var actual = context.Workouts.Single();
-
-
+        //act
+        service.DeleteWorkoutByWorkoutId(workout.Id, workout);
+        var actual = service.GetWorkoutByTitle("UpdatedWorkout");
 
         // assert
-        Assert.Null(actual);
-
-
+        Assert.Equal(actual.ScheduleId, null);
     }
-
-
 
     [Fact]
     public void T5DeleteEmptyData()
     {
-
-
+        //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
 
+        //act
         service.DeleteEmptyWorkouts();
+        var actual = service.GetAllWorkouts().Where(X => X.UserId == null);
 
-
-
-        var actual = service.GetAllWorkouts().Where(X=>X.UserId == null);
-
-        
+        //Assert
         Assert.Empty(actual);
-
-
     }
-
 }

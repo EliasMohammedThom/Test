@@ -1,69 +1,83 @@
 ﻿
-//namespace WorkoutApp.Tests
-//{
-//    public class Schedule
-//    {
-//        [Fact]
-//        public void CanCreateScheduleIfTrueReturnSchedule()
-//        {
-//            // Arrange
-//            var schedule = new Core.Models.Schedule();
+using Core.Models;
+using Infrastructure.Services;
 
-//            // Act
+namespace WorkoutApp.Tests
+{
+    [TestCaseOrderer(
+    ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
+    ordererAssemblyName: "WorkoutApp.Tests")] 
 
-//            //Assert
+    public class ScheduleTests : IClassFixture<TestDatabaseFixture>
+    {
 
-//            Assert.NotNull(schedule);
-//            Assert.Equal(0, schedule.Id); 
-//            Assert.Null(schedule.Title); 
-//            Assert.Null(schedule.Description); 
-//            Assert.Equal(DayOfWeek.Sunday, schedule.WeekDay); 
-//            Assert.Equal(0, schedule.Week);
-//            Assert.Equal(0, schedule.UserId);
-//        }
+        private Schedule _schedule { get; set; }
+        public ScheduleTests(TestDatabaseFixture fixture)
+        {
+            Fixture = fixture;
+            _schedule = new Schedule
+            {
+                UserId = "test"
+            };
+        }
+        public TestDatabaseFixture Fixture { get; }
 
-//        [Fact]
-//        public void CanAddContentToCreatedSchedule()
-//        {
-//            // Arrange 
-//            var sut = new Core.Models.Schedule()
-//            {
-//                Id = 1,
-//                Title = "Test",
-//                Description = "Testar",
-//                WeekDay = DayOfWeek.Monday,
-//                Week = 47,
-//                UserId = 1
-//            };
+        [Fact]
+        public void T1AddSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
 
-//            // Act
+            //act
+            var service = new ScheduleService(context);
+            service.AddSchedule(_schedule);
+            var schedule = context.Schedules.SingleOrDefault(b => b.Id == _schedule.Id);
 
-//            // Assert
-//            Assert.NotNull(sut);
-//            Assert.Equal(1, sut.Id);
-//            Assert.Equal(sut.Title, "Test");
-//            Assert.Equal(sut.Description, "Testar");
-//            Assert.Equal(DayOfWeek.Monday, sut.WeekDay);
-//            Assert.Equal(47, sut.Week);
-//            Assert.Equal(1, sut.UserId);
+            //assert
+            Assert.Equal(_schedule.Id, schedule.Id);
+        }
+        [Fact]
+        public void T2GetSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
 
-//        }
+            //act
+            _schedule = service.GetAllSchedules().LastOrDefault();
 
-//        //[Fact]
-//        //public void CanSaveScheduleToDataBase()
-//        //{
-//        //    // Arrange
-//        //    //var sut = new Domain.Schedule();
+            //Assert
+            Assert.Equal(_schedule.UserId, "test");
+        }
+        [Fact]
+        public void T3UpdateSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
+            var testSchedule = _schedule.UserId;
 
-//        //    //var mockDB = new Mock<WorkoutAppDbContext>();
+            //act
+            service.UpdateSchedule(testSchedule, "updatedSchedule");
+            var actual = service.GetScheduleByUserId("updatedSchedule");
 
-//        //    //var sut = new Domain.Schedule(mockDB.Object);
-//        //    // Act
+            //assert
+            Assert.NotNull(actual);
+        }
+        [Fact]
+        public void T4RemoveSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
+            //act
 
-            
+            _schedule = service.GetAllSchedules().LastOrDefault();
+            service.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
+            var actual = service.GetScheduleById(_schedule.Id);
 
-
-//        //    // Assert
-//        //}
-//    }
-//}
+            // assert
+            Assert.Null(actual);
+        }
+    }
+}
