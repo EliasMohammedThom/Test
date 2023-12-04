@@ -5,6 +5,7 @@
 //using System.Threading.Tasks;
 //using Xunit;
 //using Core;
+using Microsoft.Extensions.Configuration;
 
 //namespace WorkoutApp.Tests
 //{
@@ -15,7 +16,14 @@
 //        {
 //            // Arrange
 //            string apiUrl = "https://api-ninjas.com/api/exercises?muscle=biceps";
-//            string apiKey = "7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg";
+//IConfiguration configuration = new ConfigurationBuilder()
+//    .SetBasePath(Directory.GetCurrentDirectory())
+//    .AddJsonFile("appsettings.json")
+//    .Build();
+
+
+
+//            string apiKey = configuration["ApiSettings:ApiKey"];
 //            // Act
 //            using (HttpClient client = new HttpClient())
 //            {
@@ -25,7 +33,7 @@
 //                {
 //                    HttpResponseMessage responseMessage = await client.GetAsync(apiUrl);
 
-                    
+
 //                    Assert.True(responseMessage.IsSuccessStatusCode, $"API request failed with status code {responseMessage.StatusCode}");
 
 //                    string content = await responseMessage.Content.ReadAsStringAsync();
@@ -46,7 +54,7 @@
 //            // Arrange
 //            string foodType = "chicken";
 //            string apiUrl = $"https://api.api-ninjas.com/v1/nutrition?query={foodType}";
-//            string apiKey = "7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg";
+//            string apiKey = configuration["ApiSettings:ApiKey"];
 
 //            using (HttpClient client = new HttpClient())
 //            {
@@ -79,7 +87,7 @@
 //            // Arrange
 //            string activity = "hockey";
 //            string apiUrl = $"https://api.api-ninjas.com/v1/caloriesburned?activity={activity}";
-//            string apiKey = "7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg";
+//            string apiKey = configuration["ApiSettings:ApiKey"];
 
 //            using (HttpClient client = new HttpClient())
 //            {
