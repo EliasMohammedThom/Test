@@ -11,18 +11,10 @@
 @foreach(var item in Model.AllWorkoutsByCurrentUser)
 {
     <p>@item.Title</p>
-    <p>@item.Date</p>
-    <p>@item.Description</p>
-    @foreach(var exercises in Model.AllExercisesByCurrentUser)
+    foreach(var exercise in item.Exercises)
     {
-        <p>@exercises.Name <button type="submit" class="btn btn-danger">Remove</button></p>
-        
+        <p>@exercise.Name</p>
     }
-    <p>@item.Id</p>
-    <p>@item.UserId</p>
-    <p>---------------------------</p>
+   
+ 
 }
-@* <form method="post">
-    <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-    <button type="submit" class="btn btn-outline-danger">X</button>
-</form> *@

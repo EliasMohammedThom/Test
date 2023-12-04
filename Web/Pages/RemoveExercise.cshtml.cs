@@ -35,6 +35,7 @@ namespace Web.Pages
 
 
 
+
         #endregion
 
 
@@ -43,22 +44,21 @@ namespace Web.Pages
             IdentityUser identityUser = await _userManager.GetUserAsync(User);
 
             AllWorkoutsByCurrentUser = _workoutService.GetAllWorkouts().Where(X => X.UserId == identityUser.Id).ToList();
+            foreach (var item in AllWorkoutsByCurrentUser)
+            {
+                item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
+                foreach (var exercise in item.Exercises) ;
+            }
 
-            //AllExercisesByCurrentUser = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
-
-            workout = AllWorkoutsByCurrentUser.FirstOrDefault();
-
-            if (workout != null)
-                AllExercisesByCurrentUser = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
+              
 
 
-            //workout = SortedWorkoutList.FirstOrDefault();
-            //if (workout != null)
-            //{
-            //    SortedExercise = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
-            //}
+
+
+
 
             return Page();
+
         }
     }
 }
