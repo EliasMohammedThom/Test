@@ -28,9 +28,8 @@ namespace Infrastructure.Services
         {
             _scheduleContext.Schedules.Add(schedule);
             _scheduleContext.SaveChanges();
-
         }
-        public Schedule GetScheduleById(int scheduleId)
+        public Schedule? GetScheduleById(int? scheduleId)
             => _scheduleContext.Schedules.Where(s => s.Id == scheduleId).SingleOrDefault();
 
         public void UpdateSchedule(string oldString, string newString) 

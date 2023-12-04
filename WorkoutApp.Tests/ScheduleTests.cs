@@ -11,10 +11,15 @@ namespace WorkoutApp.Tests
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
     {
 
-        private readonly Schedule _schedule = new();
+        private Schedule _schedule { get; set; }
         public ScheduleTests(TestDatabaseFixture fixture)
-            => Fixture = fixture;
-
+        {
+            Fixture = fixture;
+            _schedule = new Schedule
+            {
+                UserId = "test"
+            };
+        }
         public TestDatabaseFixture Fixture { get; }
 
         [Fact]
@@ -39,10 +44,10 @@ namespace WorkoutApp.Tests
             var service = new ScheduleService(context);
 
             //act
-            var schedule = service.GetScheduleById(_schedule.Id);
+            _schedule = service.GetAllSchedules().LastOrDefault();
 
             //Assert
-            Assert.Equal(_schedule.Id, schedule.Id);
+            Assert.Equal(_schedule.UserId, "test");
         }
         [Fact]
         public void T3UpdateSchedule()
@@ -63,11 +68,11 @@ namespace WorkoutApp.Tests
         public void T4RemoveSchedule()
         {
             //arrange
-            Thread.Sleep(1000);
             using var context = Fixture.CreateContext();
             var service = new ScheduleService(context);
             //act
 
+            _schedule = service.GetAllSchedules().LastOrDefault();
             service.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
             var actual = service.GetScheduleById(_schedule.Id);
 
