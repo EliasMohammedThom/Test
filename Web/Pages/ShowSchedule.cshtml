@@ -21,17 +21,21 @@ else
         <div class="workout-container">
             @foreach (var workout in Model.SortedWorkoutList)
             {
-                <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description')">
-                    <strong>@workout.Title</strong> 
-                    <p>@workout.Date</p>
-                    <p>@workout.Description</p>
-                    
-                </div>
-                <form method="post">
-                    <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                    <button type="submit" class="btn btn-outline-danger">X</button>
-                </form>
-                
+                @foreach(var exercise in Model.SortedExercise)
+                {
+                    <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@exercise.Name', '@exercise.Sets', '@exercise.Repetitions')">
+                        <strong>@workout.Title</strong>
+                        <p>@workout.Date</p>
+                        <p>@workout.Description</p>
+
+                    </div>
+                    <form method="post">
+                        <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                        <button type="submit" class="btn btn-outline-danger">X</button>
+                    </form>
+
+                }
+
             }
             @*Ta ScheduleID på en workout och sätt den som NULL för att ta bort den ifrån en users schedule*@
         </div>
@@ -46,8 +50,12 @@ else
             <h2 id="popupTitle"></h2>
             <p id="popupDate"></p>
             <p id="popupDescription"></p>
+            <b>Workout Name: <a id="popupName" style="font-weight: normal"></a></b>
+            <br>
+            <b>Amount of Sets: <a id="popupSets" style="font-weight: normal"></a></b>
+            <br>
+            <b>Amount of Repetitions: </b><a id="popupRepetitions" style="font-weight: normal"></a>
         </div>
     </div>
-
 
 }
