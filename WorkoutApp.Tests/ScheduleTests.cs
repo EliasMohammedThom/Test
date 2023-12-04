@@ -1,69 +1,78 @@
 ﻿
-//namespace WorkoutApp.Tests
-//{
-//    public class Schedule
-//    {
-//        [Fact]
-//        public void CanCreateScheduleIfTrueReturnSchedule()
-//        {
-//            // Arrange
-//            var schedule = new Core.Models.Schedule();
+using Core.Models;
+using Infrastructure.Services;
 
-//            // Act
+namespace WorkoutApp.Tests
+{
+    [TestCaseOrderer(
+    ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
+    ordererAssemblyName: "WorkoutApp.Tests")] 
 
-//            //Assert
+    public class ScheduleTests : IClassFixture<TestDatabaseFixture>
+    {
 
-//            Assert.NotNull(schedule);
-//            Assert.Equal(0, schedule.Id); 
-//            Assert.Null(schedule.Title); 
-//            Assert.Null(schedule.Description); 
-//            Assert.Equal(DayOfWeek.Sunday, schedule.WeekDay); 
-//            Assert.Equal(0, schedule.Week);
-//            Assert.Equal(0, schedule.UserId);
-//        }
+        private readonly Schedule _schedule = new();
+        public ScheduleTests(TestDatabaseFixture fixture)
+            => Fixture = fixture;
 
-//        [Fact]
-//        public void CanAddContentToCreatedSchedule()
-//        {
-//            // Arrange 
-//            var sut = new Core.Models.Schedule()
-//            {
-//                Id = 1,
-//                Title = "Test",
-//                Description = "Testar",
-//                WeekDay = DayOfWeek.Monday,
-//                Week = 47,
-//                UserId = 1
-//            };
+        public TestDatabaseFixture Fixture { get; }
 
-//            // Act
+        [Fact]
+        public void T1AddSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
 
-//            // Assert
-//            Assert.NotNull(sut);
-//            Assert.Equal(1, sut.Id);
-//            Assert.Equal(sut.Title, "Test");
-//            Assert.Equal(sut.Description, "Testar");
-//            Assert.Equal(DayOfWeek.Monday, sut.WeekDay);
-//            Assert.Equal(47, sut.Week);
-//            Assert.Equal(1, sut.UserId);
+            //act
+            var service = new ScheduleService(context);
+            service.AddSchedule(_schedule);
+            var schedule = context.Schedules.SingleOrDefault(b => b.Id == _schedule.Id);
 
-//        }
+            //assert
+            Assert.Equal(_schedule.Id, schedule.Id);
+        }
+        [Fact]
+        public void T2GetSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
 
-//        //[Fact]
-//        //public void CanSaveScheduleToDataBase()
-//        //{
-//        //    // Arrange
-//        //    //var sut = new Domain.Schedule();
+            //act
+            var schedule = service.GetScheduleById(_schedule.Id);
 
-//        //    //var mockDB = new Mock<WorkoutAppDbContext>();
+            //Assert
+            Assert.Equal(_schedule.Id, schedule.Id);
+        }
+        [Fact]
+        public void T3UpdateSchedule()
+        {
+            //arrange
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
+            var testSchedule = _schedule.UserId;
 
-//        //    //var sut = new Domain.Schedule(mockDB.Object);
-//        //    // Act
+            //act
+            service.UpdateSchedule(testSchedule, "updatedSchedule");
+            var actual = service.GetScheduleByUserId("updatedSchedule");
 
-            
+            //assert
+            Assert.NotNull(actual);
+        }
+        [Fact]
+        public void T4RemoveSchedule()
+        {
+            //arrange
+            Thread.Sleep(1000);
+            using var context = Fixture.CreateContext();
+            var service = new ScheduleService(context);
+            //act
 
+            service.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
+            var actual = service.GetScheduleById(_schedule.Id);
 
-//        //    // Assert
-//        //}
-//    }
-//}
+            // assert
+            Assert.Null(actual);
+        }
+    }
+}

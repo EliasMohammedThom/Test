@@ -25,9 +25,9 @@ namespace Infrastructure.Services
             _workoutContext.SaveChanges();
         }
 
-        public Workout GetWorkout(string name)
+        public Workout GetWorkout(int? id)
         {
-            var workout = _workoutContext.Workouts.FirstOrDefault(b => b.Title == name);
+            var workout = _workoutContext.Workouts.FirstOrDefault(b => b.Id == id);
             return workout;
         }
 
@@ -57,12 +57,13 @@ namespace Infrastructure.Services
             _workoutContext.SaveChanges();
         }
 
-        public void DeleteWorkout(string name)
+        public void DeleteWorkoutByName(string name)
         {
             var workouttodelete = _workoutContext.Workouts.Where(x => x.Title == name);
             _workoutContext.Workouts.RemoveRange(workouttodelete);
             _workoutContext.SaveChanges();
         }
+
         public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout)
         {
             workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).SingleOrDefault();
