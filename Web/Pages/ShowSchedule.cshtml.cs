@@ -14,7 +14,6 @@ namespace Web.Pages
         private readonly IScheduleService _scheduleService;
         private readonly IExerciseService _exerciseService;
         private readonly UserManager<IdentityUser> _userManager;
-        private IdentityUser currentUser;
 
         #region Public_Fields
         public Workout workout { get; set; }
@@ -76,16 +75,7 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-
          
-            //int? workoutIdToRemove = _workoutService.GetAllWorkouts().Where(X => X.Id == SelectedWorkoutToRemove).SingleOrDefault().Id;
-
-            
-
-
-            //var ScheduleIdToRemove = SelectedWorkoutToRemove;
-
             _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, workout);
            
             return Redirect("/ShowSchedule");

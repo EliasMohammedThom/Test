@@ -29,7 +29,6 @@ namespace Web.Pages
         [BindProperty]
         public string SelectedExerciseName { get; set; }
 
-
         [BindProperty]
         public ExercisesAPI SelectedItemExercise { get; set; }
         [BindProperty]

@@ -1,0 +1,35 @@
+﻿@page
+@model Web.Pages.View_workoutsModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "View workouts";
+    var user = await UserManager.GetUserAsync(User);
+
+}
+
+<ul> 
+@if (SignInManager.IsSignedIn(User))
+{
+    
+    foreach (var item in Model.SortedWorkoutList)
+    {
+        <strong> @item.Title</strong>
+
+          
+        foreach(var item2 in Model.Exercises.Where(x=>x.WorkoutId == item.Id))
+        {
+            <ul> 
+            <strong>Name: @item2.Name</strong>
+            <p> Difficulty: @item2.Difficulty </p>
+            <p>Exercise type: @item2.Type </p>
+            <p>Equipment: @item2.Equipment </p>
+            <p>Instructions: @item2.Instructions </p>
+                </ul>
+        }
+       
+       
+    }
+
+}
+</ul>
