@@ -17,5 +17,7 @@ namespace Core.Models
         public DateOnly Date { get; set; }
         public string? Title { get; set; }
         public string? Description { get; set; }
+        public List<ExercisesAPI>? Exercises { get; set;}
+
     }
 }
