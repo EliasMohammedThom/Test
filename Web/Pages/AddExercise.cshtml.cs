@@ -69,8 +69,7 @@ namespace Web.Pages
         {
             ChosenWorkout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout);
             Exercises = _exerciseListService.GetAllExerciseLists();
-            SelectedExercise = Exercises.Where(X => X.Name == SelectedExerciseName).SingleOrDefault();
-            //SelectedExercise = _exerciseListService.GetExerciseListByName(SelectedExerciseName, SelectedExercise);
+            SelectedExercise= _exerciseListService.GetExerciseListByName(SelectedExerciseName);
             ExerciseToAdd = _importValues.AssignValuesToNewExercise(ExerciseToAdd, SelectedExercise, ChosenWorkout);
 
             _exerciseService.AddExercise(ExerciseToAdd);

@@ -44,7 +44,8 @@ namespace Web.Pages
             IdentityUser identityUser = await _userManager.GetUserAsync(User);
             currentUser = await _userManager.GetUserAsync(User);
 
-            WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == identityUser.Id).ToList();
+            WorkoutList = _workoutService.GetAllWorkouts().Where(X=>X.UserId == identityUser.Id&& X.ScheduleId == null).ToList();
+
 
         }
 
@@ -55,17 +56,16 @@ namespace Web.Pages
 
            Workout = _workoutService.GetWorkoutByTitle(SelectedItem);
 
-            if (Workout.ScheduleId!= null)
-            {
-                Workout.ScheduleId = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).SingleOrDefault().Id;
+          
+                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
                 Workout.Date = SelectedDate;
                 Workout.Description = Description;
 
                 _workoutService.UpdateWorkout(Workout);
-            }
-          
-          
-            return Page();
+            
+
+
+            return Redirect("/EditSchedule");
 
 
         }

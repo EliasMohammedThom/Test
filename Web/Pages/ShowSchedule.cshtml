@@ -7,38 +7,59 @@
     var user = await UserManager.GetUserAsync(User);
 
 }
-@if (Model.CurrentUserScheduleId is null)
+@if (Model.CurrentUserScheduleId == null)
 {
     <p>You need to create a workout and a schedule before coming here! please press <a class="btn btn-primary" asp-page="/Addworkout">Here</a> to continiue</p>
 }
 else
 {
 
-    @foreach (var schedule in Model.SortedScheduleList)
-    {
+ 
+    
         <strong class="CenterText">Current workouts in your schedule:</strong>
 
-        <div class="workout-container">
-            @foreach (var workout in Model.SortedWorkoutList)
-            {
-                @foreach(var exercise in Model.SortedExercise)
+
+   
+    @foreach (var workout in Model.SortedWorkoutList)
+    {
+        <div class="workout-box">
+            <strong>@workout.Title</strong>
+            <p>@workout.Date</p>
+            <p>@workout.Description</p>
+
+            <ul class="exercise-list">
+                @foreach (var exercise in workout.Exercises)
                 {
-                    <div class="workout-box" onclick="showPopup('@workout.Title', '@workout.Date', '@workout.Description', '@exercise.Name', '@exercise.Sets', '@exercise.Repetitions')">
-                        <strong>@workout.Title</strong>
-                        <p>@workout.Date</p>
-                        <p>@workout.Description</p>
-
-                    </div>
-                    <form method="post">
-                        <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                        <button type="submit" class="btn btn-outline-danger">X</button>                     
-                    </form>
+                    <li class="exercise-item">
+                        @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                    </li>
                 }
+            </ul>
 
-            }
-            
+            <form method="post">
+                <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                <button type="submit" class="btn btn-outline-danger">X</button>
+            </form>
         </div>
     }
+
+
+    <style>
+        .workout-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .exercise-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .exercise-item {
+            margin-bottom: 5px;
+        }
+    </style>
 
 
     <div id="workoutPopup" class="popup">
@@ -47,7 +68,7 @@ else
             <h2 id="popupTitle"></h2>
             <p id="popupDate"></p>
             <p id="popupDescription"></p>
-            <b>Workout Name: <a id="popupName" style="font-weight: normal"></a></b>
+            <b>Exercise name: <a id="popupName" style="font-weight: normal"></a></b>
             <br>
             <b>Amount of Sets: <a id="popupSets" style="font-weight: normal"></a></b>
             <br>

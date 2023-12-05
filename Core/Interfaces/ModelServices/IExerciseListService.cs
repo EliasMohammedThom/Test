@@ -6,6 +6,6 @@ namespace Core.Interfaces.ModelServices
     {
         List<ExerciseList> GetAllExerciseLists();
 
-        ExerciseList GetExerciseListByName(string exerciseName, ExerciseList exerciseList);
+        ExerciseList GetExerciseListByName(string exerciseName);
     }
 }

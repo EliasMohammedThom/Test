@@ -20,11 +20,9 @@ namespace Infrastructure.Services
         public List<ExerciseList> GetAllExerciseLists()
             => _ExerciseLists.ExerciseLists.OrderBy(s => s.Name).ToList();
 
-        public ExerciseList GetExerciseListByName(string exerciseName, ExerciseList exerciseList)
-        {
+        public ExerciseList GetExerciseListByName(string exerciseName) 
+            => GetAllExerciseLists().Where(x=>x.Name == exerciseName).SingleOrDefault();
 
-            GetAllExerciseLists().Where(x=>x.Name == exerciseName).SingleOrDefault();
-            return exerciseList ;
-        }
+        
     }
 }
