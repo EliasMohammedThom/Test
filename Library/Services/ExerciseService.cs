@@ -18,12 +18,14 @@ namespace Infrastructure.Services
             _ExercisesAPIContext = ExercisesAPIContext;
         }
 
+        //Testas ej men används i tester
         public List<ExercisesAPI> GetAllExercisesAPIs()
             => _ExercisesAPIContext.ExercisesAPIs.OrderBy(s => s.Name).ToList();
 
-
+        //Testas ej men används i tester
         public ExercisesAPI GetExerciseById(int id)
             => _ExercisesAPIContext.ExercisesAPIs.SingleOrDefault(s => s.Id == id);
+
 
         public void AddExercise(ExercisesAPI ExercisesAPI)
         {
