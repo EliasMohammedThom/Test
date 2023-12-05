@@ -18,11 +18,10 @@ namespace Infrastructure.Services
             _scheduleContext = scheduleContext;
         }
 
+        //Testas ej, men används i tester
         public List<Schedule> GetAllSchedules()
             => _scheduleContext.Schedules.OrderBy(s => s.UserId).ToList();
 
-        public List<Workout> GetWorkoutById()
-            => _scheduleContext.Workouts.OrderBy(s => s.Id).ToList();
 
         public void AddSchedule(Schedule schedule)
         {
@@ -50,6 +49,8 @@ namespace Infrastructure.Services
             _scheduleContext.Remove(schedule);
             _scheduleContext.SaveChanges();
         }
+
+        //Testas ej, men används i tester
         public Schedule GetScheduleByUserId(string userId)
         => _scheduleContext.Schedules.Where(s => s.UserId == userId).SingleOrDefault();
     }

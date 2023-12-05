@@ -10,7 +10,6 @@ namespace Core.Interfaces.ModelServices
     public interface IScheduleService
     {
         public List<Schedule> GetAllSchedules();
-        public List<Workout> GetWorkoutById();
         public void AddSchedule(Schedule schedule);
         public Schedule? GetScheduleById(int? scheduleId);
         public void UpdateSchedule(string oldString, string newString);
