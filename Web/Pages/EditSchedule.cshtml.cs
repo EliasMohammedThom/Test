@@ -64,7 +64,6 @@ namespace Web.Pages
                 _workoutService.UpdateWorkout(Workout);
             
 
-
             return Redirect("/EditSchedule");
 
 
