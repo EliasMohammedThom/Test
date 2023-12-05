@@ -18,11 +18,14 @@ namespace Infrastructure.Services
             _ExercisesAPIContext = ExercisesAPIContext;
         }
 
+        //Testas ej men används i tester
         public List<ExercisesAPI> GetAllExercisesAPIs()
             => _ExercisesAPIContext.ExercisesAPIs.OrderBy(s => s.Name).ToList();
 
+        //Testas ej men används i tester
         public ExercisesAPI GetExerciseById(int id)
             => _ExercisesAPIContext.ExercisesAPIs.SingleOrDefault(s => s.Id == id);
+
 
         public void AddExercise(ExercisesAPI ExercisesAPI)
         {
@@ -30,18 +33,17 @@ namespace Infrastructure.Services
             _ExercisesAPIContext.SaveChanges();
 
         }
-        public void UpdateExercisesAPI(ExercisesAPI ExercisesAPI)
-        {
-            _ExercisesAPIContext.Update(ExercisesAPI);
-            _ExercisesAPIContext.SaveChanges();
-        }
+
         public void RemoveExerciseById(int id, ExercisesAPI exercise)
         {
             exercise = GetExerciseById(id);
 
-
             _ExercisesAPIContext.Remove(exercise);
             _ExercisesAPIContext?.SaveChanges();
         }
+
+        public List<ExercisesAPI> GetExercisesByWorkoutId(int? workoutid)
+            => _ExercisesAPIContext.ExercisesAPIs.Where(s => s.WorkoutId == workoutid).ToList();
+        
     }
 }

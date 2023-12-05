@@ -24,9 +24,9 @@ namespace Web.Pages
         public async Task<IActionResult> OnPost() 
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            var singledSchedule = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).ToList();
+            var singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            if (singledSchedule.Count == 0)             
+            if (singledSchedule != null)             
             {
                 Schedule schedule = new Schedule { UserId = identityUser.Id };
                 _scheduleService.AddSchedule(schedule);

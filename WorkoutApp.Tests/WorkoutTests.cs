@@ -103,7 +103,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         _workout.Title = "WorkoutToBeUpdated";
         var service = new WorkoutService(context);
         service.AddWorkout(_workout);
-        var workout = context.Workouts.SingleOrDefault(b => b.Title == "WorkoutToBeUpdated");
+        var workout = context.Workouts.First(b => b.Title == "WorkoutToBeUpdated");
 
         //assert
         Assert.Equal("WorkoutToBeUpdated", workout.Title);

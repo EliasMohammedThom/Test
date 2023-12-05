@@ -62,7 +62,8 @@ namespace Web.Pages
 
             foreach(var workout in SortedWorkoutList)
             {
-                workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
+                //workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id);
+                workout.Exercises = _exerciseService.GetExercisesByWorkoutId(workout.Id);
             }
                 
 

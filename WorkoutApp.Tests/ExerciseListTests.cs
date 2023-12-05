@@ -29,5 +29,20 @@ namespace WorkoutApp.Tests
             //Assert
             Assert.Equal(550, exerciseList.Count);
         }
+        [Fact]
+        public void GetExerciseListByNameShouldReturnCorrectExerciseList()
+        {
+            // arrange
+            using var context = Fixture.CreateContext();
+            var service = new ExerciseListService(context);
+            var exerciseNameToFind = "Cocoons";
+
+            // act
+            var result = service.GetExerciseListByName(exerciseNameToFind);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.Equal(exerciseNameToFind, result.Name);
+        }
     }
 }
