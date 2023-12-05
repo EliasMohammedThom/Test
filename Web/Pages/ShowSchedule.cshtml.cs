@@ -72,7 +72,7 @@ namespace Web.Pages
         public async Task<IActionResult> OnPostAsync()
         {
          
-            _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, Workouts);
+            _workoutService.UpdateWorkoutScheduleIDToNull(SelectedWorkoutToRemove, Workouts);
            
             return Redirect("/ShowSchedule");
         }

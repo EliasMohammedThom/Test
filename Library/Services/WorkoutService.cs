@@ -34,20 +34,20 @@ namespace Infrastructure.Services
             _workoutContext.SaveChanges();
         }
 
-        public void DeleteEmptyWorkouts()
+        public void DeleteEmptyWorkout()
 
         {
-            var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null);
+            var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null).First();
 
             if (emptyWorkout != null)
             {
-                _workoutContext.Workouts.RemoveRange(emptyWorkout);
+                _workoutContext.Workouts.Remove(emptyWorkout);
                 _workoutContext.SaveChanges();
             }
 
         }
 
-        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout? workout)
+        public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout? workout)
         {
             workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).SingleOrDefault();
 

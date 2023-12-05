@@ -10,7 +10,7 @@ namespace Core.Interfaces.ModelServices
         public void UpdateWorkout(Workout workout);
         //public Workout GetWorkoutByUserId(string userId);
         public Workout GetWorkoutByTitle(string title);
-        public void DeleteWorkoutByWorkoutId(int? workoutId, Workout workout);
+        public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout workout);
         public List<Workout>? GetWorkoutsByUserId(string userId);
         List<Workout> GetWorkoutsByTitle(string? title);
         List<Workout> GetWorkoutsByScheduleId(int? id);
