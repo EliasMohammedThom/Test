@@ -10,27 +10,33 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-     
-
         @foreach (var item in Model.SortedWorkoutList)
         {
             <div class="workout-box">
-                <strong>@item.Title</strong>
-
+                <strong>Workout name: @item.Title</strong>
+            @if(Model.Exercises.Any(x => x.WorkoutId == item.Id))
+            {
                 @foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
                 {
                     <ul class="exercise-list">
-                        <strong>Name: @item2.Name</strong>
+                        <strong>Exercise name: @item2.Name</strong>
                         <li class="exercise-item">Difficulty: @item2.Difficulty</li>
                         <li class="exercise-item">Exercise type: @item2.Type</li>
                         <li class="exercise-item">Equipment: @item2.Equipment</li>
                         <li class="exercise-item">Instructions: @item2.Instructions</li>
+                        <li class="exercise-item">Sets: @item2.Sets</li>
+                        <li class="exercise-item">Reps: @item2.Repetitions</li>
                     </ul>
                 }
-            </div>
+            }
+            else
+            {
+                <p class="danger alert-danger">No exercises yet!</p>
+                <a asp-page="/AddExercise" asp-route-workoutId="@item.Id" class="btn btn-primary">Add exercise</a>
+            }
+        </div>
         }
 }
-
 
 <style>
     .workout-box {
