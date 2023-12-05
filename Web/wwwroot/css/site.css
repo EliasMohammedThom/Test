@@ -31,15 +31,15 @@ body {
 .workout-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    justify-content: space-around;
 }
-.workout-box{
-    border: 1px solid ccc#;
+.workout-box {
+    width: 300px; /* Set a fixed width for each box */
+    background-color: #ffffff;
     padding: 10px;
-    width: 200px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    margin: 5px;
+    margin: 10px;
+    border: 1px solid #dddddd;
+    box-sizing: border-box;
 }
 
 .popup {
@@ -69,4 +69,99 @@ body {
     right: 10px;
     font-size: 20px;
     cursor: pointer;
+}
+
+
+.custom-btn {
+    margin-right: 10px;
+    border-radius: 20px; /* Adjust border-radius for rounded corners */
+}
+
+.custom-btn-primary {
+    background-color: #007bff; /* Primary color - adjust as needed */
+    color: #fff; /* Text color for contrast */
+}
+
+.custom-btn-danger {
+    background-color: #dc3545; /* Danger color for confirmation button */
+    color: #fff;
+}
+
+
+.welcome-container {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.0); /* White background with 50% transparency */
+}
+
+.welcome-title {
+    font-size: 2.5em;
+    font-family: 'Pacifico', cursive;
+    color: white;
+}
+
+.welcome-message {
+    font-size: 1.2em;
+    font-family: 'Roboto', sans-serif;
+    color: white;
+}
+
+/*body {
+    background-image: url('/Images/Arnold.jpg');*/ /* Use a relative path to your image file */
+    /*background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}*/
+body {
+    background-image: url('/Images/Arnold.jpg'); /* Use a relative path to your image file */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+.content {
+    min-height: 100vh; /* Set a minimum height for the content area to cover at least the entire viewport height */
+    padding-bottom: 100px; /* Adjust the padding to accommodate the height of your footer */
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100px; /* Set the height of your footer */
+    background-color: #f8f9fa; /* Add a background color to your footer */
+    text-align: center;
+    line-height: 100px; /* Center content vertically in the footer */
+}
+
+
+.workout-box {
+    background-color: #ffffff; /* Light white background color */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd; /* Optional: Add a border for separation */
+    border-radius: 10px;
+}
+
+    .workout-box strong {
+        font-size: 1.2em;
+        color: #333333;
+    }
+
+    .workout-box p {
+        margin-bottom: 8px;
+    }
+
+.exercise-list {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 5px;
+}
+
+.exercise-item {
+    margin-bottom: 5px;
 }
