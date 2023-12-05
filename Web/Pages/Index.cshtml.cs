@@ -11,28 +11,31 @@ namespace Web.Pages
         private readonly IScheduleService _scheduleService;
         private readonly UserManager<IdentityUser> _userManager;
 
+        [BindProperty] 
+        public Schedule Schedule { get; set; }
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _scheduleService = scheduleService;
             _userManager = userManager;
         }
-        public void OnGet()
+        public async Task <IActionResult> OnGetAsync()
         {
-
-          //Not yet implemented
+          
+            //Not yet implemented
+            return Page();
         }
         public async Task<IActionResult> OnPost() 
         {
+
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
             var singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            if (singledSchedule != null)             
+            if (singledSchedule == null)
             {
-                Schedule schedule = new Schedule { UserId = identityUser.Id };
+                Schedule schedule = new Schedule();
+                schedule.UserId = Schedule.UserId;
                 _scheduleService.AddSchedule(schedule);
             }
-          
-
 
             return Redirect("/EditSchedule");
         }
