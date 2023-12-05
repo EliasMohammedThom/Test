@@ -16,6 +16,10 @@
 
 @if(SignInManager.IsSignedIn(User))
 {
+
+
+    <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
+
     <form method="post">
         <input type="hidden" name="userId" value="@user.Id" />
         <button type="submit" class="btn btn-primary">Add workouts to your schedule</button>
@@ -24,7 +28,7 @@
     </form>
   
    
-    <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
+ 
     <a class="btn btn-primary" asp-page="/ShowSchedule">My Schedule</a>
     <a class="btn btn-primary" asp-page="/AddExercise">Add exercise to workout</a>
     <a class="btn btn-primary" asp-page="/RemoveExercise">Remove exercise</a>
