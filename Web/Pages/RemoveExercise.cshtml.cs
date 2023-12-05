@@ -50,8 +50,8 @@ namespace Web.Pages
             AllWorkoutsByCurrentUser = _workoutService.GetAllWorkouts().Where(X => X.UserId == identityUser.Id).ToList();
             foreach (var item in AllWorkoutsByCurrentUser)
             {
-                item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
-                foreach (var exercise in item.Exercises) ;
+                //item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
+                item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
             }
 
             return Page();

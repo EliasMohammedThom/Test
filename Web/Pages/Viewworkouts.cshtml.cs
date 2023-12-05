@@ -26,8 +26,8 @@ namespace Web.Pages
         public async Task<IActionResult> OnGet()
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.UserId == identityUser.Id).ToList();
-            Exercises = _exerciseService.GetAllExercisesAPIs().ToList();
+            SortedWorkoutList = _workoutService.GetWorkoutsByUserId(identityUser.Id);
+            Exercises = _exerciseService.GetAllExercisesAPIs();
 
             return Page();
         }
