@@ -10,7 +10,7 @@
 }
 
 
-<h1>Edit Schedule</h1>
+<h1 style="color: white;">Edit Schedule</h1>
 
 @if (SignInManager.IsSignedIn(User) && Model.WorkoutList.Count >0 )
 {
@@ -24,7 +24,7 @@
 
 
         <div class="form-group">
-        <label>Select a workout to add to your schedule:</label>
+            <label style="color: white;">Select a workout to add to your schedule:</label>
         <br />
         <select asp-for="SelectedItem" name="SelectedItem">
             @foreach (var item in Model.WorkoutList)

@@ -8,14 +8,14 @@
     var user = await UserManager.GetUserAsync(User);
 } 
 
-<h1>New workout</h1>
+<h1 style="color: white;">New workout</h1>
 
 <div class="row">
     <div class="col-md-4">
         <form method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <p>Workout Name</p>
+                <p style="color: white;">Workout Name</p>
                 <input asp-for="workout.Title" class="form-control" placeholder="Enter workoutname" />
                 <p class="danger alert-danger">@Model.ReplyToUser</p>
                 <button type="submit" class="btn btn-primary">Create</button>

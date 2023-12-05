@@ -13,35 +13,33 @@
 }
 else
 {
+    <strong class="CenterText" style="font-size: 2.5em; font-family: 'Pacifico', cursive; color: white;">Current workouts in your schedule:</strong>
 
- 
-    
-        <strong class="CenterText">Current workouts in your schedule:</strong>
+    <div class="workout-container">
+        @foreach (var workout in Model.SortedWorkoutList)
+        {
+            <div class="workout-box">
+                <strong>@workout.Title</strong>
+                <p>@workout.Date</p>
+                <p>@workout.Description</p>
 
+                <ul class="exercise-list">
+                    @foreach (var exercise in workout.Exercises)
+                    {
+                        <li class="exercise-item">
+                            @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                        </li>
+                    }
+                </ul>
 
+                <form method="post">
+                    <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                    <button type="submit" class="btn btn-outline-danger">X</button>
+                </form>
+            </div>
+        }
+    </div>
    
-    @foreach (var workout in Model.SortedWorkoutList)
-    {
-        <div class="workout-box">
-            <strong>@workout.Title</strong>
-            <p>@workout.Date</p>
-            <p>@workout.Description</p>
-
-            <ul class="exercise-list">
-                @foreach (var exercise in workout.Exercises)
-                {
-                    <li class="exercise-item">
-                        @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
-                    </li>
-                }
-            </ul>
-
-            <form method="post">
-                <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                <button type="submit" class="btn btn-outline-danger">X</button>
-            </form>
-        </div>
-    }
 
 
     <style>
