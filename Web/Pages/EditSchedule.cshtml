@@ -12,7 +12,7 @@
 
 <h1>Edit Schedule</h1>
 
-@if (SignInManager.IsSignedIn(User))
+@if (SignInManager.IsSignedIn(User) && Model.WorkoutList.Count >0 )
 {
 
 
@@ -42,15 +42,26 @@
        
             <br>
         <button type="submit" value="save" class="btn btn-primary">Create</button>
-        </form>
-
-        
+    </form>
 
 
-      
 
 
-   
 
 
+
+
+
+
+}
+
+else
+{
+
+    
+
+        <strong> You need to create a workout before adding them to your schedule, click on the button to create a workout </strong>
+
+        <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
+    
 }
