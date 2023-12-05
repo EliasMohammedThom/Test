@@ -8,21 +8,34 @@
     var user = await UserManager.GetUserAsync(User);
 }
 
-@foreach(var item in Model.AllWorkoutsByCurrentUser)
+    @foreach(var item in Model.AllWorkoutsByCurrentUser)
 {
+    <div class="exercise-box">
     <p>Workoutname: @item.Title</p>
-  @*   <p>@item.Date</p>
-    <p>@item.Description</p>
-   
-    <p>@item.UserId</p>
-    <p>@item.Id</p> *@
 
-    foreach(var exercise in item.Exercises)
+    @foreach(var exercise in item.Exercises)
     {
         <form method="post">
-            <p>Exercise name: @exercise.Name <button type="submit" class="btn btn-danger" name="SelectedExerciseToRemove" value="@exercise.Id">Remove</button></p>
+            <p>@exercise.Name <button type="submit" class="btn btn-danger" name="SelectedExerciseToRemove" value="@exercise.Id">Remove</button></p>
         </form>
+    
     }
-    <p>---------------------------</p>
- 
+    </div>
+    
 }
+<style>
+    .exercise-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 15px;
+    }
+
+    .exercise-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .exercise-item {
+        margin-bottom: 5px;
+    }
+</style>

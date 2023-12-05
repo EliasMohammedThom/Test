@@ -8,28 +8,44 @@
 
 }
 
-<ul> 
 @if (SignInManager.IsSignedIn(User))
 {
-    
-    foreach (var item in Model.SortedWorkoutList)
-    {
-        <strong> @item.Title</strong>
+     
 
-          
-        foreach(var item2 in Model.Exercises.Where(x=>x.WorkoutId == item.Id))
+        @foreach (var item in Model.SortedWorkoutList)
         {
-            <ul> 
-            <strong>Name: @item2.Name</strong>
-            <p> Difficulty: @item2.Difficulty </p>
-            <p>Exercise type: @item2.Type </p>
-            <p>Equipment: @item2.Equipment </p>
-            <p>Instructions: @item2.Instructions </p>
-                </ul>
+            <div class="workout-box">
+                <strong>@item.Title</strong>
+
+                @foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
+                {
+                    <ul class="exercise-list">
+                        <strong>Name: @item2.Name</strong>
+                        <li class="exercise-item">Difficulty: @item2.Difficulty</li>
+                        <li class="exercise-item">Exercise type: @item2.Type</li>
+                        <li class="exercise-item">Equipment: @item2.Equipment</li>
+                        <li class="exercise-item">Instructions: @item2.Instructions</li>
+                    </ul>
+                }
+            </div>
         }
-       
-       
+}
+
+
+<style>
+    .workout-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 15px;
+        width : 100%
     }
 
-}
-</ul>
+    .exercise-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .exercise-item {
+        margin-bottom: 5px;
+    }
+</style>

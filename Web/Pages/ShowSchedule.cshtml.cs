@@ -15,7 +15,7 @@ namespace Web.Pages
         private readonly UserManager<IdentityUser> _userManager;
 
         #region Public_Fields
-        public Workout workout { get; set; }
+        public Workout Workouts { get; set; }
 
         [BindProperty]
         public int SelectedWorkoutToRemove { get; set; }
@@ -55,27 +55,23 @@ namespace Web.Pages
 
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
-            SortedScheduleList = _scheduleService.GetAllSchedules().Where(X => X.UserId == identityUser.Id).ToList();
+            CurrentUserScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
 
-            CurrentUserScheduleId = _scheduleService.GetAllSchedules()?.SingleOrDefault(x => x.UserId == identityUser.Id)?.Id;
+            //SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.ScheduleId == CurrentUserScheduleId).OrderBy(X => X.Date).ToList();
+            SortedWorkoutList = _workoutService.GetWorkoutsByScheduleId(CurrentUserScheduleId);
 
-            SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.ScheduleId == CurrentUserScheduleId).OrderBy(X => X.Date).ToList();
-
-
-            //Find current users exercises thru its workoutid and display it
-            workout = SortedWorkoutList.FirstOrDefault();
-            if (workout != null) 
+            foreach(var workout in SortedWorkoutList)
             {
-                SortedExercise = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
+                workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id).ToList();
             }
-          
+                
 
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
          
-            _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, workout);
+            _workoutService.DeleteWorkoutByWorkoutId(SelectedWorkoutToRemove, Workouts);
            
             return Redirect("/ShowSchedule");
         }

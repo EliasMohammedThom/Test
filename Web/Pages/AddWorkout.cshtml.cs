@@ -28,19 +28,17 @@ namespace Web.Pages
         public async Task<IActionResult> OnPostAsync()
         {
 
-            var listofworkouts = _workoutService.GetAllWorkouts().Where(X => X.Title == workout.Title).ToList();
+            var listofworkouts = _workoutService.GetWorkoutsByTitle(workout.Title);
 
             if(listofworkouts.Count >= 1 ) 
             {
-                ReplyToUser = "This workout name already exists, please choose something else";
+                ReplyToUser = "This Workouts name already exists, please choose something else";
             }
             else
             {
                 _workoutService.AddWorkout(workout);
             }
             
-
-
             
             return Page();
         }

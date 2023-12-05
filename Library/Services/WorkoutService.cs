@@ -20,12 +20,12 @@ namespace Infrastructure.Services
         }
         public void AddWorkout(Workout workout)
         {
-             if (workout != null)
+            if (workout != null)
             {
                 _workoutContext.Add(workout);
                 _workoutContext.SaveChanges();
             }
-            
+
         }
 
         public void UpdateWorkout(Workout workout)
@@ -39,12 +39,12 @@ namespace Infrastructure.Services
         {
             var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null);
 
-            if (emptyWorkout != null) 
+            if (emptyWorkout != null)
             {
                 _workoutContext.Workouts.RemoveRange(emptyWorkout);
                 _workoutContext.SaveChanges();
             }
-           
+
         }
 
         public void DeleteWorkoutByWorkoutId(int? workoutId, Workout? workout)
@@ -65,11 +65,12 @@ namespace Infrastructure.Services
 
         public Workout? GetWorkoutByTitle(string title)
         => _workoutContext.Workouts.Where(s => s.Title == title).SingleOrDefault();
-        public List< Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
+        public List<Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
 
+        public List<Workout> GetWorkoutsByTitle(string? title) => _workoutContext.Workouts.Where(X => X.Title == title).ToList();
 
+        public List<Workout> GetWorkoutsByScheduleId(int? scheduleId)
+            => _workoutContext.Workouts.Where(X => X.ScheduleId == scheduleId).OrderBy(X=>X.Date).ToList();
 
-
-       
     }
 }

@@ -8,7 +8,6 @@ namespace Web.Pages
 {
     public class View_workoutsModel : PageModel
     {
-
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseService _exerciseService;
         private readonly UserManager<IdentityUser> _userManager;
@@ -32,11 +31,6 @@ namespace Web.Pages
 
             return Page();
         }
-        public async Task<IActionResult> OnpostAsync()
-        {
-
-
-            return Page();
-        }
+     
     }
 }
