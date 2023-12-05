@@ -64,7 +64,7 @@ namespace Infrastructure.Services
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
         public Workout? GetWorkoutByTitle(string title)
-        => _workoutContext.Workouts.Where(s => s.Title == title).SingleOrDefault();
+        => _workoutContext.Workouts.Where(s => s.Title == title).First();
         public List<Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
 
         public List<Workout> GetWorkoutsByTitle(string? title) => _workoutContext.Workouts.Where(X => X.Title == title).ToList();

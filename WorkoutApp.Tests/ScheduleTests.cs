@@ -1,5 +1,4 @@
-﻿
-using Core.Models;
+﻿using Core.Models;
 using Infrastructure.Services;
 
 namespace WorkoutApp.Tests
@@ -31,7 +30,7 @@ namespace WorkoutApp.Tests
             //act
             var service = new ScheduleService(context);
             service.AddSchedule(_schedule);
-            var schedule = context.Schedules.SingleOrDefault(b => b.Id == _schedule.Id);
+            var schedule = context.Schedules.First(b => b.Id == _schedule.Id);
 
             //assert
             Assert.Equal(_schedule.Id, schedule.Id);
