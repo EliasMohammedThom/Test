@@ -150,7 +150,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         var workout = service.GetWorkoutByTitle("UpdatedWorkout");
 
         //act
-        service.DeleteWorkoutByWorkoutId(workout.Id, workout);
+        service.UpdateWorkoutScheduleIDToNull(workout.Id, workout);
         var actual = service.GetWorkoutByTitle("UpdatedWorkout");
 
         // assert
@@ -158,14 +158,14 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T5DeleteEmptyData()
+    public void T5DeleteTestData()
     {
         //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
 
         //act
-        service.DeleteEmptyWorkouts();
+        service.DeleteEmptyWorkout();
         var actual = service.GetAllWorkouts().Where(X => X.UserId == null);
 
         //Assert
