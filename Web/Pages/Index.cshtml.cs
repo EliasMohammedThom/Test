@@ -26,7 +26,6 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnPost() 
         {
-
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
             var singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
@@ -36,7 +35,6 @@ namespace Web.Pages
                 schedule.UserId = Schedule.UserId;
                 _scheduleService.AddSchedule(schedule);
             }
-
             return Redirect("/EditSchedule");
         }
     }

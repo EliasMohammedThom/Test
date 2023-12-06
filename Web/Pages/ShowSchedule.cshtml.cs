@@ -52,7 +52,6 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnGet()
         {
-
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
             CurrentUserScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
@@ -65,13 +64,10 @@ namespace Web.Pages
                 //workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id);
                 workout.Exercises = _exerciseService.GetExercisesByWorkoutId(workout.Id);
             }
-                
-
             return Page();
         }
         public async Task<IActionResult> OnPostAsync()
         {
-         
             _workoutService.UpdateWorkoutScheduleIDToNull(SelectedWorkoutToRemove, Workouts);
            
             return Redirect("/ShowSchedule");
