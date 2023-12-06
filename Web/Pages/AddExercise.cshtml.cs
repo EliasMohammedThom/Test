@@ -22,7 +22,6 @@ namespace Web.Pages
         private readonly IImportValues _importValues;
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser? currentUser;
-
         
         [BindProperty]
         public List<ExerciseList>? Exercises { get; set; }
@@ -77,7 +76,5 @@ namespace Web.Pages
 
             return Redirect("/AddExercise");
         }
-
-     
     }
 }

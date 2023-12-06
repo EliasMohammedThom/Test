@@ -45,8 +45,6 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         Assert.NotNull(exercise);
     }
 
-
-
     [Fact]
     public void T3RemoveExercisFromDB()
     {
@@ -62,12 +60,9 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         testexercise = service.GetExerciseById(testexercise.Id);
 
         Assert.Null(testexercise);
-
-
     }
 
     [Fact]
-
     public void T4GetExercisesbyworkoutID()
     {
         //arrange
@@ -78,7 +73,5 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         var testdata= service.GetExercisesByWorkoutId(159);
 
         Assert.NotNull(testdata);
-
-
     }
 }

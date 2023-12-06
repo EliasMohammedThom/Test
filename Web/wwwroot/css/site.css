@@ -165,3 +165,7 @@ body {
 .exercise-item {
     margin-bottom: 5px;
 }
+.footer {
+    text-align: center; 
+    background-color: #2d2e2d;
+}

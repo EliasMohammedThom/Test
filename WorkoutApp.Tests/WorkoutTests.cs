@@ -20,6 +20,8 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
     public TestDatabaseFixture Fixture { get; }
 
+
+    //THIS CODE ADDS ALL THE EXERCISES FROM THE API TO THE DATABASE
     //[Fact]
     //public async Task T0AddAllWorkoutsToList()
     //{

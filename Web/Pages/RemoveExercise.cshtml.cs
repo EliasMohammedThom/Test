@@ -36,10 +36,6 @@ namespace Web.Pages
         [BindProperty]
 
         public ExercisesAPI Randomtest {  get; set; }
-
-
-
-
         #endregion
 
 
@@ -53,9 +49,7 @@ namespace Web.Pages
                 //item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
                 item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
             }
-
             return Page();
-
         }
         public async Task<IActionResult> OnPostAsync()
         {
