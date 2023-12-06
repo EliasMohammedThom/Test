@@ -9,7 +9,6 @@ namespace WorkoutApp.Tests
 
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
     {
-
         private Schedule _schedule { get; set; }
         public ScheduleTests(TestDatabaseFixture fixture)
         {
