@@ -22,7 +22,5 @@ namespace Infrastructure.Services
 
         public ExerciseList GetExerciseListByName(string exerciseName) 
             => GetAllExerciseLists().Where(x=>x.Name == exerciseName).SingleOrDefault();
-
-        
     }
 }

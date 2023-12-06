@@ -14,7 +14,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public TestDatabaseFixture Fixture { get; }
 
     [Fact]
-    public void T1AddExercise()
+    public void T1AddExerciseShouldReturnAddedExerciseName()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -31,7 +31,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T2GetExercise()
+    public void T2GetExerciseByIdShouldReturnNotNullForValidId()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -46,7 +46,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T3RemoveExercisFromDB()
+    public void T3RemoveExerciseByIdFromDatabaseShouldReturnNullAfterRemoval()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -63,7 +63,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T4GetExercisesbyworkoutID()
+    public void T4GetExercisesByWorkoutIdShouldReturnNotNullAfterRetrievingExistingExerciseInDataBase()
     {
         //arrange
         using var context = Fixture.CreateContext();

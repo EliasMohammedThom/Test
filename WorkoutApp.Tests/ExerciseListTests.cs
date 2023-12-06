@@ -17,7 +17,7 @@ namespace WorkoutApp.Tests
         public TestDatabaseFixture Fixture { get; }
 
         [Fact]
-        public void ExerciseListShouldReturnExercises()
+        public void GetAllExerciseListsShouldReturnCorrectAmountOfExercises()
         {
             //arrange
             using var context = Fixture.CreateContext();
@@ -30,7 +30,7 @@ namespace WorkoutApp.Tests
             Assert.Equal(550, exerciseList.Count);
         }
         [Fact]
-        public void GetExerciseListByNameShouldReturnCorrectExerciseList()
+        public void GetExerciseListByNameShouldReturnCorrectExercise()
         {
             // arrange
             using var context = Fixture.CreateContext();

@@ -36,7 +36,6 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "stretching",
     //            "strongman"
     //        };
-
     //   List<string> MuscleCategories = new List<string> {
     //            "abdominals",
     //            "abductors",
@@ -55,48 +54,37 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "traps",
     //            "triceps"
     //        };
-
     //   List<string> DifficultyCategory = new List<string>
     //        {
     //            "beginner",
     //            "intermediate",
     //            "expert"
     //        };
-
     //    List<ExerciseList>? exerciseList = new List<ExerciseList>();
-
     //    foreach (var type in ExerciseTypes)
     //    {
     //        foreach(var muscle in MuscleCategories)
-            
     //        {
     //            foreach(var difficulty in DifficultyCategory) 
     //            {
-
     //                var response = APICalls.GetAPICall(type, muscle, difficulty);
     //                string result = await response.Result.Content.ReadAsStringAsync();
-
     //                exerciseList = JsonConvert.DeserializeObject<List<ExerciseList>>(result);
-
     //                foreach(var exercise in exerciseList)
     //                {
     //                   if (exercise != null)
     //                    {
-
-
     //                        context.ExerciseLists.Add(exercise);
-
     //                        context.SaveChangesAsync();
     //                    }
     //                }
-                    
     //            }
     //        }
     //    }
     //}
 
-        [Fact]
-    public void T1AddWorkout()
+    [Fact]
+    public void T1AddWorkoutShouldReturnAddedWorkoutTitle()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -112,7 +100,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T2GetWorkout()
+    public void T2GetWorkoutByTitleShouldReturnWorkoutTitle()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -126,7 +114,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T3UpdateWorkout()
+    public void T3UpdateWorkoutShouldReturnUpdatedWorkoutTitle()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -144,7 +132,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T4RemoveWorkoutFromSchedule()
+    public void T4UpdateWorkoutScheduleIDToNullShouldReturnNullAfterRemoval()
     {
         //arrange
         using var context = Fixture.CreateContext();
@@ -160,24 +148,20 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T5DeleteTestData()
+    public void T5DeleteWorkoutByIdShouldRemoveWorkoutFromDatabase()
     {
         //arrange
         using var context = Fixture.CreateContext();
         var service = new WorkoutService(context);
 
         //act
-        var actual = service.GetAllWorkouts().Where(X=>X.Title == "UpdatedWorkout").First();
-
-        int? actualid = actual.Id;
+        var actual = service.GetAllWorkouts().Where(x => x.Title == "UpdatedWorkout").First();
+        int? actualId = actual.Id;
         context.Remove(actual);
-
         context.SaveChanges();
-
-        //actual = service.GetAllWorkouts().Where(X=>X.Id == actualid).First();
-        var updatedactual = service.GetWorkoutByID(actualid);
+        var updatedActual = service.GetWorkoutByID(actualId);
 
         //Assert
-        Assert.Null(updatedactual);
+        Assert.Null(updatedActual);
     }
 }
