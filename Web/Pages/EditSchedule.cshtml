@@ -17,14 +17,14 @@
 
 
     <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
+        <div class="form-group" style="color: whitesmoke">
             <label for="datePicker">Select Date:</label>
             <input asp-for="SelectedDate" type="date" id="datePicker" class="form-control" />
         </div>
 
 
         <div class="form-group">
-            <label style="color: white;">Select a workout to add to your schedule:</label>
+            <label style="color: whitesmoke;">Select a workout to add to your schedule:</label>
         <br />
         <select asp-for="SelectedItem" name="SelectedItem">
             @foreach (var item in Model.WorkoutList)
@@ -36,7 +36,7 @@
         </div>
 
         <div class="form-group">
-        <input asp-for="Description" class="form-control" placeholder="Enter Description" />
+        <input asp-for="Description" class="form-control" placeholder="Enter a workoutname" />
 
        </div>
        
