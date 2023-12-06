@@ -6,6 +6,8 @@ using Core.Interfaces.ModelServices;
 using Core.Interfaces.Commands;
 using Core.Interfaces.Commands.Exercises;
 using Core.Commands.Exercises;
+using Core.Interfaces.Helpers;
+using Core.Helpers;
 
 namespace Web
 {
@@ -31,6 +33,7 @@ namespace Web
             builder.Services.AddScoped<IExerciseListService, ExerciseListService>();
             builder.Services.AddScoped<IScheduleService, ScheduleService>();
             builder.Services.AddScoped<IImportValues, ImportValues>();
+            builder.Services.AddScoped<IExtensions, Extensions>();
             builder.Services.AddHttpClient();
 
             var app = builder.Build();

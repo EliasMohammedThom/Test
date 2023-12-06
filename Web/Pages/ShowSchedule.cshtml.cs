@@ -1,3 +1,4 @@
+using Core.Interfaces.Helpers;
 using Core.Interfaces.ModelServices;
 using Core.Models;
 using Humanizer;
@@ -12,7 +13,9 @@ namespace Web.Pages
         private readonly IWorkoutService _workoutService;
         private readonly IScheduleService _scheduleService;
         private readonly IExerciseService _exerciseService;
+        private readonly IExtensions _extensionService;
         private readonly UserManager<IdentityUser> _userManager;
+
 
         #region Public_Fields
         public Workout Workouts { get; set; }
@@ -39,16 +42,22 @@ namespace Web.Pages
 
         [BindProperty]
         public List<ExercisesAPI> SortedExercise { get; set; }
-
+        [BindProperty]
+        public IExtensions Extensions { get; set; }
         public List<Workout> workouts { get; set; }
         #endregion
 
-        public ShowScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager, IExerciseService exerciseService)
+        public ShowScheduleModel(IWorkoutService workoutService,
+            IScheduleService scheduleService,
+            UserManager<IdentityUser> userManager,
+            IExerciseService exerciseService,
+            IExtensions extensions)
         {
             _workoutService = workoutService;
             _scheduleService = scheduleService;
             _userManager = userManager;
             _exerciseService = exerciseService;
+            _extensionService = extensions;
         }
         public async Task<IActionResult> OnGet()
         {
