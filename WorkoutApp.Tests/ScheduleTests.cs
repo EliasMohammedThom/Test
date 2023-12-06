@@ -22,7 +22,7 @@ namespace WorkoutApp.Tests
         public TestDatabaseFixture Fixture { get; }
 
         [Fact]
-        public void T1AddSchedule()
+        public void T1AddScheduleShouldReturnAddedScheduleId()
         {
             //arrange
             using var context = Fixture.CreateContext();
@@ -36,7 +36,7 @@ namespace WorkoutApp.Tests
             Assert.Equal(_schedule.Id, schedule.Id);
         }
         [Fact]
-        public void T2GetSchedule()
+        public void T2GetLastScheduleInDatabaseShouldReturnTestUserId()
         {
             //arrange
             using var context = Fixture.CreateContext();
@@ -49,7 +49,7 @@ namespace WorkoutApp.Tests
             Assert.Equal(_schedule.UserId, "test");
         }
         [Fact]
-        public void T3UpdateSchedule()
+        public void T3UpdateScheduleShouldReturnNotNullSchedule()
         {
             //arrange
             using var context = Fixture.CreateContext();
@@ -64,7 +64,7 @@ namespace WorkoutApp.Tests
             Assert.NotNull(actual);
         }
         [Fact]
-        public void T4RemoveSchedule()
+        public void T4DeleteScheduleByScheduleIdShouldReturnNullAfterDeleted()
         {
             //arrange
             using var context = Fixture.CreateContext();
