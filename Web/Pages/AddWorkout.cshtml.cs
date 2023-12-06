@@ -16,15 +16,33 @@ namespace Web.Pages
 
         [BindProperty]
         public string ReplyToUser { get; set; } = default!;
-        
-        public AddWorkoutModel(IWorkoutService workoutService)
+
+
+        private readonly UserManager<IdentityUser> _userManager;
+        private IdentityUser currentUser;
+
+
+        public AddWorkoutModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager)
         {
             _workoutService = workoutService;
+            _userManager = userManager;
+
         }
-      
-        public async Task<IActionResult> OnPostAsync()
+
+        public async Task <IActionResult> OnGetAsync()
         {
-            var listofworkouts = _workoutService.GetWorkoutsByTitle(workout.Title);
+
+           
+            return Page();
+        }
+
+
+        public async Task<IActionResult> OnPostAsync()
+
+        {
+            currentUser = await _userManager.GetUserAsync(User);
+           
+            var listofworkouts = _workoutService.GetWorkoutsByTitle(workout.Title, currentUser.Id);
 
             if(listofworkouts.Count >= 1 ) 
             {
