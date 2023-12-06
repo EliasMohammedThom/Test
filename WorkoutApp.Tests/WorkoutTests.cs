@@ -167,10 +167,17 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         var service = new WorkoutService(context);
 
         //act
-        service.DeleteEmptyWorkout();
-        var actual = service.GetAllWorkouts().Where(X => X.UserId == null);
+        var actual = service.GetAllWorkouts().Where(X=>X.Title == "UpdatedWorkout").First();
+
+        int? actualid = actual.Id;
+        context.Remove(actual);
+
+        context.SaveChanges();
+
+        //actual = service.GetAllWorkouts().Where(X=>X.Id == actualid).First();
+        var updatedactual = service.GetWorkoutByID(actualid);
 
         //Assert
-        Assert.Empty(actual);
+        Assert.Null(updatedactual);
     }
 }

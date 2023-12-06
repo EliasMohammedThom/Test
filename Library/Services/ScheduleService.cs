@@ -52,6 +52,6 @@ namespace Infrastructure.Services
 
         //Testas ej, men används i tester
         public Schedule GetScheduleByUserId(string userId)
-        => _scheduleContext.Schedules.Where(s => s.UserId == userId).SingleOrDefault();
+        => _scheduleContext.Schedules.Where(s => s.UserId == userId).First();
     }
 }
