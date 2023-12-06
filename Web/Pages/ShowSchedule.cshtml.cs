@@ -42,8 +42,7 @@ namespace Web.Pages
 
         [BindProperty]
         public List<ExercisesAPI> SortedExercise { get; set; }
-        [BindProperty]
-        public IExtensions Extensions { get; set; }
+      
         public List<Workout> workouts { get; set; }
         #endregion
 
@@ -72,6 +71,7 @@ namespace Web.Pages
             {
                 //workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id);
                 workout.Exercises = _exerciseService.GetExercisesByWorkoutId(workout.Id);
+                workout.Description = _extensionService.LimitLength(workout.Description,40) + "...";
             }
             return Page();
         }

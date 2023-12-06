@@ -21,7 +21,7 @@ else
             <div class="workout-box">
                 <strong>@workout.Title</strong>
                 <p>@workout.Date</p>
-                <p>@Model.Extensions.LimitLength(workout.Description, 40)...</p>
+                <p>@workout.Description</p>
 
                 <ul class="exercise-list">
                     @foreach (var exercise in workout.Exercises)
