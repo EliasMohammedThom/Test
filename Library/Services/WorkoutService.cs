@@ -49,7 +49,7 @@ namespace Infrastructure.Services
 
         public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout? workout)
         {
-            workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).SingleOrDefault();
+            workout = _workoutContext.Workouts.Where(X => X.Id == workoutId).First();
 
             if (workout != null)
             {
