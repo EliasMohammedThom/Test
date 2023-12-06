@@ -16,7 +16,6 @@ namespace Web.Pages
         private readonly IExtensions _extensionService;
         private readonly UserManager<IdentityUser> _userManager;
 
-
         #region Public_Fields
         public Workout Workouts { get; set; }
 
