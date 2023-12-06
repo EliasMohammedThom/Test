@@ -55,9 +55,8 @@ namespace Web.Pages
 
            IdentityUser identityUser = await _userManager.GetUserAsync(User);
 
-           Workout = _workoutService.GetWorkoutByTitle(SelectedItem);
+                Workout = _workoutService.GetWorkoutByTitle(SelectedItem, identityUser.Id);
 
-          
                 Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
                 Workout.Date = SelectedDate;
                 Workout.Description = Description;

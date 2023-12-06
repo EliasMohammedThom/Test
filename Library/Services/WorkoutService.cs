@@ -67,10 +67,12 @@ namespace Infrastructure.Services
         => _workoutContext.Workouts.Where(s => s.Title == title).First();
         public List<Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
 
-        public List<Workout> GetWorkoutsByTitle(string? title) => _workoutContext.Workouts.Where(X => X.Title == title).ToList();
+        public List<Workout> GetWorkoutsByTitle(string? title, string? userid) => _workoutContext.Workouts.Where(X => X.Title == title && X.UserId == userid).ToList();
 
         public List<Workout> GetWorkoutsByScheduleId(int? scheduleId)
             => _workoutContext.Workouts.Where(X => X.ScheduleId == scheduleId).OrderBy(X=>X.Date).ToList();
 
+        public Workout? GetWorkoutByTitle(string title, string userid)
+             => _workoutContext.Workouts.Where(s => s.Title == title && s.UserId == userid).First();
     }
 }
