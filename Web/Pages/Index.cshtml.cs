@@ -12,7 +12,7 @@ namespace Web.Pages
         private readonly UserManager<IdentityUser> _userManager;
 
         [BindProperty] 
-        public Schedule Schedule { get; set; }
+        public Schedule? Schedule { get; set; }
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _scheduleService = scheduleService;
@@ -20,8 +20,10 @@ namespace Web.Pages
         }
         public async Task <IActionResult> OnGetAsync()
         {
-          
             //Not yet implemented
+            IdentityUser? identityUser = await _userManager.GetUserAsync(User);
+            Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+
             return Page();
         }
         public async Task<IActionResult> OnPost() 
