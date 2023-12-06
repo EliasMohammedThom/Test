@@ -6,52 +6,47 @@
 <h1 style="color: white;">Exercise List</h1>
 
 @{
-    if (Model.WorkoutList.Count > 0)
-    {
+	if (Model.WorkoutList.Count > 0)
+	{
+		<form method="post" enctype="multipart/form-data">
+			<div class="form-group">
+				<label style="color: white;">Select an exercise to add to your schedule</label>
+				<br />
+				<select asp-for="SelectedExerciseName" name="SelectedExerciseName">
 
-        <form method="post" enctype="multipart/form-data">
-            <div class="form-group">
-                <label style="color: white;">Select an exercise to add to your schedule</label>
-                <br />
-                <select asp-for="SelectedExerciseName" name="SelectedExerciseName">
+					@foreach (var item in Model.Exercises)
+					{
+						<option value="@item.Name"> @item.Name</option>
+					}
+				</select>
+				<span asp-validation-for="SelectedExerciseName" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label style="color: white;">Select a workout to add to your schedule:</label>
+				<br />
+				<select asp-for="SelectedItemWorkout" name="SelectedItemWorkout">
 
-                    @foreach (var item in Model.Exercises)
-                    {
-                        <option value="@item.Name"> @item.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="SelectedExerciseName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label style="color: white;">Select a workout to add to your schedule:</label>
-                <br />
-                <select asp-for="SelectedItemWorkout" name="SelectedItemWorkout">
+					@foreach (var item in Model.WorkoutList)
+					{
+						<option value="@item.Title"> @item.Title</option>
+					}
+				</select>
+				<span asp-validation-for="SelectedItemWorkout" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input asp-for="ExerciseToAdd.Sets" class="form-control" placeholder="Enter Sets" type="number" min="0" value="0" required />
+			</div>
+			<div class="form-group">
+				<input asp-for="ExerciseToAdd.Repetitions" class="form-control" placeholder="Enter Reps" type="number" min="0" value="0" required />
+			</div>
+			<button type="submit" value="save" class="btn btn-primary">Create</button>
+		</form>
+	}
+	else
+	{
+		<strong> You need to create a workout before adding exercises to them, click on the button to create a workout  </strong>
 
-                    @foreach (var item in Model.WorkoutList)
-                    {
-                        <option value="@item.Title"> @item.Title</option>
-                    }
-                </select>
-                <span asp-validation-for="SelectedItemWorkout" class="text-danger"></span>
-
-            </div>
-            <div class="form-group">
-                <input asp-for="ExerciseToAdd.Sets" class="form-control" placeholder="Enter Sets" />
-            </div>
-            <div class="form-group">
-                <input asp-for="ExerciseToAdd.Repetitions" class="form-control" placeholder="Enter Reps" />
-            </div>
-            <button type="submit" value="save" class="btn btn-primary">Create</button>
-        </form>
-
-    }
-
-    else
-    {
-        
-        <strong> You need to create a workout before adding exercises to them, click on the button to create a workout  </strong>
-
-        <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
-    }
+		<a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
+	}
 }
 

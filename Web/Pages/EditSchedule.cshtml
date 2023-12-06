@@ -4,64 +4,40 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
-    ViewData["Title"] = "Edit Schedule";
-    var user = await UserManager.GetUserAsync(User);
-
+	ViewData["Title"] = "Edit Schedule";
+	var user = await UserManager.GetUserAsync(User);
 }
-
 
 <h1 style="color: white;">Edit Schedule</h1>
 
-@if (SignInManager.IsSignedIn(User) && Model.WorkoutList.Count >0 )
+@if (SignInManager.IsSignedIn(User) && Model.WorkoutList.Count > 0)
 {
-
-
-    <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="datePicker">Select Date:</label>
-            <input asp-for="SelectedDate" type="date" id="datePicker" class="form-control" />
-        </div>
-
-
-        <div class="form-group">
-            <label style="color: white;">Select a workout to add to your schedule:</label>
-        <br />
-        <select asp-for="SelectedItem" name="SelectedItem">
-            @foreach (var item in Model.WorkoutList)
-            {
-                <option value="@item.Title"> @item.Title</option>
-            }
-            </select>
-        <span asp-validation-for="SelectedItem" class="text-danger"></span>
-        </div>
-
-        <div class="form-group">
-        <input asp-for="Description" class="form-control" placeholder="Enter Description" />
-
-       </div>
-       
-            <br>
-        <button type="submit" value="save" class="btn btn-primary">Create</button>
-    </form>
-
-
-
-
-
-
-
-
-
-
+	<form method="post" enctype="multipart/form-data">
+		<div class="form-group" style="color: whitesmoke">
+			<label for="datePicker">Select Date:</label>
+			<input asp-for="SelectedDate" type="date" id="datePicker" class="form-control" />
+		</div>
+		<div class="form-group">
+			<label style="color: whitesmoke;">Select a workout to add to your schedule:</label>
+			<br />
+			<select asp-for="SelectedItem" name="SelectedItem">
+				@foreach (var item in Model.WorkoutList)
+				{
+					<option value="@item.Title"> @item.Title</option>
+				}
+			</select>
+			<span asp-validation-for="SelectedItem" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<input asp-for="Description" class="form-control" placeholder="Enter description" />
+		</div><br>
+		<button type="submit" value="save" class="btn btn-primary">Create</button>
+	</form>
 }
 
 else
 {
+	<strong style="color: white;"> You need to create a workout before adding them to your schedule, click on the button to create a workout </strong>
 
-    
-
-        <strong> You need to create a workout before adding them to your schedule, click on the button to create a workout </strong>
-
-        <a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
-    
+	<a class="btn btn-primary" asp-page="/AddWorkout">Create Workout</a>
 }

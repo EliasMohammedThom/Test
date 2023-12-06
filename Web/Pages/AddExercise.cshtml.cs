@@ -22,7 +22,6 @@ namespace Web.Pages
         private readonly IImportValues _importValues;
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser? currentUser;
-
         
         [BindProperty]
         public List<ExerciseList>? Exercises { get; set; }
@@ -67,7 +66,8 @@ namespace Web.Pages
             
         public async Task<IActionResult> OnPostAsync()
         {
-            ChosenWorkout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout);
+            currentUser = await _userManager.GetUserAsync(User);
+            ChosenWorkout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout, currentUser.Id);
             Exercises = _exerciseListService.GetAllExerciseLists();
             SelectedExercise= _exerciseListService.GetExerciseListByName(SelectedExerciseName);
             ExerciseToAdd = _importValues.AssignValuesToNewExercise(ExerciseToAdd, SelectedExercise, ChosenWorkout);
@@ -76,7 +76,5 @@ namespace Web.Pages
 
             return Redirect("/AddExercise");
         }
-
-     
     }
 }
