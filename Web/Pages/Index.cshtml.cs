@@ -22,19 +22,23 @@ namespace Web.Pages
         {
             //Not yet implemented
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            //Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
             return Page();
         }
         public async Task<IActionResult> OnPost() 
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
+
             var singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            if (singledSchedule == null)
+            if (singledSchedule is null)
             {
-                Schedule schedule = new Schedule();
-                schedule.UserId = Schedule.UserId;
+                Schedule schedule = new Schedule
+                {
+                   UserId = identityUser.Id,
+                };
+                //schedule.UserId = Schedule.UserId;
                 _scheduleService.AddSchedule(schedule);
             }
             return Redirect("/EditSchedule");
