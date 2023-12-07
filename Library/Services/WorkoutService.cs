@@ -60,6 +60,12 @@ namespace Infrastructure.Services
             }
         }
 
+        public void DeleteWorkoutById(int? id)
+        {
+            _workoutContext.Remove(GetWorkoutByID(id));
+            _workoutContext.SaveChanges();
+        }
+
         public List<Workout> GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 

@@ -44,6 +44,9 @@ namespace Infrastructure.Services
 
         public List<ExercisesAPI> GetExercisesByWorkoutId(int? workoutid)
             => _ExercisesAPIContext.ExercisesAPIs.Where(s => s.WorkoutId == workoutid).ToList();
+
+        public ExercisesAPI GetByWorkoutName(string workoutName)
+         => _ExercisesAPIContext.ExercisesAPIs.Where(X=>X.Name == workoutName).First();
         
     }
 }

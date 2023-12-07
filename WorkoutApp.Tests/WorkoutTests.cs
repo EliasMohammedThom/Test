@@ -3,24 +3,28 @@ using Infrastructure.Services;
 using Core.Models;
 using Core;
 using Newtonsoft.Json;
+using Core.Interfaces.ModelServices;
 namespace WorkoutApp.Tests;
-
 
 [TestCaseOrderer(
     ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
     ordererAssemblyName: "WorkoutApp.Tests")]
 
-
 public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 {
     private readonly Workout _workout = new();
-
+    private WorkoutService _workoutService { get; set; }
     public WorkoutServiceTest(TestDatabaseFixture fixture)
-        => Fixture = fixture;
+    {
+        Fixture = fixture;
+        var context = Fixture.CreateContext();
 
+        _workoutService = new WorkoutService(context);
+    }
+       
     public TestDatabaseFixture Fixture { get; }
 
-
+    #region do not touch unless you know what you're doing
     //THIS CODE ADDS ALL THE EXERCISES FROM THE API TO THE DATABASE
     //[Fact]
     //public async Task T0AddAllWorkoutsToList()
@@ -36,7 +40,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "stretching",
     //            "strongman"
     //        };
-    //   List<string> MuscleCategories = new List<string> {
+    //    List<string> MuscleCategories = new List<string> {
     //            "abdominals",
     //            "abductors",
     //            "adductors",
@@ -54,7 +58,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "traps",
     //            "triceps"
     //        };
-    //   List<string> DifficultyCategory = new List<string>
+    //    List<string> DifficultyCategory = new List<string>
     //        {
     //            "beginner",
     //            "intermediate",
@@ -63,16 +67,16 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //    List<ExerciseList>? exerciseList = new List<ExerciseList>();
     //    foreach (var type in ExerciseTypes)
     //    {
-    //        foreach(var muscle in MuscleCategories)
+    //        foreach (var muscle in MuscleCategories)
     //        {
-    //            foreach(var difficulty in DifficultyCategory) 
+    //            foreach (var difficulty in DifficultyCategory)
     //            {
     //                var response = APICalls.GetAPICall(type, muscle, difficulty);
     //                string result = await response.Result.Content.ReadAsStringAsync();
     //                exerciseList = JsonConvert.DeserializeObject<List<ExerciseList>>(result);
-    //                foreach(var exercise in exerciseList)
+    //                foreach (var exercise in exerciseList)
     //                {
-    //                   if (exercise != null)
+    //                    if (exercise != null)
     //                    {
     //                        context.ExerciseLists.Add(exercise);
     //                        context.SaveChangesAsync();
@@ -82,18 +86,19 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //        }
     //    }
     //}
+    #endregion
 
     [Fact]
     public void T1AddWorkoutShouldReturnAddedWorkoutTitle()
     {
         //arrange
-        using var context = Fixture.CreateContext();
 
         //act
         _workout.Title = "WorkoutToBeUpdated";
-        var service = new WorkoutService(context);
-        service.AddWorkout(_workout);
-        var workout = context.Workouts.First(b => b.Title == "WorkoutToBeUpdated");
+       
+        _workoutService.AddWorkout(_workout);
+
+        var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
 
         //assert
         Assert.Equal("WorkoutToBeUpdated", workout.Title);
@@ -103,11 +108,10 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T2GetWorkoutByTitleShouldReturnWorkoutTitle()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new WorkoutService(context);
+   
 
         //act
-        var workout = service.GetWorkoutByTitle("WorkoutToBeUpdated");
+        var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
 
         //Assert
         Assert.Equal("WorkoutToBeUpdated", workout.Title);
@@ -135,13 +139,12 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T4UpdateWorkoutScheduleIDToNullShouldReturnNullAfterRemoval()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new WorkoutService(context);
-        var workout = service.GetWorkoutByTitle("UpdatedWorkout");
+        
+        var workout = _workoutService.GetWorkoutByTitle("UpdatedWorkout");
 
         //act
-        service.UpdateWorkoutScheduleIDToNull(workout.Id, workout);
-        var actual = service.GetWorkoutByTitle("UpdatedWorkout");
+        _workoutService.UpdateWorkoutScheduleIDToNull(workout.Id, workout);
+        var actual = _workoutService.GetWorkoutByTitle("UpdatedWorkout");
 
         // assert
         Assert.Equal(actual.ScheduleId, null);
@@ -151,15 +154,14 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T5DeleteWorkoutByIdShouldRemoveWorkoutFromDatabase()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new WorkoutService(context);
-
+      
         //act
-        var actual = service.GetAllWorkouts().Where(x => x.Title == "UpdatedWorkout").First();
+        var actual = _workoutService.GetAllWorkouts().Where(x => x.Title == "UpdatedWorkout").First();
         int? actualId = actual.Id;
-        context.Remove(actual);
-        context.SaveChanges();
-        var updatedActual = service.GetWorkoutByID(actualId);
+
+        _workoutService.DeleteWorkoutById(actualId);
+      
+        var updatedActual = _workoutService.GetWorkoutByID(actualId);
 
         //Assert
         Assert.Null(updatedActual);

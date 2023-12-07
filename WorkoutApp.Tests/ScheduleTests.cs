@@ -1,5 +1,6 @@
 ﻿using Core.Models;
 using Infrastructure.Services;
+using Infrastructure.Data;
 
 namespace WorkoutApp.Tests
 {
@@ -9,14 +10,22 @@ namespace WorkoutApp.Tests
 
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
     {
+       
         private Schedule _schedule { get; set; }
+        private ScheduleService _scheduleService { get; set; }
+      
         public ScheduleTests(TestDatabaseFixture fixture)
         {
             Fixture = fixture;
+         
             _schedule = new Schedule
             {
                 UserId = "test"
             };
+
+            var context = Fixture.CreateContext();
+            
+            _scheduleService = new ScheduleService(context);
         }
         public TestDatabaseFixture Fixture { get; }
 
@@ -24,12 +33,11 @@ namespace WorkoutApp.Tests
         public void T1AddScheduleShouldReturnAddedScheduleId()
         {
             //arrange
-            using var context = Fixture.CreateContext();
+          
 
-            //act
-            var service = new ScheduleService(context);
-            service.AddSchedule(_schedule);
-            var schedule = context.Schedules.First(b => b.Id == _schedule.Id);
+            _scheduleService.AddSchedule(_schedule);
+             var schedule = _scheduleService.GetScheduleById(_schedule.Id);
+            
 
             //assert
             Assert.Equal(_schedule.Id, schedule.Id);
@@ -38,11 +46,9 @@ namespace WorkoutApp.Tests
         public void T2GetLastScheduleInDatabaseShouldReturnTestUserId()
         {
             //arrange
-            using var context = Fixture.CreateContext();
-            var service = new ScheduleService(context);
-
+       
             //act
-            _schedule = service.GetAllSchedules().LastOrDefault();
+            _schedule = _scheduleService.GetScheduleByUserId("test");
 
             //Assert
             Assert.Equal(_schedule.UserId, "test");
@@ -51,13 +57,12 @@ namespace WorkoutApp.Tests
         public void T3UpdateScheduleShouldReturnNotNullSchedule()
         {
             //arrange
-            using var context = Fixture.CreateContext();
-            var service = new ScheduleService(context);
+          
             var testSchedule = _schedule.UserId;
 
             //act
-            service.UpdateSchedule(testSchedule, "updatedSchedule");
-            var actual = service.GetScheduleByUserId("updatedSchedule");
+            _scheduleService.UpdateSchedule(testSchedule, "updatedSchedule");
+            var actual = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
             //assert
             Assert.NotNull(actual);
@@ -66,13 +71,12 @@ namespace WorkoutApp.Tests
         public void T4DeleteScheduleByScheduleIdShouldReturnNullAfterDeleted()
         {
             //arrange
-            using var context = Fixture.CreateContext();
-            var service = new ScheduleService(context);
+            _schedule = _scheduleService.GetAllSchedules().LastOrDefault();
             //act
 
-            _schedule = service.GetAllSchedules().LastOrDefault();
-            service.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
-            var actual = service.GetScheduleById(_schedule.Id);
+
+            _scheduleService.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
+            var actual = _scheduleService.GetScheduleById(_schedule.Id);
 
             // assert
             Assert.Null(actual);

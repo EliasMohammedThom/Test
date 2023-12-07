@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class refactorCode : Migration
+    public partial class firstworkout3init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,21 +51,39 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ExerciseLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Muscle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseLists", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Nutritions",
                 columns: table => new
                 {
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Calories = table.Column<float>(type: "real", nullable: false),
-                    ServingSizePerGram = table.Column<float>(type: "real", nullable: false),
-                    FatTotalGram = table.Column<float>(type: "real", nullable: false),
-                    SaturatedGram = table.Column<float>(type: "real", nullable: false),
-                    ProteinGram = table.Column<float>(type: "real", nullable: false),
-                    SodiumMilligram = table.Column<float>(type: "real", nullable: false),
-                    PotassiumMilligram = table.Column<float>(type: "real", nullable: false),
-                    Cholesterol = table.Column<float>(type: "real", nullable: false),
-                    CarbohydratesPerGram = table.Column<float>(type: "real", nullable: false),
-                    FiberPerGram = table.Column<float>(type: "real", nullable: false),
-                    Sugar = table.Column<float>(type: "real", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Calories = table.Column<float>(type: "real", nullable: true),
+                    ServingSizePerGram = table.Column<float>(type: "real", nullable: true),
+                    FatTotalGram = table.Column<float>(type: "real", nullable: true),
+                    SaturatedGram = table.Column<float>(type: "real", nullable: true),
+                    ProteinGram = table.Column<float>(type: "real", nullable: true),
+                    SodiumMilligram = table.Column<float>(type: "real", nullable: true),
+                    PotassiumMilligram = table.Column<float>(type: "real", nullable: true),
+                    Cholesterol = table.Column<float>(type: "real", nullable: true),
+                    CarbohydratesPerGram = table.Column<float>(type: "real", nullable: true),
+                    FiberPerGram = table.Column<float>(type: "real", nullable: true),
+                    Sugar = table.Column<float>(type: "real", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,15 +95,28 @@ namespace Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    WeekDay = table.Column<int>(type: "int", nullable: false),
-                    Week = table.Column<int>(type: "int", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Workouts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ScheduleId = table.Column<int>(type: "int", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Workouts", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,37 +226,20 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Workouts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ScheduleId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Workouts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Workouts_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ExercisesAPIs",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    WorkoutId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Muscle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    WorkoutId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Muscle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Equipment = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sets = table.Column<int>(type: "int", nullable: true),
+                    Repetitions = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -234,8 +248,7 @@ namespace Infrastructure.Migrations
                         name: "FK_ExercisesAPIs_Workouts_WorkoutId",
                         column: x => x.WorkoutId,
                         principalTable: "Workouts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -281,11 +294,6 @@ namespace Infrastructure.Migrations
                 name: "IX_ExercisesAPIs_WorkoutId",
                 table: "ExercisesAPIs",
                 column: "WorkoutId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Workouts_ScheduleId",
-                table: "Workouts",
-                column: "ScheduleId");
         }
 
         /// <inheritdoc />
@@ -307,10 +315,16 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ExerciseLists");
+
+            migrationBuilder.DropTable(
                 name: "ExercisesAPIs");
 
             migrationBuilder.DropTable(
                 name: "Nutritions");
+
+            migrationBuilder.DropTable(
+                name: "Schedules");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -320,9 +334,6 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Workouts");
-
-            migrationBuilder.DropTable(
-                name: "Schedules");
         }
     }
 }

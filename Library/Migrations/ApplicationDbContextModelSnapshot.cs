@@ -56,7 +56,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExerciseLists", (string)null);
+                    b.ToTable("ExerciseLists");
                 });
 
             modelBuilder.Entity("Core.Models.ExercisesAPI", b =>
@@ -104,61 +104,60 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("WorkoutId");
 
-                    b.ToTable("ExercisesAPIs", (string)null);
+                    b.ToTable("ExercisesAPIs");
                 });
 
             modelBuilder.Entity("Core.Models.Nutrition", b =>
                 {
-                    b.Property<float>("Calories")
+                    b.Property<float?>("Calories")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "calories");
 
-                    b.Property<float>("CarbohydratesPerGram")
+                    b.Property<float?>("CarbohydratesPerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "carbohydrates_total_g");
 
-                    b.Property<float>("Cholesterol")
+                    b.Property<float?>("Cholesterol")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "cholesterol_mg");
 
-                    b.Property<float>("FatTotalGram")
+                    b.Property<float?>("FatTotalGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fat_total_g");
 
-                    b.Property<float>("FiberPerGram")
+                    b.Property<float?>("FiberPerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fiber_g");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
-                    b.Property<float>("PotassiumMilligram")
+                    b.Property<float?>("PotassiumMilligram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "potassium_mg");
 
-                    b.Property<float>("ProteinGram")
+                    b.Property<float?>("ProteinGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "protein_g");
 
-                    b.Property<float>("SaturatedGram")
+                    b.Property<float?>("SaturatedGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fat_saturated_g");
 
-                    b.Property<float>("ServingSizePerGram")
+                    b.Property<float?>("ServingSizePerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "serving_size_g");
 
-                    b.Property<float>("SodiumMilligram")
+                    b.Property<float?>("SodiumMilligram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "sodium_mg");
 
-                    b.Property<float>("Sugar")
+                    b.Property<float?>("Sugar")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "sugar_g");
 
-                    b.ToTable("Nutritions", (string)null);
+                    b.ToTable("Nutritions");
                 });
 
             modelBuilder.Entity("Core.Models.Schedule", b =>
@@ -174,7 +173,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Schedules", (string)null);
+                    b.ToTable("Schedules");
                 });
 
             modelBuilder.Entity("Core.Models.Workout", b =>
@@ -202,7 +201,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Workouts", (string)null);
+                    b.ToTable("Workouts");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

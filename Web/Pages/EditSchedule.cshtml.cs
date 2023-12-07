@@ -15,21 +15,21 @@ namespace Web.Pages
 		private readonly IScheduleService _scheduleService;
 
 		[BindProperty]
-		public List<Workout> WorkoutList { get; set; }
+		public List<Workout>? WorkoutList { get; set; }
 
 		[BindProperty]
 		public DateOnly SelectedDate { get; set; }
 
 		[BindProperty]
-		public string SelectedItem { get; set; }
+		public string? SelectedItem { get; set; }
 
 		[BindProperty]
-		public string Description { get; set; }
+		public string? Description { get; set; }
 
 		[BindProperty]
-		public Workout Workout { get; set; }
+		public Workout? Workout { get; set; }
 		private readonly UserManager<IdentityUser> _userManager;
-		private IdentityUser currentUser;
+		private IdentityUser? currentUser;
 
 		public EditScheduleModel(IWorkoutService workoutService, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
 		{
@@ -49,7 +49,7 @@ namespace Web.Pages
 
 		public async Task<IActionResult> OnPostAsync()
 		{
-			IdentityUser identityUser = await _userManager.GetUserAsync(User);
+			IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
             Workout = _workoutService.GetWorkoutByTitle(SelectedItem, identityUser.Id);
             Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;

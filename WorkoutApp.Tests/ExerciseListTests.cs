@@ -1,4 +1,5 @@
-﻿using Infrastructure.Services;
+﻿using Core.Interfaces.ModelServices;
+using Infrastructure.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,17 @@ namespace WorkoutApp.Tests
 
     public class ExerciseListTests : IClassFixture<TestDatabaseFixture>
     {
+
+        private ExerciseListService _exerciseListService { get; set; }
         public ExerciseListTests(TestDatabaseFixture fixture)
-            => Fixture = fixture;
+        {
+            Fixture = fixture;
+
+            var context = Fixture.CreateContext();
+
+            _exerciseListService = new ExerciseListService(context);
+        }
+            
 
         public TestDatabaseFixture Fixture { get; }
 
@@ -20,25 +30,23 @@ namespace WorkoutApp.Tests
         public void GetAllExerciseListsShouldReturnCorrectAmountOfExercises()
         {
             //arrange
-            using var context = Fixture.CreateContext();
-            var service = new ExerciseListService(context);
+           
 
             //act
-            var exerciseList = service.GetAllExerciseLists();
+            var exerciseList = _exerciseListService.GetAllExerciseLists();
 
             //Assert
-            Assert.Equal(550, exerciseList.Count);
+            Assert.Equal(551, exerciseList.Count);
         }
         [Fact]
         public void GetExerciseListByNameShouldReturnCorrectExercise()
         {
             // arrange
-            using var context = Fixture.CreateContext();
-            var service = new ExerciseListService(context);
+           
             var exerciseNameToFind = "Cocoons";
 
             // act
-            var result = service.GetExerciseListByName(exerciseNameToFind);
+            var result = _exerciseListService.GetExerciseListByName(exerciseNameToFind);
 
             // assert
             Assert.NotNull(result);
