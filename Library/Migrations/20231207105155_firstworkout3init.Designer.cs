@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231128154714_refactorCode")]
-    partial class refactorCode
+    [Migration("20231207105155_firstworkout3init")]
+    partial class firstworkout3init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,43 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Core.Models.ExerciseList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Difficulty")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "difficulty");
+
+                    b.Property<string>("Equipment")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "equipment");
+
+                    b.Property<string>("Instructions")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "instructions");
+
+                    b.Property<string>("Muscle")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "muscle");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "name");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("Relational:JsonPropertyName", "type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExerciseLists");
+                });
+
             modelBuilder.Entity("Core.Models.ExercisesAPI", b =>
                 {
                     b.Property<int>("Id")
@@ -34,36 +71,36 @@ namespace Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Difficulty")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "difficulty");
 
                     b.Property<string>("Equipment")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "equipment");
 
                     b.Property<string>("Instructions")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "instructions");
 
                     b.Property<string>("Muscle")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "muscle");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
+                    b.Property<int?>("Repetitions")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Sets")
+                        .HasColumnType("int");
+
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "type");
 
-                    b.Property<int>("WorkoutId")
+                    b.Property<int?>("WorkoutId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -75,52 +112,51 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.Nutrition", b =>
                 {
-                    b.Property<float>("Calories")
+                    b.Property<float?>("Calories")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "calories");
 
-                    b.Property<float>("CarbohydratesPerGram")
+                    b.Property<float?>("CarbohydratesPerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "carbohydrates_total_g");
 
-                    b.Property<float>("Cholesterol")
+                    b.Property<float?>("Cholesterol")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "cholesterol_mg");
 
-                    b.Property<float>("FatTotalGram")
+                    b.Property<float?>("FatTotalGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fat_total_g");
 
-                    b.Property<float>("FiberPerGram")
+                    b.Property<float?>("FiberPerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fiber_g");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasAnnotation("Relational:JsonPropertyName", "name");
 
-                    b.Property<float>("PotassiumMilligram")
+                    b.Property<float?>("PotassiumMilligram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "potassium_mg");
 
-                    b.Property<float>("ProteinGram")
+                    b.Property<float?>("ProteinGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "protein_g");
 
-                    b.Property<float>("SaturatedGram")
+                    b.Property<float?>("SaturatedGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "fat_saturated_g");
 
-                    b.Property<float>("ServingSizePerGram")
+                    b.Property<float?>("ServingSizePerGram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "serving_size_g");
 
-                    b.Property<float>("SodiumMilligram")
+                    b.Property<float?>("SodiumMilligram")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "sodium_mg");
 
-                    b.Property<float>("Sugar")
+                    b.Property<float?>("Sugar")
                         .HasColumnType("real")
                         .HasAnnotation("Relational:JsonPropertyName", "sugar_g");
 
@@ -135,22 +171,8 @@ namespace Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Week")
-                        .HasColumnType("int");
-
-                    b.Property<int>("WeekDay")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -159,21 +181,28 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.Workout", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ScheduleId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ScheduleId");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Workouts");
                 });
@@ -382,20 +411,9 @@ namespace Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Models.ExercisesAPI", b =>
                 {
-                    b.HasOne("Core.Models.Workout", "Workout")
-                        .WithMany("ExercisesAPIs")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Workout");
-                });
-
-            modelBuilder.Entity("Core.Models.Workout", b =>
-                {
-                    b.HasOne("Core.Models.Schedule", null)
-                        .WithMany("Workouts")
-                        .HasForeignKey("ScheduleId");
+                    b.HasOne("Core.Models.Workout", null)
+                        .WithMany("Exercises")
+                        .HasForeignKey("WorkoutId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -449,14 +467,9 @@ namespace Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Core.Models.Schedule", b =>
-                {
-                    b.Navigation("Workouts");
-                });
-
             modelBuilder.Entity("Core.Models.Workout", b =>
                 {
-                    b.Navigation("ExercisesAPIs");
+                    b.Navigation("Exercises");
                 });
 #pragma warning restore 612, 618
         }
