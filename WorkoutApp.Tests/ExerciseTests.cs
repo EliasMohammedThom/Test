@@ -7,9 +7,17 @@ namespace WorkoutApp.Tests;
 public class ExerciseTests : IClassFixture<TestDatabaseFixture>
 {
     private readonly ExercisesAPI _Exercise = new();
-
+    private ExerciseService _exerciseService {  get; set; }
     public ExerciseTests(TestDatabaseFixture fixture)
-        => Fixture = fixture;
+    {
+        Fixture = fixture;
+        var context = Fixture.CreateContext();
+        _exerciseService = new ExerciseService(context);
+
+
+
+    }
+
 
     public TestDatabaseFixture Fixture { get; }
 
@@ -17,15 +25,13 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T1AddExerciseShouldReturnAddedExerciseName()
     {
         //arrange
-        using var context = Fixture.CreateContext();
 
         //act
         _Exercise.Name = "ExerciseToBeRemoved";
 
-
-        var service = new ExerciseService(context);
-        service.AddExercise(_Exercise);
-        var exercise = context.ExercisesAPIs.Where(X => X.Name == "ExerciseToBeRemoved").First();
+        _exerciseService.AddExercise(_Exercise);
+        var exercise = _exerciseService.GetByWorkoutName("ExerciseToBeRemoved");
+        
         //assert
         Assert.Equal("ExerciseToBeRemoved", exercise.Name);
     }
@@ -34,12 +40,11 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T2GetExerciseByIdShouldReturnNotNullForValidId()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new ExerciseService(context);
+       
 
-        var testexercise = service.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
+        var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
-        var exercise = service.GetExerciseById(testexercise.Id);
+        var exercise = _exerciseService.GetExerciseById(testexercise.Id);
 
         //Assert
         Assert.NotNull(exercise);
@@ -49,15 +54,14 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T3RemoveExerciseByIdFromDatabaseShouldReturnNullAfterRemoval()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new ExerciseService(context);
+      
 
-        var testexercise = service.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
+        var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
 
-        service.RemoveExerciseById(testexercise.Id, testexercise);
+        _exerciseService.RemoveExerciseById(testexercise.Id, testexercise);
 
-        testexercise = service.GetExerciseById(testexercise.Id);
+        testexercise = _exerciseService.GetExerciseById(testexercise.Id);
 
         Assert.Null(testexercise);
     }
@@ -66,11 +70,9 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T4GetExercisesByWorkoutIdShouldReturnNotNullAfterRetrievingExistingExerciseInDataBase()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new ExerciseService(context);
-
+        
         //act 
-        var testdata= service.GetExercisesByWorkoutId(159);
+        var testdata= _exerciseService.GetExercisesByWorkoutId(159);
 
         Assert.NotNull(testdata);
     }

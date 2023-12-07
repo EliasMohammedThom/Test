@@ -22,10 +22,9 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         _workoutService = new WorkoutService(context);
     }
        
-
     public TestDatabaseFixture Fixture { get; }
 
-
+    #region do not touch unless you know what you're doing
     //THIS CODE ADDS ALL THE EXERCISES FROM THE API TO THE DATABASE
     //[Fact]
     //public async Task T0AddAllWorkoutsToList()
@@ -41,7 +40,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "stretching",
     //            "strongman"
     //        };
-    //   List<string> MuscleCategories = new List<string> {
+    //    List<string> MuscleCategories = new List<string> {
     //            "abdominals",
     //            "abductors",
     //            "adductors",
@@ -59,7 +58,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //            "traps",
     //            "triceps"
     //        };
-    //   List<string> DifficultyCategory = new List<string>
+    //    List<string> DifficultyCategory = new List<string>
     //        {
     //            "beginner",
     //            "intermediate",
@@ -68,16 +67,16 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //    List<ExerciseList>? exerciseList = new List<ExerciseList>();
     //    foreach (var type in ExerciseTypes)
     //    {
-    //        foreach(var muscle in MuscleCategories)
+    //        foreach (var muscle in MuscleCategories)
     //        {
-    //            foreach(var difficulty in DifficultyCategory) 
+    //            foreach (var difficulty in DifficultyCategory)
     //            {
     //                var response = APICalls.GetAPICall(type, muscle, difficulty);
     //                string result = await response.Result.Content.ReadAsStringAsync();
     //                exerciseList = JsonConvert.DeserializeObject<List<ExerciseList>>(result);
-    //                foreach(var exercise in exerciseList)
+    //                foreach (var exercise in exerciseList)
     //                {
-    //                   if (exercise != null)
+    //                    if (exercise != null)
     //                    {
     //                        context.ExerciseLists.Add(exercise);
     //                        context.SaveChangesAsync();
@@ -87,6 +86,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //        }
     //    }
     //}
+    #endregion
 
     [Fact]
     public void T1AddWorkoutShouldReturnAddedWorkoutTitle()
