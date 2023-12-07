@@ -32,10 +32,6 @@ namespace Web.Pages
 
         [BindProperty]
         public int SelectedExerciseToRemove { get; set; }
-
-        [BindProperty]
-
-        public ExercisesAPI Randomtest {  get; set; }
         #endregion
 
 
@@ -53,7 +49,7 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnPostAsync()
         {
-            _exerciseService.RemoveExerciseById(SelectedExerciseToRemove, Randomtest);
+            _exerciseService.RemoveExerciseById(SelectedExerciseToRemove);
 
             return Redirect("/RemoveExercise");
         }
