@@ -7,7 +7,7 @@ namespace Core.Interfaces.ModelServices
         void AddExercise(ExercisesAPI ExercisesAPI);
         List<ExercisesAPI> GetAllExercisesAPIs();
         public ExercisesAPI GetExerciseById(int id);
-        public void RemoveExerciseById(int id, ExercisesAPI exercise);
+        public void RemoveExerciseById(int id);
         List<ExercisesAPI> GetExercisesByWorkoutId(int? id);
     }
 }
