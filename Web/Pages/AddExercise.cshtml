@@ -34,10 +34,10 @@
 				<span asp-validation-for="SelectedItemWorkout" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<input asp-for="ExerciseToAdd.Sets" class="form-control" placeholder="Enter Sets" type="number" min="0" value="0" required />
+				<input asp-for="ExerciseToAdd.Sets" class="form-control" placeholder="Enter Sets" type="number" min="0" max="100" value="0" required />
 			</div>
 			<div class="form-group">
-				<input asp-for="ExerciseToAdd.Repetitions" class="form-control" placeholder="Enter Reps" type="number" min="0" value="0" required />
+				<input asp-for="ExerciseToAdd.Repetitions" class="form-control" placeholder="Enter Reps" type="number" min="0" max="100" value="0" required />
 			</div>
 			<button type="submit" value="save" class="btn btn-primary">Create</button>
 		</form>

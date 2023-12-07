@@ -9,11 +9,11 @@ namespace Web.Pages
     public class IndexModel : PageModel
     {
         private readonly IScheduleService _scheduleService;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser>? _userManager;
 
         [BindProperty] 
         public Schedule? Schedule { get; set; }
-        public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser> userManager)
+        public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser>? userManager)
         {
             _scheduleService = scheduleService;
             _userManager = userManager;
@@ -22,7 +22,11 @@ namespace Web.Pages
         {
             //Not yet implemented
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            if(identityUser != null)
+            {
+                Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            }
+          
 
             return Page();
         }

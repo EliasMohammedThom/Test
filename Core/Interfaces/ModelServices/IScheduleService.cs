@@ -14,6 +14,6 @@ namespace Core.Interfaces.ModelServices
         public Schedule? GetScheduleById(int? scheduleId);
         public void UpdateSchedule(string oldString, string newString);
         public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule);
-        public Schedule? GetScheduleByUserId(string userId);
+        public Schedule? GetScheduleByUserId(string? userId);
     }
 }
