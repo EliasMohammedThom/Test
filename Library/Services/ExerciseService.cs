@@ -34,19 +34,15 @@ namespace Infrastructure.Services
 
         }
 
-        public void RemoveExerciseById(int id)
-        {
-            var exercise = GetExerciseById(id);
+		public void RemoveExerciseById(int id, ExercisesAPI exercise)
+		{
+			exercise = GetExerciseById(id);
 
-            if(exercise != null)
-            {
-                _ExercisesAPIContext.Remove(exercise);
-                _ExercisesAPIContext?.SaveChanges();
-            }
-            
-        }
+			_ExercisesAPIContext.Remove(exercise);
+			_ExercisesAPIContext?.SaveChanges();
+		}
 
-        public List<ExercisesAPI> GetExercisesByWorkoutId(int? workoutid)
+		public List<ExercisesAPI> GetExercisesByWorkoutId(int? workoutid)
             => _ExercisesAPIContext.ExercisesAPIs.Where(s => s.WorkoutId == workoutid).ToList();
 
         public ExercisesAPI GetByWorkoutName(string workoutName)

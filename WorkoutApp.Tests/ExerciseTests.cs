@@ -59,7 +59,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
 
-        _exerciseService.RemoveExerciseById(testexercise.Id);
+        _exerciseService.RemoveExerciseById(testexercise.Id, testexercise);
 
         testexercise = _exerciseService.GetExerciseById(testexercise.Id);
 
