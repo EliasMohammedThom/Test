@@ -42,9 +42,8 @@ namespace Web.Pages
         {
             currentUser = await _userManager.GetUserAsync(User);
            
-            var listofworkouts = _workoutService.GetWorkoutsByTitle(workout.Title, currentUser.Id);
 
-            if(listofworkouts.Count >= 1 ) 
+            if(_workoutService.Exists(workout.Title, currentUser.Id)) 
             {
                 ReplyToUser = "This Workouts name already exists, please choose something else";
                 TempData["ErrorMessage"] = ReplyToUser;

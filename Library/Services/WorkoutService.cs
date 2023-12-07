@@ -66,7 +66,14 @@ namespace Infrastructure.Services
             _workoutContext.SaveChanges();
         }
 
-        public List<Workout> GetAllWorkouts()
+		public bool Exists(string? title, string userId)
+        {
+            var x = _workoutContext.Workouts.Any(X => X.Title == title && X.UserId == userId);
+            return x;
+        }
+
+
+		public List<Workout> GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
         public Workout? GetWorkoutByTitle(string title)

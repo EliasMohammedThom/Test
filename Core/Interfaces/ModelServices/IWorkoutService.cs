@@ -15,6 +15,6 @@ namespace Core.Interfaces.ModelServices
         List<Workout> GetWorkoutsByTitle(string? title, string? userid);
         List<Workout> GetWorkoutsByScheduleId(int? id);
         public Workout? GetWorkoutByTitle(string title, string userid);
-       
-    }
+		bool Exists(string? title, string id);
+	}
 }
