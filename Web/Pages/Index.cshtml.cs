@@ -22,7 +22,7 @@ namespace Web.Pages
         {
             //Not yet implemented
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            //Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
             return Page();
         }

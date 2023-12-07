@@ -27,7 +27,7 @@ namespace WorkoutApp.Tests
             var exerciseList = service.GetAllExerciseLists();
 
             //Assert
-            Assert.Equal(550, exerciseList.Count);
+            Assert.Equal(551, exerciseList.Count);
         }
         [Fact]
         public void GetExerciseListByNameShouldReturnCorrectExercise()
