@@ -121,15 +121,14 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T3UpdateWorkoutShouldReturnUpdatedWorkoutTitle()
     {
         //arrange
-        using var context = Fixture.CreateContext();
-        var service = new WorkoutService(context);
+     
         var updatedName = "UpdatedWorkout";
-        var workout = service.GetWorkoutByTitle("WorkoutToBeUpdated");
+        var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
         workout.Title = updatedName;
 
         //act
-        service.UpdateWorkout(workout);
-        var actual = service.GetWorkoutByTitle(updatedName);
+        _workoutService.UpdateWorkout(workout);
+        var actual = _workoutService.GetWorkoutByTitle(updatedName);
 
         //assert
         Assert.Equal(actual.Title, updatedName);

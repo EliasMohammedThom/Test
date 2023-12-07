@@ -38,7 +38,7 @@ namespace Infrastructure.Services
 
         public void UpdateSchedule(string oldString, string newString) 
         {
-            var scheduleToBeUpdates = _scheduleContext.Schedules.SingleOrDefault(x => x.UserId == oldString);
+            var scheduleToBeUpdates = _scheduleContext.Schedules.FirstOrDefault(x => x.UserId == oldString);
 
             if (scheduleToBeUpdates != null)
             {
