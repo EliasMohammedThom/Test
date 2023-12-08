@@ -12,7 +12,7 @@ namespace WorkoutApp.Tests;
 
 public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 {
-    private readonly Workout _workout = new();
+    private Workout _workout = new();
     private WorkoutService _workoutService { get; set; }
     public WorkoutServiceTest(TestDatabaseFixture fixture)
     {
@@ -88,7 +88,8 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     //}
     #endregion
 
-    [Fact]
+
+  [Fact]
     public void T1AddWorkoutShouldReturnAddedWorkoutTitle()
     {
         //arrange
@@ -104,8 +105,21 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         Assert.Equal("WorkoutToBeUpdated", workout.Title);
     }
 
+
     [Fact]
-    public void T2GetWorkoutByTitleShouldReturnWorkoutTitle()
+    public void T2ExistsTest()
+    {
+        //arrange
+        _workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
+
+        //act
+        bool exists = _workoutService.Exists(_workout.Title, _workout.UserId);
+
+        //assert
+        Assert.True(exists);
+    }
+    [Fact]
+    public void T3GetWorkoutByTitleShouldReturnWorkoutTitle()
     {
         //arrange
    
@@ -117,7 +131,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T3UpdateWorkoutShouldReturnUpdatedWorkoutTitle()
+    public void T4UpdateWorkoutShouldReturnUpdatedWorkoutTitle()
     {
         //arrange     
         var updatedName = "UpdatedWorkout";
@@ -133,7 +147,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T4UpdateWorkoutScheduleIDToNullShouldReturnNullAfterRemoval()
+    public void T5UpdateWorkoutScheduleIDToNullShouldReturnNullAfterRemoval()
     {
         //arrange
         
@@ -148,7 +162,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     }
 
     [Fact]
-    public void T5DeleteWorkoutByIdShouldRemoveWorkoutFromDatabase()
+    public void T6DeleteWorkoutByIdShouldRemoveWorkoutFromDatabase()
     {
         //arrange
       
@@ -163,4 +177,6 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         //Assert
         Assert.Null(updatedActual);
     }
+
+  
 }
