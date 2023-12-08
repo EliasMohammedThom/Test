@@ -10,31 +10,39 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-	@foreach (var item in Model.SortedWorkoutList)
+	@if(Model.SortedWorkoutList?.Count != 0)
 	{
-		<div class="workout-box">
-			<strong>Workout name: @item.Title</strong>
-			@if (Model.Exercises.Any(x => x.WorkoutId == item.Id))
-			{
-				@foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
+
+		@foreach (var item in Model.SortedWorkoutList)
+		{
+			<div class="workout-box">
+				<strong>Workout name: @item.Title</strong>
+				@if (Model.Exercises.Any(x => x.WorkoutId == item.Id))
 				{
-					<ul class="exercise-list">
-						<strong>Exercise name: @item2.Name</strong>
-						<li class="exercise-item">Difficulty: @item2.Difficulty</li>
-						<li class="exercise-item">Exercise type: @item2.Type</li>
-						<li class="exercise-item">Equipment: @item2.Equipment</li>
-						<li class="exercise-item">Instructions: @item2.Instructions</li>
-						<li class="exercise-item">Sets: @item2.Sets</li>
-						<li class="exercise-item">Reps: @item2.Repetitions</li>
-					</ul>
+					@foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
+					{
+						<ul class="exercise-list">
+							<strong>Exercise name: @item2.Name</strong>
+							<li class="exercise-item">Difficulty: @item2.Difficulty</li>
+							<li class="exercise-item">Exercise type: @item2.Type</li>
+							<li class="exercise-item">Equipment: @item2.Equipment</li>
+							<li class="exercise-item">Instructions: @item2.Instructions</li>
+							<li class="exercise-item">Sets: @item2.Sets</li>
+							<li class="exercise-item">Reps: @item2.Repetitions</li>
+						</ul>
+					}
 				}
-			}
-			else
-			{
-				<p class="danger alert-danger">No exercises yet!</p>
-				<a asp-page="/AddExercise" asp-route-workoutId="@item.Id" class="btn btn-primary">Add exercise</a>
-			}
-		</div>
+				else
+				{
+					<p class="danger alert-danger">No exercises yet!</p>
+					<a asp-page="/AddExercise" asp-route-workoutId="@item.Id" class="btn btn-primary">Add exercise</a>
+				}
+			</div>
+		}
+	}
+	else
+	{
+		<p class ="danger alert-danger">You currently don't have any Workouts to be able to do anything here click <a asp-page="/AddWorkout">HERE</a> to create a workout</p>
 	}
 }
 

@@ -20,7 +20,6 @@ public class TestDatabaseFixture
                 {
 
                 }
-
                 _databaseInitialized = true;
             }
         }

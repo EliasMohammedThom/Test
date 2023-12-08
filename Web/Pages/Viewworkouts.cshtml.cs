@@ -23,7 +23,7 @@ namespace Web.Pages
 			_exerciseService = exerciseService;
 		}
 
-		public async Task<IActionResult> OnGet()
+		public async Task<IActionResult> OnGetAsync()
 		{
 			IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 			SortedWorkoutList = _workoutService.GetWorkoutsByUserId(identityUser.Id);

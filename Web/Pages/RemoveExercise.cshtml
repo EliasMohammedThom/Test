@@ -7,20 +7,34 @@
     ViewData["Title"] = "RemoveExercise";
     var user = await UserManager.GetUserAsync(User);
 }
-    @foreach(var item in Model.AllWorkoutsByCurrentUser)
+@if (Model.DoesUserHaveWorkouts.Count > 0)
 {
-    <div class="exercise-box">
-    <p>Workoutname: @item.Title</p>
 
-    @foreach(var exercise in item.Exercises)
+    @foreach (var item in Model.AllWorkoutsByCurrentUser)
     {
-        <form method="post">
-            <p>@exercise.Name <button type="submit" class="btn btn-danger" name="SelectedExerciseToRemove" value="@exercise.Id">Remove</button></p>
-        </form>
+
+        <div class="exercise-box">
+            <p>Workoutname: @item.Title</p>
+
+            @foreach (var exercise in item.Exercises)
+            {
+                <form method="post">
+                    <p>@exercise.Name <button type="submit" class="btn btn-danger" name="SelectedExerciseToRemove" value="@exercise.Id">Remove</button></p>
+                </form>
+            }
+        </div>
     }
-    </div>
     
 }
+else
+{
+    <p class="alert alert-danger">You currently don't have any Exercies in any workouts, Click <a asp-page="/AddExercise">HERE</a> to add a Exercise to a workout</p>
+}
+
+
+
+
+
 <style>
     .exercise-box {
         border: 1px solid #ccc;

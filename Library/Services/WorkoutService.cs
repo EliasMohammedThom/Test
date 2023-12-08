@@ -25,7 +25,6 @@ namespace Infrastructure.Services
                 _workoutContext.Add(workout);
                 _workoutContext.SaveChanges();
             }
-
         }
 
         public void UpdateWorkout(Workout workout)
@@ -35,7 +34,6 @@ namespace Infrastructure.Services
         }
 
         public void DeleteEmptyWorkout()
-
         {
             var emptyWorkout = _workoutContext.Workouts.Where(X => X.UserId == null).First();
 
@@ -44,7 +42,6 @@ namespace Infrastructure.Services
                 _workoutContext.Workouts.Remove(emptyWorkout);
                 _workoutContext.SaveChanges();
             }
-
         }
 
         public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout? workout)
@@ -72,15 +69,16 @@ namespace Infrastructure.Services
             return x;
         }
 
-
-		public List<Workout> GetAllWorkouts()
+		public List<Workout>? GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
         public Workout? GetWorkoutByTitle(string title)
-        => _workoutContext.Workouts.Where(s => s.Title == title).First();
-        public List<Workout>? GetWorkoutsByUserId(string userId) => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
+            => _workoutContext.Workouts.Where(s => s.Title == title).First();
+        public List<Workout>? GetWorkoutsByUserId(string userId) 
+            => _workoutContext.Workouts.Where(s => s.UserId == userId).ToList();
 
-        public List<Workout> GetWorkoutsByTitle(string? title, string? userid) => _workoutContext.Workouts.Where(X => X.Title == title && X.UserId == userid).ToList();
+        public List<Workout> GetWorkoutsByTitle(string? title, string? userid) 
+            => _workoutContext.Workouts.Where(X => X.Title == title && X.UserId == userid).ToList();
 
         public List<Workout> GetWorkoutsByScheduleId(int? scheduleId)
             => _workoutContext.Workouts.Where(X => X.ScheduleId == scheduleId).OrderBy(X=>X.Date).ToList();
