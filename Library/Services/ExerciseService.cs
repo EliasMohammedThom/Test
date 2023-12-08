@@ -26,7 +26,6 @@ namespace Infrastructure.Services
         public ExercisesAPI GetExerciseById(int id)
             => _ExercisesAPIContext.ExercisesAPIs.SingleOrDefault(s => s.Id == id);
 
-
         public void AddExercise(ExercisesAPI ExercisesAPI)
         {
             _ExercisesAPIContext.ExercisesAPIs.Add(ExercisesAPI);

@@ -16,10 +16,8 @@ namespace Infrastructure.Services
         {
             _ExerciseLists = ExerciseLists;
         }
-
         public List<ExerciseList> GetAllExerciseLists()
             => _ExerciseLists.ExerciseLists.OrderBy(s => s.Name).ToList();
-
         public ExerciseList GetExerciseListByName(string exerciseName) 
             => GetAllExerciseLists().Where(x=>x.Name == exerciseName).SingleOrDefault();
     }

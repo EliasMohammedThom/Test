@@ -17,7 +17,6 @@ namespace Core
             using (HttpClient client = new HttpClient())
             {
                 client.DefaultRequestHeaders.Add("X-Api-Key", apiKey);
-
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
                 if (response.IsSuccessStatusCode)
                 {
@@ -25,16 +24,11 @@ namespace Core
                     List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
                     return response;
                 }
-
-
                 else
                 {
                     return response;
                 }
             }
-
-
-
         }
     }
 }

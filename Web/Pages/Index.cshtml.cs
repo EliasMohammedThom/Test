@@ -16,11 +16,13 @@ namespace Web.Pages
 
         [BindProperty] 
         public Schedule? Schedule { get; set; }
+
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser>? userManager)
         {
             _scheduleService = scheduleService;
             _userManager = userManager;
         }
+
         public async Task <IActionResult> OnGetAsync()
         {
             //Not yet implemented
@@ -30,9 +32,9 @@ namespace Web.Pages
                 Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
             }
           
-
             return Page();
         }
+
         public async Task<IActionResult> OnPost() 
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
@@ -45,7 +47,6 @@ namespace Web.Pages
                 {
                    UserId = identityUser.Id,
                 };
-                //schedule.UserId = Schedule.UserId;
                 _scheduleService.AddSchedule(schedule);
             }
             return Redirect("/EditSchedule");

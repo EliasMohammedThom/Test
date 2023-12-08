@@ -5,49 +5,56 @@ using System.Reflection.Metadata;
 using Core.Models;
 using Microsoft.AspNetCore.Identity;
 using Core.Interfaces.ModelServices;
+using ProfanityFilter.Interfaces;
+using NuGet.ContentModel;
+
 namespace Web.Pages
 {
     public class AddWorkoutModel : PageModel
     {
         private readonly IWorkoutService _workoutService;
+        private readonly IProfanityFilter _profanityFilter;
 
         [BindProperty]
         public Workout workout { get; set; } = default!;
 
         [BindProperty]
         public string ReplyToUser { get; set; } = default!;
-
-
+        
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser currentUser;
 
-
-        public AddWorkoutModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager)
+        public AddWorkoutModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IProfanityFilter profanityFilter)
         {
             _workoutService = workoutService;
             _userManager = userManager;
+            _profanityFilter = profanityFilter;
 
         }
 
         public async Task <IActionResult> OnGetAsync()
-        {
 
-           
+        {
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostAsync()
 
         {
             currentUser = await _userManager.GetUserAsync(User);
-           
 
-            if(_workoutService.Exists(workout.Title, currentUser.Id)) 
+            if ( _profanityFilter.IsProfanity(workout.Title) )
+            {
+                ReplyToUser = "Profanities are not allowed";
+                TempData["ErrorMessage"] = ReplyToUser;
+            }
+
+            else if (_workoutService.Exists(workout.Title, currentUser.Id))
             {
                 ReplyToUser = "This Workouts name already exists, please choose something else";
                 TempData["ErrorMessage"] = ReplyToUser;
             }
+
             else
             {
                 _workoutService.AddWorkout(workout);

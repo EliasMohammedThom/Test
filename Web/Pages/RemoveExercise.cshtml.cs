@@ -22,7 +22,7 @@ namespace Web.Pages
         #region Public_Fields
         public Workout workout { get; set; }
         [BindProperty]
-        public List<Workout> AllWorkoutsByCurrentUser { get; set; }
+        public List<Workout>? AllWorkoutsByCurrentUser { get; set; }
 
         [BindProperty]
         public List<ExercisesAPI> AllExercisesByCurrentUser { get; set; }
@@ -32,21 +32,34 @@ namespace Web.Pages
 
         [BindProperty]
         public int SelectedExerciseToRemove { get; set; }
-        #endregion
 
+        [BindProperty]
+        public List<Workout>? DoesUserHaveWorkouts { get; set; }
+        #endregion
 
         public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser identityUser = await _userManager.GetUserAsync(User);
 
-            AllWorkoutsByCurrentUser = _workoutService.GetAllWorkouts().Where(X => X.UserId == identityUser.Id).ToList();
-            foreach (var item in AllWorkoutsByCurrentUser)
+            AllWorkoutsByCurrentUser = _workoutService.GetAllWorkouts()?.Where(X => X.UserId == identityUser.Id).ToList();
+
+            DoesUserHaveWorkouts = _workoutService.GetWorkoutsByUserId(identityUser.Id);
+
+            if (AllWorkoutsByCurrentUser != null)
             {
-                //item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
-                item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
+                foreach (var item in AllWorkoutsByCurrentUser)
+                {
+                    item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
+                }
             }
+            else
+            {
+                DoesUserHaveWorkouts = null;
+            }
+
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             _exerciseService.RemoveExerciseById(SelectedExerciseToRemove);

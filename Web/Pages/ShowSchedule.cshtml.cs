@@ -63,12 +63,10 @@ namespace Web.Pages
 
             CurrentUserScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
 
-            //SortedWorkoutList = _workoutService.GetAllWorkouts().Where(X => X.ScheduleId == CurrentUserScheduleId).OrderBy(X => X.Date).ToList();
             SortedWorkoutList = _workoutService.GetWorkoutsByScheduleId(CurrentUserScheduleId);
 
             foreach(var workout in SortedWorkoutList)
             {
-                //workout.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X => X.WorkoutId == workout.Id);
                 workout.Exercises = _exerciseService.GetExercisesByWorkoutId(workout.Id);
                 workout.Description = _extensionService.LimitLength(workout.Description,40) + "...";
             }
