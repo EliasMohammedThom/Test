@@ -8,6 +8,8 @@ using Core.Interfaces.Commands.Exercises;
 using Core.Commands.Exercises;
 using Core.Interfaces.Helpers;
 using Core.Helpers;
+using ProfanityFilter;
+using ProfanityFilter.Interfaces;
 
 namespace Web
 {
@@ -34,6 +36,7 @@ namespace Web
             builder.Services.AddScoped<IScheduleService, ScheduleService>();
             builder.Services.AddScoped<IImportValues, ImportValues>();
             builder.Services.AddScoped<IExtensions, Extensions>();
+            builder.Services.AddScoped<IProfanityFilter, ProfanityFilter.ProfanityFilter>();
             builder.Services.AddHttpClient();
 
             var app = builder.Build();
