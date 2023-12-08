@@ -9,9 +9,9 @@ namespace WorkoutApp.Tests
     ordererAssemblyName: "WorkoutApp.Tests")] 
 
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
-    {
        
         private Schedule? _schedule { get; set; }
+
         private ScheduleService _scheduleService { get; set; }
       
         public ScheduleTests(TestDatabaseFixture fixture)
@@ -34,12 +34,10 @@ namespace WorkoutApp.Tests
         {
             //arrange
           
-
              _scheduleService.AddSchedule(_schedule);
 
              var schedule = _scheduleService.GetScheduleById(_schedule.Id);
             
-
             //assert
             Assert.Equal(schedule.Id, _schedule.Id);
         }
@@ -57,9 +55,7 @@ namespace WorkoutApp.Tests
         [Fact]
         public void T3UpdateScheduleShouldReturnNotNullSchedule()
         {
-            //arrange
-          
-            //var testSchedule = _schedule.UserId;
+            //arrange         
 
             //act
             _scheduleService.UpdateSchedule(_schedule.UserId, "updatedSchedule");
@@ -78,12 +74,12 @@ namespace WorkoutApp.Tests
 
             _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
+
             _scheduleService.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
 
             _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
             
             
-
             // assert
             Assert.Null(_schedule);
         }

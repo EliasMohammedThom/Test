@@ -13,11 +13,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         Fixture = fixture;
         var context = Fixture.CreateContext();
         _exerciseService = new ExerciseService(context);
-
-
-
     }
-
 
     public TestDatabaseFixture Fixture { get; }
 
@@ -41,7 +37,6 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     {
         //arrange
        
-
         var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
         var exercise = _exerciseService.GetExerciseById(testexercise.Id);
@@ -55,7 +50,6 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     {
         //arrange
       
-
         var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
 

@@ -5,7 +5,6 @@ namespace Core.Interfaces.ModelServices
     public interface IExerciseListService
     {
         List<ExerciseList> GetAllExerciseLists();
-
         ExerciseList GetExerciseListByName(string exerciseName);
     }
 }

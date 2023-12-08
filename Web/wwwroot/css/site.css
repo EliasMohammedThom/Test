@@ -169,3 +169,17 @@ body {
     text-align: center; 
     background-color: #2d2e2d;
 }
+.workout-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 90px;
+}
+
+.exercise-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.exercise-item {
+    margin-bottom: 5px;
+}

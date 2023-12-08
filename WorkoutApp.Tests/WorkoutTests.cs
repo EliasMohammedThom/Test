@@ -109,7 +109,6 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     {
         //arrange
    
-
         //act
         var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
 
@@ -120,8 +119,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     [Fact]
     public void T3UpdateWorkoutShouldReturnUpdatedWorkoutTitle()
     {
-        //arrange
-     
+        //arrange     
         var updatedName = "UpdatedWorkout";
         var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
         workout.Title = updatedName;

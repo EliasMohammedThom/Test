@@ -30,19 +30,15 @@ namespace Web.Pages
         }
 
         public async Task <IActionResult> OnGetAsync()
-        {
-
-           
+        {    
             return Page();
         }
-
 
         public async Task<IActionResult> OnPostAsync()
 
         {
             currentUser = await _userManager.GetUserAsync(User);
            
-
             if(_workoutService.Exists(workout.Title, currentUser.Id)) 
             {
                 ReplyToUser = "This Workouts name already exists, please choose something else";
