@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace WorkoutApp.Tests
 {
-
-
     public class ExerciseListTests : IClassFixture<TestDatabaseFixture>
     {
-
         private ExerciseListService _exerciseListService { get; set; }
         public ExerciseListTests(TestDatabaseFixture fixture)
         {
@@ -21,8 +18,7 @@ namespace WorkoutApp.Tests
             var context = Fixture.CreateContext();
 
             _exerciseListService = new ExerciseListService(context);
-        }
-            
+        }       
 
         public TestDatabaseFixture Fixture { get; }
 
@@ -31,7 +27,6 @@ namespace WorkoutApp.Tests
         {
             //arrange
            
-
             //act
             var exerciseList = _exerciseListService.GetAllExerciseLists();
 

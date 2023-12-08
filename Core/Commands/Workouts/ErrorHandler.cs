@@ -10,7 +10,6 @@ namespace Core.Commands.Workouts
 {
     public class ErrorHandler
     {
-      
        
     }
 }

@@ -34,7 +34,6 @@ namespace Web.Pages
         public int SelectedExerciseToRemove { get; set; }
         #endregion
 
-
         public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser identityUser = await _userManager.GetUserAsync(User);
@@ -42,11 +41,11 @@ namespace Web.Pages
             AllWorkoutsByCurrentUser = _workoutService.GetAllWorkouts().Where(X => X.UserId == identityUser.Id).ToList();
             foreach (var item in AllWorkoutsByCurrentUser)
             {
-                //item.Exercises = _exerciseService.GetAllExercisesAPIs().Where(X=>X.WorkoutId == item.Id).ToList();
                 item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
             }
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             _exerciseService.RemoveExerciseById(SelectedExerciseToRemove);

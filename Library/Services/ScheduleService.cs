@@ -22,7 +22,6 @@ namespace Infrastructure.Services
         public List<Schedule> GetAllSchedules()
             => _scheduleContext.Schedules.OrderBy(s => s.UserId).ToList();
 
-
         public void AddSchedule(Schedule schedule)
         {
 

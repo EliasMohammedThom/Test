@@ -6,10 +6,7 @@ namespace Core.Interfaces.ModelServices
     {
         public List<Workout> GetAllWorkouts();
         public void AddWorkout(Workout workout);
-        //public Workout GetWorkoutById(int workoutid);
         public void UpdateWorkout(Workout workout);
-        //public Workout GetWorkoutByUserId(string userId);
-        //public Workout GetWorkoutByTitle(string title, string userid);
         public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout workout);
         public List<Workout>? GetWorkoutsByUserId(string userId);
         List<Workout> GetWorkoutsByTitle(string? title, string? userid);

@@ -12,10 +12,7 @@ namespace Core.Models
     public class Nutrition
     {
         public Nutrition() { }
-
-        
             [JsonPropertyName("name")]
-        
             public string? Name { get; set; }
             [JsonPropertyName("calories")]
             public float? Calories { get; set; }

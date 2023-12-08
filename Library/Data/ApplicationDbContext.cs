@@ -13,17 +13,13 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
     public DbSet<ExerciseList> ExerciseLists { get; set; }
-
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder>? modelCustomizer = null)
     : base(options)
     {
         _modelCustomizer = modelCustomizer;
     }
-
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        //builder.Entity<UrlResource>().HasNoKey()
-        //    .ToView("AllResources");
         base.OnModelCreating(builder);
         if (_modelCustomizer is not null)
         {
