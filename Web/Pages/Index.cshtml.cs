@@ -11,6 +11,9 @@ namespace Web.Pages
         private readonly IScheduleService _scheduleService;
         private readonly UserManager<IdentityUser>? _userManager;
 
+        public bool IsScheduleNull => Schedule == null;
+        public string ScheduleClass => IsScheduleNull ? " disabled-link" : "";
+
         [BindProperty] 
         public Schedule? Schedule { get; set; }
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser>? userManager)
