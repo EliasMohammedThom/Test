@@ -11,7 +11,7 @@ namespace WorkoutApp.Tests
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
     {
        
-        private Schedule _schedule { get; set; }
+        private Schedule? _schedule { get; set; }
         private ScheduleService _scheduleService { get; set; }
       
         public ScheduleTests(TestDatabaseFixture fixture)
@@ -36,11 +36,12 @@ namespace WorkoutApp.Tests
           
 
              _scheduleService.AddSchedule(_schedule);
+
              var schedule = _scheduleService.GetScheduleById(_schedule.Id);
             
 
             //assert
-            Assert.Equal(_schedule.Id, schedule.Id);
+            Assert.Equal(schedule.Id, _schedule.Id);
         }
         [Fact]
         public void T2GetLastScheduleInDatabaseShouldReturnTestUserId()
@@ -62,20 +63,25 @@ namespace WorkoutApp.Tests
 
             //act
             _scheduleService.UpdateSchedule(_schedule.UserId, "updatedSchedule");
-            var actual = _scheduleService.GetScheduleByUserId("updatedSchedule");
+
+            _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
             //assert
-            Assert.NotNull(actual);
+            Assert.Equal("updatedSchedule",_schedule.UserId);
         }
         [Fact]
         public void T4DeleteScheduleByScheduleIdShouldReturnNullAfterDeleted()
         {
             //arrange
-            
+
             //act
 
+            _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
             _scheduleService.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
+
+            _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
+            
             
 
             // assert

@@ -49,7 +49,7 @@ namespace Infrastructure.Services
         }
         public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule)
         {
-            schedule = _scheduleContext.Schedules.Where(x => x.Id == scheduleId).SingleOrDefault();
+            schedule = GetScheduleById(scheduleId);
 
             _scheduleContext.Remove(schedule);
             _scheduleContext.SaveChanges();
