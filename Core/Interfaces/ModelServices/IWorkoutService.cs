@@ -4,7 +4,7 @@ namespace Core.Interfaces.ModelServices
 {
     public interface IWorkoutService
     {
-        public List<Workout> GetAllWorkouts();
+        public List<Workout>? GetAllWorkouts();
         public void AddWorkout(Workout workout);
         public void UpdateWorkout(Workout workout);
         public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout workout);

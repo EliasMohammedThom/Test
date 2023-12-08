@@ -69,7 +69,7 @@ namespace Infrastructure.Services
             return x;
         }
 
-		public List<Workout> GetAllWorkouts()
+		public List<Workout>? GetAllWorkouts()
             => _workoutContext.Workouts.OrderBy(b => b.Title).ToList();
 
         public Workout? GetWorkoutByTitle(string title)
