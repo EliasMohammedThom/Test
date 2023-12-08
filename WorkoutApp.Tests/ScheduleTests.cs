@@ -6,25 +6,25 @@ namespace WorkoutApp.Tests
 {
     [TestCaseOrderer(
     ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
-    ordererAssemblyName: "WorkoutApp.Tests")] 
+    ordererAssemblyName: "WorkoutApp.Tests")]
 
     public class ScheduleTests : IClassFixture<TestDatabaseFixture>
-       
+    {
         private Schedule? _schedule { get; set; }
 
         private ScheduleService _scheduleService { get; set; }
-      
+
         public ScheduleTests(TestDatabaseFixture fixture)
         {
             Fixture = fixture;
-         
+
             _schedule = new Schedule
             {
                 UserId = "test"
             };
 
             var context = Fixture.CreateContext();
-            
+
             _scheduleService = new ScheduleService(context);
         }
         public TestDatabaseFixture Fixture { get; }
@@ -33,11 +33,11 @@ namespace WorkoutApp.Tests
         public void T1AddScheduleShouldReturnAddedScheduleId()
         {
             //arrange
-          
-             _scheduleService.AddSchedule(_schedule);
 
-             var schedule = _scheduleService.GetScheduleById(_schedule.Id);
-            
+            _scheduleService.AddSchedule(_schedule);
+
+            var schedule = _scheduleService.GetScheduleById(_schedule.Id);
+
             //assert
             Assert.Equal(schedule.Id, _schedule.Id);
         }
@@ -45,7 +45,7 @@ namespace WorkoutApp.Tests
         public void T2GetLastScheduleInDatabaseShouldReturnTestUserId()
         {
             //arrange
-       
+
             //act
             _schedule = _scheduleService.GetScheduleByUserId("test");
 
@@ -63,7 +63,7 @@ namespace WorkoutApp.Tests
             _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
             //assert
-            Assert.Equal("updatedSchedule",_schedule.UserId);
+            Assert.Equal("updatedSchedule", _schedule.UserId);
         }
         [Fact]
         public void T4DeleteScheduleByScheduleIdShouldReturnNullAfterDeleted()
@@ -78,8 +78,8 @@ namespace WorkoutApp.Tests
             _scheduleService.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
 
             _schedule = _scheduleService.GetScheduleByUserId("updatedSchedule");
-            
-            
+
+
             // assert
             Assert.Null(_schedule);
         }
