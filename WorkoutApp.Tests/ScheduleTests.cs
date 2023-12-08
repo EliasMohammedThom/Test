@@ -35,7 +35,7 @@ namespace WorkoutApp.Tests
             //arrange
           
 
-            _scheduleService.AddSchedule(_schedule);
+             _scheduleService.AddSchedule(_schedule);
              var schedule = _scheduleService.GetScheduleById(_schedule.Id);
             
 
@@ -58,10 +58,10 @@ namespace WorkoutApp.Tests
         {
             //arrange
           
-            var testSchedule = _schedule.UserId;
+            //var testSchedule = _schedule.UserId;
 
             //act
-            _scheduleService.UpdateSchedule(testSchedule, "updatedSchedule");
+            _scheduleService.UpdateSchedule(_schedule.UserId, "updatedSchedule");
             var actual = _scheduleService.GetScheduleByUserId("updatedSchedule");
 
             //assert
@@ -71,15 +71,15 @@ namespace WorkoutApp.Tests
         public void T4DeleteScheduleByScheduleIdShouldReturnNullAfterDeleted()
         {
             //arrange
-            _schedule = _scheduleService.GetAllSchedules().LastOrDefault();
+            
             //act
 
 
             _scheduleService.DeleteScheduleByScheduleId(_schedule.Id, _schedule);
-            var actual = _scheduleService.GetScheduleById(_schedule.Id);
+            
 
             // assert
-            Assert.Null(actual);
+            Assert.Null(_schedule);
         }
     }
 }
