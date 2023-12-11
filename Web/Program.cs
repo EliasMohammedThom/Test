@@ -55,9 +55,9 @@ namespace Web
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseHealthChecks(null);
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.MapRazorPages();
