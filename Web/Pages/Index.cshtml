@@ -36,9 +36,22 @@
         <a class="btn custom-btn custom-btn-primary" asp-page="/Viewworkouts"><i class="fas fa-eye"></i> View your workouts</a>
     </div>
 }
+else
+{
+    <p class="EmptyScreenText">Please <a asp-page="/Identity/Account/Register" class="ButtonLink">Register</a> a account or <a asp-page="/Identity/Account/Login" class="ButtonLink">Login in</a> to start your workout journey</p>
+}
 <style>
     .disabled-link{
         pointer-events: none;
         opacity: 0.5;
+    }
+
+    .EmptyScreenText{
+       text-align: center;
+        color: white;
+    }
+
+    .ButtonLink{
+        color: red;
     }
 </style>
