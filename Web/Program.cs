@@ -10,11 +10,15 @@ using Core.Interfaces.Helpers;
 using Core.Helpers;
 using ProfanityFilter;
 using ProfanityFilter.Interfaces;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Web
 {
+
     public class Program
     {
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +33,8 @@ namespace Web
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
 
+
+
             //Add our services
             builder.Services.AddScoped<IWorkoutService, WorkoutService>();
             builder.Services.AddScoped<IExerciseService, ExerciseService>();
@@ -38,6 +44,12 @@ namespace Web
             builder.Services.AddScoped<IExtensions, Extensions>();
             builder.Services.AddScoped<IProfanityFilter, ProfanityFilter.ProfanityFilter>();
             builder.Services.AddHttpClient();
+            builder.Services.AddHealthChecks();
+
+            
+
+
+
 
             var app = builder.Build();
 
@@ -53,15 +65,16 @@ namespace Web
                 app.UseHsts();
             }
 
+           
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseHealthChecks(null);
+            
             app.UseRouting();
             
             app.UseAuthorization();
 
             app.MapRazorPages();
-
+            app.MapHealthChecks("/health");
             app.Run();
         }
     }
