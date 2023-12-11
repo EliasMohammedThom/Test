@@ -14,7 +14,7 @@ using Core.Interfaces.Commands.Exercises;
 
 namespace Web.Pages
 {
-    public class ExerciseAPICallModel : PageModel
+    public class AddExercise : PageModel
     {
         private readonly IWorkoutService _workoutService;
         private readonly IExerciseService _exerciseService;
@@ -44,7 +44,7 @@ namespace Web.Pages
         [BindProperty]
         public List<Workout>? WorkoutList { get; set; }
 
-        public ExerciseAPICallModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI, IExerciseListService exerciseList, IImportValues importValues)
+        public AddExercise(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exercisesAPI, IExerciseListService exerciseList, IImportValues importValues)
         {
             _workoutService = workoutService;
             _userManager = userManager;
