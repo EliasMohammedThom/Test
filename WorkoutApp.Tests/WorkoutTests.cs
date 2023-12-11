@@ -89,7 +89,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     #endregion
 
 
-  [Fact]
+    [Fact]
     public void T1AddWorkoutShouldReturnAddedWorkoutTitle()
     {
         //arrange

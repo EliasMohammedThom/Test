@@ -5,7 +5,7 @@ namespace WorkoutApp.Tests;
 #region TestDatabaseFixture
 public class TestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=tcp:workoutapp3.database.windows.net,1433;Initial Catalog=WorkoutAppDb;Persist Security Info=False;User ID=WorkoutAppName3;Password=Passwordisverysafe!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+    private const string ConnectionString = @"Server=mssql-157271-0.cloudclusters.net,10043;Initial Catalog=WorkoutAppDb;Persist Security Info=False;User ID=workoutapp3;Password=Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
 
     private static readonly object _lock = new();
     private static bool _databaseInitialized;
