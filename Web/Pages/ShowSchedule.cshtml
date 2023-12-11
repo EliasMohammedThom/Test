@@ -7,10 +7,12 @@
     var user = await UserManager.GetUserAsync(User);
 
 }
-@if (Model.CurrentUserScheduleId == null)
+@if (Model.SortedWorkoutList.Count <= 0)
 {
-    <p>You need to create a workout and a schedule before coming here! please press <a class="btn btn-primary" asp-page="/Addworkout">Here</a> to continiue</p>
+    <p style="color:white;">You need to add workouts to your schedule first, click on the button to add a workout, then edit your schedule <a class="btn btn-primary" asp-page="/Addworkout">Here</a> to continue</p>
 }
+
+
 else
 {
     <strong class="CenterText" style="font-size: 2.5em; font-family: 'Pacifico', cursive; color: white;">Current workouts in your schedule:</strong>
