@@ -39,6 +39,10 @@ jobs:
         run: |
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+          
+      - name: Install dotnet-coverage tool
+        run: dotnet tool install --global dotnet-coverage
+        
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -48,9 +52,10 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"EliasMohammedThom_Test" /o:"eliasmohammedthom" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
            dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml" 
+          dotnet test --collect "Code Coverage"
           
-      - name: Install dotnet-coverage tool
-        run: dotnet tool install --global dotnet-coverage
+     
         
 
 
