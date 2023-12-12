@@ -133,7 +133,7 @@ body {
     bottom: 0;
     width: 100%;
     height: 100px; /* Set the height of your footer */
-    background-color: #f8f9fa; /* Add a background color to your footer */
+    background-color: white; /* Add a background color to your footer */
     text-align: center;
     line-height: 100px; /* Center content vertically in the footer */
 }
@@ -144,7 +144,7 @@ body {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #dddddd; /* Optional: Add a border for separation */
-    border-radius: 10px;
+    radius: 10px;
 }
 
     .workout-box strong {
@@ -167,7 +167,7 @@ body {
 }
 .footer {
     text-align: center; 
-    background-color: #2d2e2d;
+    background-color: white;
 }
 .workout-box {
     border: 1px solid #ccc;
