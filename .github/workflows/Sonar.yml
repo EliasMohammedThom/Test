@@ -11,6 +11,7 @@ jobs:
     name: Build and analyze
     runs-on: windows-latest
     steps:
+    
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
@@ -47,3 +48,17 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"EliasMohammedThom_Test" /o:"eliasmohammedthom" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
            dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+          
+      - name: Install dotnet-coverage tool
+        run: dotnet tool install --global dotnet-coverage
+        
+
+
+
+              
+
+
+
+
+          
+
