@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Core\Helpers\Extensions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Interfaces.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core.Helpers
+{
+    public class Extensions : IExtensions
+    {
+        public string LimitLength(string source, int maxLength)
+        {
+            if (source != null)
+            {
+                if (source.Length &lt;= maxLength)
+                {
+                    return source;
+                }
+                return source.Substring(0, maxLength);
+            }
+            return source;
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,9,13,10,0],[14,13,14,32,0],[15,13,15,14,0],[16,17,16,48,0],[17,17,17,18,0],[18,21,18,35,0],[20,17,20,55,0],[22,13,22,27,0],[23,9,23,10,0]]);
+    </script>
+  </body>
+</html>

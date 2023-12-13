@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Library\Services\WorkoutService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Core.Interfaces.ModelServices;
+using Core.Models;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Infrastructure.Services
+{
+    public class WorkoutService : IWorkoutService
+    {
+        private readonly ApplicationDbContext _workoutContext;
+
+        public WorkoutService(ApplicationDbContext workoutContext)
+        {
+            _workoutContext = workoutContext;
+        }
+        public void AddWorkout(Workout workout)
+        {
+            if (workout != null)
+            {
+                _workoutContext.Add(workout);
+                _workoutContext.SaveChanges();
+            }
+        }
+
+        public void UpdateWorkout(Workout workout)
+        {
+            _workoutContext.Update(workout);
+            _workoutContext.SaveChanges();
+        }
+
+        public void DeleteEmptyWorkout()
+        {
+            var emptyWorkout = _workoutContext.Workouts.Where(X =&gt; X.UserId == null).First();
+
+            if (emptyWorkout != null)
+            {
+                _workoutContext.Workouts.Remove(emptyWorkout);
+                _workoutContext.SaveChanges();
+            }
+        }
+
+        public void UpdateWorkoutScheduleIDToNull(int? workoutId, Workout? workout)
+        {
+            workout = _workoutContext.Workouts.Where(X =&gt; X.Id == workoutId).First();
+
+            if (workout != null)
+            {
+                workout.ScheduleId = null;
+
+                _workoutContext.Update(workout);
+                _workoutContext.SaveChanges();
+            }
+        }
+
+        public void DeleteWorkoutById(int? id)
+        {
+            _workoutContext.Remove(GetWorkoutByID(id));
+            _workoutContext.SaveChanges();
+        }
+
+		public bool Exists(string? title, string userId)
+        {
+            var x = _workoutContext.Workouts.Any(X =&gt; X.Title == title &amp;&amp; X.UserId == userId);
+            return x;
+        }
+
+		public List&lt;Workout&gt;? GetAllWorkouts()
+            =&gt; _workoutContext.Workouts.OrderBy(b =&gt; b.Title).ToList();
+
+        public Workout? GetWorkoutByTitle(string title)
+            =&gt; _workoutContext.Workouts.Where(s =&gt; s.Title == title).First();
+        public List&lt;Workout&gt;? GetWorkoutsByUserId(string userId) 
+            =&gt; _workoutContext.Workouts.Where(s =&gt; s.UserId == userId).ToList();
+
+        public List&lt;Workout&gt; GetWorkoutsByTitle(string? title, string? userid) 
+            =&gt; _workoutContext.Workouts.Where(X =&gt; X.Title == title &amp;&amp; X.UserId == userid).ToList();
+
+        public List&lt;Workout&gt; GetWorkoutsByScheduleId(int? scheduleId)
+            =&gt; _workoutContext.Workouts.Where(X =&gt; X.ScheduleId == scheduleId).OrderBy(X=&gt;X.Date).ToList();
+
+        public Workout? GetWorkoutByTitle(string title, string userid)
+             =&gt; _workoutContext.Workouts.Where(s =&gt; s.Title == title &amp;&amp; s.UserId == userid).First();
+
+        public Workout? GetWorkoutByID(int? id) 
+            =&gt;_workoutContext.Workouts.FirstOrDefault(W=&gt;W.Id == id);
+
+        
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,9,17,67,1],[18,9,18,10,1],[19,13,19,46,1],[20,9,20,10,1],[22,9,22,10,1],[23,13,23,33,1],[24,13,24,14,1],[25,17,25,46,1],[26,17,26,47,1],[27,13,27,14,1],[28,9,28,10,1],[31,9,31,10,1],[32,13,32,45,1],[33,13,33,43,1],[34,9,34,10,1],[37,9,37,10,0],[38,13,38,94,0],[40,13,40,38,0],[41,13,41,14,0],[42,17,42,63,0],[43,17,43,47,0],[44,13,44,14,0],[45,9,45,10,0],[48,9,48,10,1],[49,13,49,86,1],[51,13,51,33,1],[52,13,52,14,1],[53,17,53,43,1],[55,17,55,49,1],[56,17,56,47,1],[57,13,57,14,1],[58,9,58,10,1],[61,9,61,10,1],[62,13,62,56,1],[63,13,63,43,1],[64,9,64,10,1],[67,9,67,10,1],[68,13,68,95,1],[69,13,69,22,1],[70,9,70,10,1],[73,16,73,71,1],[76,16,76,77,1],[78,16,78,80,0],[81,16,81,100,0],[84,16,84,107,0],[87,17,87,100,0],[90,15,90,69,0]]);
+    </script>
+  </body>
+</html>

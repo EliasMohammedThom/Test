@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\AlphabeticalOrderer.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Xunit.Abstractions;
+using Xunit.Sdk;
+
+namespace WorkoutApp.Tests;
+
+public class AlphabeticalOrderer : ITestCaseOrderer
+{
+    public IEnumerable&lt;TTestCase&gt; OrderTestCases&lt;TTestCase&gt;(
+        IEnumerable&lt;TTestCase&gt; testCases) where TTestCase : ITestCase =&gt;
+        testCases.OrderBy(testCase =&gt; testCase.TestMethod.Method.Name);
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,9,10,39,1],[10,39,10,70,1],[10,70,10,71,1]]);
+    </script>
+  </body>
+</html>

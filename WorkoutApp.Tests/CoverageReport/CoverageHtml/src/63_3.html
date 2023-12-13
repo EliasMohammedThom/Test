@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Core\ApiCalls.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Models;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core
+{
+    public class APICalls
+    {
+        public static async Task&lt;HttpResponseMessage&gt; GetAPICall(string type, string muscle, string difficulty)
+        {
+            string apiUrl = $&quot;https://api.api-ninjas.com/v1/exercises?muscle={muscle}&amp;type={type}&amp;difficulty={difficulty}&quot;;
+            string apiKey = &quot;7XGUZFPA48mkJTnWL2ZRuA==DyuL7vMFbtzbJHYg&quot;;
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Add(&quot;X-Api-Key&quot;, apiKey);
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                if (response.IsSuccessStatusCode)
+                {
+                    string result = await response.Content.ReadAsStringAsync();
+                    List&lt;ExercisesAPI&gt; exercises = JsonConvert.DeserializeObject&lt;List&lt;ExercisesAPI&gt;&gt;(result);
+                    return response;
+                }
+                else
+                {
+                    return response;
+                }
+            }
+        }
+    }
+}
+
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[14,9,14,10,0],[15,13,15,124,0],[16,13,16,72,0],[17,20,17,56,0],[18,13,18,14,0],[19,17,19,71,0],[20,17,20,78,0],[21,17,21,50,0],[22,17,22,18,0],[23,21,23,80,0],[24,21,24,110,0],[25,21,25,37,0],[28,17,28,18,0],[29,21,29,37,0],[32,9,32,10,0]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Core\Models\ExcercisesAPI.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace Core.Models
+{
+    public class ExercisesAPI
+    {
+
+        [Key]
+        public int Id { get; set; }
+        public int? WorkoutId { get; set; }
+
+        [JsonPropertyName(&quot;name&quot;)]
+        public string? Name { get; set; }
+        [JsonPropertyName(&quot;type&quot;)]
+        public string? Type { get; set; }
+        [JsonPropertyName(&quot;muscle&quot;)]
+        public string? Muscle { get; set; }
+        [JsonPropertyName(&quot;equipment&quot;)]
+        public string? Equipment { get; set; }
+        [JsonPropertyName(&quot;difficulty&quot;)]
+        public string? Difficulty { get; set; }
+        [JsonPropertyName(&quot;instructions&quot;)]
+        public string? Instructions { get; set; }
+        public int? Sets { get; set; }
+        public int? Repetitions { get; set; }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[16,25,16,29,0],[16,30,16,34,0],[17,33,17,37,0],[17,38,17,42,0],[20,31,20,35,1],[20,36,20,40,1],[22,31,22,35,0],[22,36,22,40,0],[24,33,24,37,0],[24,38,24,42,0],[26,36,26,40,0],[26,41,26,45,0],[28,37,28,41,0],[28,42,28,46,0],[30,39,30,43,0],[30,44,30,48,0],[31,28,31,32,0],[31,33,31,37,0],[32,35,32,39,0],[32,40,32,44,0]]);
+    </script>
+  </body>
+</html>

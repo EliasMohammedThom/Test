@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Core\Models\ExerciseList.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace Core.Models
+{
+    public class ExerciseList
+    {
+        [Key]
+        public int Id { get; set; }
+        
+        [JsonPropertyName(&quot;name&quot;)]
+        public string? Name { get; set; }
+        [JsonPropertyName(&quot;type&quot;)]
+        public string? Type { get; set; }
+        [JsonPropertyName(&quot;muscle&quot;)]
+        public string? Muscle { get; set; }
+        [JsonPropertyName(&quot;equipment&quot;)]
+        public string? Equipment { get; set; }
+        [JsonPropertyName(&quot;difficulty&quot;)]
+        public string? Difficulty { get; set; }
+        [JsonPropertyName(&quot;instructions&quot;)]
+        public string? Instructions { get; set; }
+     
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[14,25,14,29,0],[14,30,14,34,0],[17,31,17,35,1],[17,36,17,40,0],[19,31,19,35,0],[19,36,19,40,0],[21,33,21,37,0],[21,38,21,42,0],[23,36,23,40,0],[23,41,23,45,0],[25,37,25,41,0],[25,42,25,46,0],[27,39,27,43,0],[27,44,27,48,0]]);
+    </script>
+  </body>
+</html>

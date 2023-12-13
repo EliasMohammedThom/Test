@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\TestDatabaseFixture.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+namespace WorkoutApp.Tests;
+
+#region TestDatabaseFixture
+public class TestDatabaseFixture
+{
+    private const string ConnectionString = @&quot;Server=mssql-157271-0.cloudclusters.net,10043;Initial Catalog=WorkoutAppDb;Persist Security Info=False;User ID=workoutapp3;Password=Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;&quot;;
+
+    private static readonly object _lock = new();
+    private static bool _databaseInitialized;
+
+    public TestDatabaseFixture()
+    {
+        lock (_lock)
+        {
+            if (!_databaseInitialized)
+            {
+                using (var context = CreateContext())
+                {
+
+                }
+                _databaseInitialized = true;
+            }
+        }
+    }
+
+    public ApplicationDbContext CreateContext()
+        =&gt; new ApplicationDbContext(
+            new DbContextOptionsBuilder&lt;ApplicationDbContext&gt;()
+                .UseSqlServer(ConnectionString)
+                .Options);
+}
+#endregion
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,5,10,50,1],[13,5,13,33,1],[14,5,14,6,1],[15,9,15,21,1],[16,9,16,10,1],[17,13,17,39,1],[18,13,18,14,1],[19,24,19,53,1],[20,17,20,18,1],[22,17,22,18,1],[23,17,23,45,1],[24,13,24,14,1],[25,9,25,10,1],[26,5,26,6,1],[29,12,32,26,1]]);
+    </script>
+  </body>
+</html>

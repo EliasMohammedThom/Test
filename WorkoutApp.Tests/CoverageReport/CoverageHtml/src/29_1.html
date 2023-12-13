@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Library\Services\ExerciseService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Interfaces.ModelServices;
+using Core.Models;
+using Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Services
+{
+    public class ExerciseService : IExerciseService
+    {
+        private readonly ApplicationDbContext _ExercisesAPIContext;
+
+        public ExerciseService(ApplicationDbContext ExercisesAPIContext)
+        {
+            _ExercisesAPIContext = ExercisesAPIContext;
+        }
+
+        //Testas ej men anv&#228;nds i tester
+        public List&lt;ExercisesAPI&gt;? GetAllExercisesAPIs()
+            =&gt; _ExercisesAPIContext.ExercisesAPIs.OrderBy(s =&gt; s.Name).ToList();
+
+        //Testas ej men anv&#228;nds i tester
+        public ExercisesAPI? GetExerciseById(int id)
+            =&gt; _ExercisesAPIContext.ExercisesAPIs.FirstOrDefault(s =&gt; s.Id == id);
+
+        public void AddExercise(ExercisesAPI ExercisesAPI)
+        {
+            _ExercisesAPIContext.ExercisesAPIs.Add(ExercisesAPI);
+            _ExercisesAPIContext.SaveChanges();
+
+        }
+
+		public void RemoveExerciseById(int id)
+		{
+			var exercise = GetExerciseById(id);
+
+			_ExercisesAPIContext.Remove(exercise);
+			_ExercisesAPIContext?.SaveChanges();
+		}
+
+		public List&lt;ExercisesAPI&gt; GetExercisesByWorkoutId(int? workoutid)
+            =&gt; _ExercisesAPIContext.ExercisesAPIs.Where(s =&gt; s.WorkoutId == workoutid).ToList();
+
+        public ExercisesAPI GetByWorkoutName(string workoutName)
+         =&gt; _ExercisesAPIContext.ExercisesAPIs.Where(X=&gt;X.Name == workoutName).First();
+        
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[16,9,16,73,1],[17,9,17,10,1],[18,13,18,56,1],[19,9,19,10,1],[23,16,23,80,1],[27,16,27,82,0],[30,9,30,10,1],[31,13,31,66,1],[32,13,32,48,1],[34,9,34,10,1],[37,3,37,4,0],[38,4,38,39,0],[40,4,40,42,0],[41,4,41,40,0],[42,3,42,4,0],[45,16,45,96,0],[48,13,48,87,1]]);
+    </script>
+  </body>
+</html>

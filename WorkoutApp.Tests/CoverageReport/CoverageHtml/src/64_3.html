@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Core\Commands\Exercises\ImportValues.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Core.Interfaces.Commands.Exercises;
+
+namespace Core.Commands.Exercises
+{
+    public class ImportValues : IImportValues
+    {
+        public ExercisesAPI AssignValuesToNewExercise(ExercisesAPI newExercise, ExerciseList exerciseFromList, Workout workout)
+        {
+            newExercise.WorkoutId = workout.Id;
+            newExercise.Name = exerciseFromList.Name;
+            newExercise.Instructions = exerciseFromList.Instructions;
+            newExercise.Equipment = exerciseFromList.Equipment;
+            newExercise.Type = exerciseFromList.Type;
+            newExercise.Difficulty = exerciseFromList.Difficulty;
+            newExercise.Muscle = exerciseFromList.Muscle;
+
+            return newExercise;
+        }
+    }
+
+   
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[14,9,14,10,0],[15,13,15,48,0],[16,13,16,54,0],[17,13,17,70,0],[18,13,18,64,0],[19,13,19,54,0],[20,13,20,66,0],[21,13,21,58,0],[23,13,23,32,0],[24,9,24,10,0]]);
+    </script>
+  </body>
+</html>

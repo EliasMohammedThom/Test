@@ -158,7 +158,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         var actual = _workoutService.GetWorkoutByTitle("UpdatedWorkout");
 
         // assert
-        Assert.Equal(actual.ScheduleId, null);
+        Assert.Null(actual.ScheduleId);
     }
 
     [Fact]
@@ -167,7 +167,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
         //arrange
 
         //act
-        var actual = _workoutService.GetAllWorkouts().Where(x => x.Title == "UpdatedWorkout").First();
+        var actual = _workoutService.GetAllWorkouts().FirstOrDefault(x => x.Title == "UpdatedWorkout");
         int? actualId = actual.Id;
 
         _workoutService.DeleteWorkoutById(actualId);

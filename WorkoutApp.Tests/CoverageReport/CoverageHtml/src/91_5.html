@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\Integrationstests\ExerciseListTests.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Interfaces.ModelServices;
+using Infrastructure.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WorkoutApp.Tests.Integrationstests
+{
+    public class ExerciseListTests : IClassFixture&lt;TestDatabaseFixture&gt;
+    {
+        private ExerciseListService _exerciseListService { get; set; }
+        public ExerciseListTests(TestDatabaseFixture fixture)
+        {
+            Fixture = fixture;
+
+            var context = Fixture.CreateContext();
+
+            _exerciseListService = new ExerciseListService(context);
+        }
+
+        public TestDatabaseFixture Fixture { get; }
+
+        [Fact]
+        public void GetAllExerciseListsShouldReturnCorrectAmountOfExercises()
+        {
+            //arrange
+
+            //act
+            var exerciseList = _exerciseListService.GetAllExerciseLists();
+
+            //Assert
+            Assert.Equal(551, exerciseList.Count);
+        }
+        [Fact]
+        public void GetExerciseListByNameShouldReturnCorrectExercise()
+        {
+            // arrange
+
+            var exerciseNameToFind = &quot;Cocoons&quot;;
+
+            // act
+            var result = _exerciseListService.GetExerciseListByName(exerciseNameToFind);
+
+            // assert
+            Assert.NotNull(result);
+            Assert.Equal(exerciseNameToFind, result.Name);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,60,13,64,1],[13,65,13,69,1],[14,9,14,62,1],[15,9,15,10,1],[16,13,16,31,1],[18,13,18,51,1],[20,13,20,69,1],[21,9,21,10,1],[23,46,23,50,1],[27,9,27,10,1],[31,13,31,75,1],[34,13,34,51,1],[35,9,35,10,1],[38,9,38,10,1],[41,13,41,48,1],[44,13,44,89,1],[47,13,47,36,1],[48,13,48,59,1],[49,9,49,10,1]]);
+    </script>
+  </body>
+</html>

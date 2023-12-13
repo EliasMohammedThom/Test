@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Library\Data\ApplicationDbContext.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Core.Models;
+
+
+namespace Infrastructure.Data;
+
+public class ApplicationDbContext : IdentityDbContext
+{
+    private readonly Action&lt;ApplicationDbContext, ModelBuilder&gt;? _modelCustomizer;
+    public DbSet&lt;Workout&gt; Workouts {  get; set; }
+    public DbSet&lt;ExercisesAPI&gt; ExercisesAPIs { get; set; }
+    public DbSet&lt;Schedule&gt; Schedules { get; set; }
+    public DbSet&lt;Nutrition&gt; Nutritions { get; set; }
+    public DbSet&lt;ExerciseList&gt; ExerciseLists { get; set; }
+    public ApplicationDbContext(DbContextOptions&lt;ApplicationDbContext&gt; options, Action&lt;ApplicationDbContext, ModelBuilder&gt;? modelCustomizer = null)
+    : base(options)
+    {
+        _modelCustomizer = modelCustomizer;
+    }
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+        if (_modelCustomizer is not null)
+        {
+            _modelCustomizer(this, builder);
+        }
+    }
+}
+
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[11,39,11,43,1],[11,44,11,48,1],[12,48,12,52,1],[12,53,12,57,1],[13,40,13,44,1],[13,45,13,49,1],[15,48,15,52,1],[15,53,15,57,1],[17,7,17,20,1],[18,5,18,6,1],[19,9,19,44,1],[20,5,20,6,1],[22,5,22,6,1],[23,9,23,39,1],[24,9,24,42,1],[25,9,25,10,0],[26,13,26,45,0],[27,9,27,10,0],[28,5,28,6,1]]);
+    </script>
+  </body>
+</html>

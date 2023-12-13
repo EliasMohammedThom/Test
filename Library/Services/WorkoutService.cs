@@ -87,7 +87,7 @@ namespace Infrastructure.Services
              => _workoutContext.Workouts.Where(s => s.Title == title && s.UserId == userid).First();
 
         public Workout? GetWorkoutByID(int? id) 
-            =>_workoutContext.Workouts.Where(W=>W.Id == id).FirstOrDefault();
+            =>_workoutContext.Workouts.FirstOrDefault(W=>W.Id == id);
 
         
     }

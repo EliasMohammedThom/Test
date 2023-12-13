@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>C:\Users\baske\Desktop\Programmering\Test\Test\Library\Services\ScheduleService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using Core.Interfaces.ModelServices;
+using Core.Models;
+using Infrastructure.Data;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Infrastructure.Services
+{
+    public class ScheduleService : IScheduleService
+    {
+        private readonly ApplicationDbContext _scheduleContext;
+
+        public ScheduleService(ApplicationDbContext scheduleContext)
+        {
+            _scheduleContext = scheduleContext;
+        }
+
+        //Testas ej, men anv&#228;nds i tester
+        public List&lt;Schedule&gt; GetAllSchedules()
+            =&gt; _scheduleContext.Schedules.OrderBy(s =&gt; s.UserId).ToList();
+
+        public void AddSchedule(Schedule schedule)
+        {
+
+            if (schedule != null)
+            {
+                _scheduleContext.Schedules.Add(schedule);
+                _scheduleContext.SaveChanges();
+            }
+          
+        }
+        public Schedule? GetScheduleById(int? scheduleId)
+            =&gt; _scheduleContext.Schedules.Where(s =&gt; s.Id == scheduleId).SingleOrDefault();
+
+        public void UpdateSchedule(string oldString, string newString) 
+        {
+            var scheduleToBeUpdates = _scheduleContext.Schedules.FirstOrDefault(x =&gt; x.UserId == oldString);
+
+            if (scheduleToBeUpdates != null)
+            {
+                scheduleToBeUpdates.UserId = newString;
+                _scheduleContext.Schedules.Update(scheduleToBeUpdates);
+                _scheduleContext.SaveChanges();
+            }
+        }
+        public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule)
+        {
+            schedule = GetScheduleById(scheduleId);
+
+            _scheduleContext.Remove(schedule);
+            _scheduleContext.SaveChanges();
+        }
+
+        //Testas ej, men anv&#228;nds i tester
+        public Schedule? GetScheduleByUserId(string? userId)
+        =&gt; _scheduleContext.Schedules.Where(s =&gt; s.UserId == userId).FirstOrDefault();
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[16,9,16,69,1],[17,9,17,10,1],[18,13,18,48,1],[19,9,19,10,1],[23,16,23,74,0],[26,9,26,10,1],[28,13,28,34,1],[29,13,29,14,1],[30,17,30,58,1],[31,17,31,48,1],[32,13,32,14,1],[34,9,34,10,1],[36,16,36,91,1],[39,9,39,10,1],[40,13,40,109,1],[42,13,42,45,1],[43,13,43,14,1],[44,17,44,56,1],[45,17,45,72,1],[46,17,46,48,1],[47,13,47,14,1],[48,9,48,10,1],[50,9,50,10,1],[51,13,51,52,1],[53,13,53,47,1],[54,13,54,44,1],[55,9,55,10,1],[59,12,59,86,1]]);
+    </script>
+  </body>
+</html>
