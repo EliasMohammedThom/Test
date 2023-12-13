@@ -4,9 +4,13 @@ using Core;
 using Newtonsoft.Json;
 namespace WorkoutApp.Tests.Integrationstests;
 
+[TestCaseOrderer(
+    ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
+    ordererAssemblyName: "WorkoutApp.Tests")]
+
 public class ExerciseTests : IClassFixture<TestDatabaseFixture>
 {
-    private readonly ExercisesAPI _Exercise = new();
+    private ExercisesAPI _Exercise = new();
     private ExerciseService _exerciseService { get; set; }
     public ExerciseTests(TestDatabaseFixture fixture)
     {
@@ -50,14 +54,17 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     {
         //arrange
 
-        var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
+
+        var exercise = _exerciseService.GetAllExercisesAPIs().First(x => x.Name == "ExerciseToBeRemoved");
+       
+
         //act
 
-        _exerciseService.RemoveExerciseById(testexercise.Id);
+        _exerciseService.RemoveExerciseById(exercise.Id);
 
-        testexercise = _exerciseService.GetExerciseById(testexercise.Id);
+        exercise = _exerciseService.GetExerciseById(exercise.Id);
 
-        Assert.Null(testexercise);
+        Assert.Null(exercise);
     }
 
     //[Fact]

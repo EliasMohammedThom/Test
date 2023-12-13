@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
-<coverage line-rate="0.743975903614458" branch-rate="0.583333333333333" lines-covered="247" lines-valid="332" branches-covered="14" branches-valid="24" complexity="127" version="0" timestamp="1702461017">
+<coverage line-rate="0.743975903614458" branch-rate="0.583333333333333" lines-covered="247" lines-valid="332" branches-covered="14" branches-valid="24" complexity="127" version="0" timestamp="1702472914">
   <sources>
     <source>C:\Users\baske\</source>
   </sources>
@@ -819,15 +819,15 @@
           <methods>
             <method name="OrderTestCases" signature="(...)" line-rate="1" branch-rate="1" complexity="2">
               <lines>
-                <line number="10" hits="12" branch="true" condition-coverage="100% (2/2)" />
+                <line number="10" hits="16" branch="true" condition-coverage="100% (2/2)" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="10" hits="12" branch="true" condition-coverage="100% (2/2)" />
+            <line number="10" hits="16" branch="true" condition-coverage="100% (2/2)" />
           </lines>
         </class>
-        <class name="WorkoutApp.Tests.ExerciseListTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\ExerciseListTests.cs" line-rate="1" branch-rate="1" complexity="5">
+        <class name="WorkoutApp.Tests.Integrationstests.ExerciseListTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\Integrationstests\ExerciseListTests.cs" line-rate="1" branch-rate="1" complexity="5">
           <methods>
             <method name="get__exerciseListService" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -889,90 +889,90 @@
             <line number="49" hits="1" branch="false" />
           </lines>
         </class>
-        <class name="WorkoutApp.Tests.ExerciseTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\ExerciseTests.cs" line-rate="1" branch-rate="1" complexity="6">
+        <class name="WorkoutApp.Tests.Integrationstests.ExerciseTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\Integrationstests\ExerciseTests.cs" line-rate="1" branch-rate="1" complexity="6">
           <methods>
             <method name="get__exerciseService" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="10" hits="10" branch="false" />
+                <line number="14" hits="10" branch="false" />
               </lines>
             </method>
             <method name="get_Fixture" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="18" hits="3" branch="false" />
+                <line number="22" hits="3" branch="false" />
               </lines>
             </method>
             <method name="T1AddExerciseShouldReturnAddedExerciseName" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="22" hits="1" branch="false" />
                 <line number="26" hits="1" branch="false" />
-                <line number="28" hits="1" branch="false" />
-                <line number="29" hits="1" branch="false" />
+                <line number="30" hits="1" branch="false" />
                 <line number="32" hits="1" branch="false" />
                 <line number="33" hits="1" branch="false" />
+                <line number="36" hits="1" branch="false" />
+                <line number="37" hits="1" branch="false" />
               </lines>
             </method>
             <method name="T2GetExerciseByIdShouldReturnNotNullForValidId" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="37" hits="1" branch="false" />
-                <line number="40" hits="10" branch="false" />
-                <line number="42" hits="1" branch="false" />
-                <line number="45" hits="1" branch="false" />
+                <line number="41" hits="1" branch="false" />
+                <line number="44" hits="10" branch="false" />
                 <line number="46" hits="1" branch="false" />
+                <line number="49" hits="1" branch="false" />
+                <line number="50" hits="1" branch="false" />
               </lines>
             </method>
             <method name="T3RemoveExerciseByIdFromDatabaseShouldReturnNullAfterRemoval" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="50" hits="1" branch="false" />
-                <line number="53" hits="10" branch="false" />
-                <line number="56" hits="1" branch="false" />
-                <line number="58" hits="1" branch="false" />
-                <line number="60" hits="1" branch="false" />
-                <line number="61" hits="1" branch="false" />
+                <line number="54" hits="1" branch="false" />
+                <line number="58" hits="10" branch="false" />
+                <line number="63" hits="1" branch="false" />
+                <line number="65" hits="1" branch="false" />
+                <line number="67" hits="1" branch="false" />
+                <line number="68" hits="1" branch="false" />
               </lines>
             </method>
             <method name=".ctor" signature="(...)" line-rate="1" branch-rate="1" complexity="1">
               <lines>
-                <line number="9" hits="3" branch="false" />
-                <line number="10" hits="10" branch="false" />
-                <line number="11" hits="3" branch="false" />
-                <line number="12" hits="3" branch="false" />
                 <line number="13" hits="3" branch="false" />
-                <line number="14" hits="3" branch="false" />
+                <line number="14" hits="10" branch="false" />
                 <line number="15" hits="3" branch="false" />
                 <line number="16" hits="3" branch="false" />
+                <line number="17" hits="3" branch="false" />
+                <line number="18" hits="3" branch="false" />
+                <line number="19" hits="3" branch="false" />
+                <line number="20" hits="3" branch="false" />
               </lines>
             </method>
           </methods>
           <lines>
-            <line number="9" hits="3" branch="false" />
-            <line number="10" hits="10" branch="false" />
-            <line number="11" hits="3" branch="false" />
-            <line number="12" hits="3" branch="false" />
             <line number="13" hits="3" branch="false" />
-            <line number="14" hits="3" branch="false" />
+            <line number="14" hits="10" branch="false" />
             <line number="15" hits="3" branch="false" />
             <line number="16" hits="3" branch="false" />
+            <line number="17" hits="3" branch="false" />
             <line number="18" hits="3" branch="false" />
-            <line number="22" hits="1" branch="false" />
+            <line number="19" hits="3" branch="false" />
+            <line number="20" hits="3" branch="false" />
+            <line number="22" hits="3" branch="false" />
             <line number="26" hits="1" branch="false" />
-            <line number="28" hits="1" branch="false" />
-            <line number="29" hits="1" branch="false" />
+            <line number="30" hits="1" branch="false" />
             <line number="32" hits="1" branch="false" />
             <line number="33" hits="1" branch="false" />
+            <line number="36" hits="1" branch="false" />
             <line number="37" hits="1" branch="false" />
-            <line number="40" hits="10" branch="false" />
-            <line number="42" hits="1" branch="false" />
-            <line number="45" hits="1" branch="false" />
+            <line number="41" hits="1" branch="false" />
+            <line number="44" hits="10" branch="false" />
             <line number="46" hits="1" branch="false" />
+            <line number="49" hits="1" branch="false" />
             <line number="50" hits="1" branch="false" />
-            <line number="53" hits="10" branch="false" />
-            <line number="56" hits="1" branch="false" />
-            <line number="58" hits="1" branch="false" />
-            <line number="60" hits="1" branch="false" />
-            <line number="61" hits="1" branch="false" />
+            <line number="54" hits="1" branch="false" />
+            <line number="58" hits="10" branch="false" />
+            <line number="63" hits="1" branch="false" />
+            <line number="65" hits="1" branch="false" />
+            <line number="67" hits="1" branch="false" />
+            <line number="68" hits="1" branch="false" />
           </lines>
         </class>
-        <class name="WorkoutApp.Tests.ScheduleTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\ScheduleTests.cs" line-rate="1" branch-rate="1" complexity="8">
+        <class name="WorkoutApp.Tests.Integrationstests.ScheduleTests" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\Integrationstests\ScheduleTests.cs" line-rate="1" branch-rate="1" complexity="8">
           <methods>
             <method name="get__schedule" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -1076,61 +1076,7 @@
             <line number="85" hits="1" branch="false" />
           </lines>
         </class>
-        <class name="WorkoutApp.Tests.TestDatabaseFixture" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\TestDatabaseFixture.cs" line-rate="1" branch-rate="1" complexity="4">
-          <methods>
-            <method name="CreateContext" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="29" hits="16" branch="false" />
-                <line number="30" hits="16" branch="false" />
-                <line number="31" hits="16" branch="false" />
-                <line number="32" hits="16" branch="false" />
-              </lines>
-            </method>
-            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="2">
-              <lines>
-                <line number="13" hits="4" branch="false" />
-                <line number="14" hits="4" branch="false" />
-                <line number="15" hits="4" branch="false" />
-                <line number="16" hits="4" branch="false" />
-                <line number="17" hits="4" branch="true" condition-coverage="100% (2/2)" />
-                <line number="18" hits="1" branch="false" />
-                <line number="19" hits="1" branch="false" />
-                <line number="20" hits="1" branch="false" />
-                <line number="22" hits="1" branch="false" />
-                <line number="23" hits="1" branch="false" />
-                <line number="24" hits="1" branch="false" />
-                <line number="25" hits="4" branch="false" />
-                <line number="26" hits="4" branch="false" />
-              </lines>
-            </method>
-            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
-              <lines>
-                <line number="10" hits="1" branch="false" />
-              </lines>
-            </method>
-          </methods>
-          <lines>
-            <line number="10" hits="1" branch="false" />
-            <line number="13" hits="4" branch="false" />
-            <line number="14" hits="4" branch="false" />
-            <line number="15" hits="4" branch="false" />
-            <line number="16" hits="4" branch="false" />
-            <line number="17" hits="4" branch="true" condition-coverage="100% (2/2)" />
-            <line number="18" hits="1" branch="false" />
-            <line number="19" hits="1" branch="false" />
-            <line number="20" hits="1" branch="false" />
-            <line number="22" hits="1" branch="false" />
-            <line number="23" hits="1" branch="false" />
-            <line number="24" hits="1" branch="false" />
-            <line number="25" hits="4" branch="false" />
-            <line number="26" hits="4" branch="false" />
-            <line number="29" hits="16" branch="false" />
-            <line number="30" hits="16" branch="false" />
-            <line number="31" hits="16" branch="false" />
-            <line number="32" hits="16" branch="false" />
-          </lines>
-        </class>
-        <class name="WorkoutApp.Tests.WorkoutServiceTest" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\WorkoutTests.cs" line-rate="1" branch-rate="1" complexity="9">
+        <class name="WorkoutApp.Tests.Integrationstests.WorkoutServiceTest" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\Integrationstests\WorkoutTests.cs" line-rate="1" branch-rate="1" complexity="9">
           <methods>
             <method name="get__workoutService" signature="()" line-rate="1" branch-rate="1" complexity="1">
               <lines>
@@ -1261,6 +1207,60 @@
             <line number="175" hits="1" branch="false" />
             <line number="178" hits="1" branch="false" />
             <line number="179" hits="1" branch="false" />
+          </lines>
+        </class>
+        <class name="WorkoutApp.Tests.TestDatabaseFixture" filename="C:\Users\baske\Desktop\Programmering\Test\Test\WorkoutApp.Tests\TestDatabaseFixture.cs" line-rate="1" branch-rate="1" complexity="4">
+          <methods>
+            <method name="CreateContext" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="29" hits="16" branch="false" />
+                <line number="30" hits="16" branch="false" />
+                <line number="31" hits="16" branch="false" />
+                <line number="32" hits="16" branch="false" />
+              </lines>
+            </method>
+            <method name=".ctor" signature="()" line-rate="1" branch-rate="1" complexity="2">
+              <lines>
+                <line number="13" hits="4" branch="false" />
+                <line number="14" hits="4" branch="false" />
+                <line number="15" hits="4" branch="false" />
+                <line number="16" hits="4" branch="false" />
+                <line number="17" hits="4" branch="true" condition-coverage="100% (2/2)" />
+                <line number="18" hits="1" branch="false" />
+                <line number="19" hits="1" branch="false" />
+                <line number="20" hits="1" branch="false" />
+                <line number="22" hits="1" branch="false" />
+                <line number="23" hits="1" branch="false" />
+                <line number="24" hits="1" branch="false" />
+                <line number="25" hits="4" branch="false" />
+                <line number="26" hits="4" branch="false" />
+              </lines>
+            </method>
+            <method name=".cctor" signature="()" line-rate="1" branch-rate="1" complexity="1">
+              <lines>
+                <line number="10" hits="1" branch="false" />
+              </lines>
+            </method>
+          </methods>
+          <lines>
+            <line number="10" hits="1" branch="false" />
+            <line number="13" hits="4" branch="false" />
+            <line number="14" hits="4" branch="false" />
+            <line number="15" hits="4" branch="false" />
+            <line number="16" hits="4" branch="false" />
+            <line number="17" hits="4" branch="true" condition-coverage="100% (2/2)" />
+            <line number="18" hits="1" branch="false" />
+            <line number="19" hits="1" branch="false" />
+            <line number="20" hits="1" branch="false" />
+            <line number="22" hits="1" branch="false" />
+            <line number="23" hits="1" branch="false" />
+            <line number="24" hits="1" branch="false" />
+            <line number="25" hits="4" branch="false" />
+            <line number="26" hits="4" branch="false" />
+            <line number="29" hits="16" branch="false" />
+            <line number="30" hits="16" branch="false" />
+            <line number="31" hits="16" branch="false" />
+            <line number="32" hits="16" branch="false" />
           </lines>
         </class>
       </classes>
