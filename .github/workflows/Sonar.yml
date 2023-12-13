@@ -1,4 +1,4 @@
-name: Run Tests and quality control
+name: Run Tests & quality control through Sonarcloud
 on:
   push:
     branches:
