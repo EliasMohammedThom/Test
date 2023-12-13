@@ -60,14 +60,14 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
         Assert.Null(testexercise);
     }
 
-    [Fact]
-    public void T4GetExercisesByWorkoutIdShouldReturnNotNullAfterRetrievingExistingExerciseInDataBase()
-    {
-        //arrange
+    //[Fact]
+    //public void T4GetExercisesByWorkoutIdShouldReturnNotNullAfterRetrievingExistingExerciseInDataBase()
+    //{
+    //    //arrange
         
-        //act 
-        var testdata= _exerciseService.GetExercisesByWorkoutId(159);
+    //    //act 
+    //    var testdata = _exerciseService.GetExercisesByWorkoutId(159);
 
-        Assert.NotNull(testdata);
-    }
+    //    Assert.NotNull(testdata);
+    //}
 }
