@@ -2,12 +2,12 @@
 using Core.Models;
 using Core;
 using Newtonsoft.Json;
-namespace WorkoutApp.Tests;
+namespace WorkoutApp.Tests.Integrationstests;
 
 public class ExerciseTests : IClassFixture<TestDatabaseFixture>
 {
     private readonly ExercisesAPI _Exercise = new();
-    private ExerciseService _exerciseService {  get; set; }
+    private ExerciseService _exerciseService { get; set; }
     public ExerciseTests(TestDatabaseFixture fixture)
     {
         Fixture = fixture;
@@ -27,7 +27,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
 
         _exerciseService.AddExercise(_Exercise);
         var exercise = _exerciseService.GetByWorkoutName("ExerciseToBeRemoved");
-        
+
         //assert
         Assert.Equal("ExerciseToBeRemoved", exercise.Name);
     }
@@ -36,7 +36,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T2GetExerciseByIdShouldReturnNotNullForValidId()
     {
         //arrange
-       
+
         var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
         var exercise = _exerciseService.GetExerciseById(testexercise.Id);
@@ -49,7 +49,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     public void T3RemoveExerciseByIdFromDatabaseShouldReturnNullAfterRemoval()
     {
         //arrange
-      
+
         var testexercise = _exerciseService.GetAllExercisesAPIs().First(X => X.Name == "ExerciseToBeRemoved");
         //act
 
@@ -64,7 +64,7 @@ public class ExerciseTests : IClassFixture<TestDatabaseFixture>
     //public void T4GetExercisesByWorkoutIdShouldReturnNotNullAfterRetrievingExistingExerciseInDataBase()
     //{
     //    //arrange
-        
+
     //    //act 
     //    var testdata = _exerciseService.GetExercisesByWorkoutId(159);
 

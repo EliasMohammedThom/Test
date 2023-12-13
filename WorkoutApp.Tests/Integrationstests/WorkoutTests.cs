@@ -4,7 +4,7 @@ using Core.Models;
 using Core;
 using Newtonsoft.Json;
 using Core.Interfaces.ModelServices;
-namespace WorkoutApp.Tests;
+namespace WorkoutApp.Tests.Integrationstests;
 
 [TestCaseOrderer(
     ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",
@@ -21,7 +21,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
         _workoutService = new WorkoutService(context);
     }
-       
+
     public TestDatabaseFixture Fixture { get; }
 
     #region do not touch unless you know what you're doing
@@ -96,7 +96,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
 
         //act
         _workout.Title = "WorkoutToBeUpdated";
-       
+
         _workoutService.AddWorkout(_workout);
 
         var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
@@ -122,7 +122,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T3GetWorkoutByTitleShouldReturnWorkoutTitle()
     {
         //arrange
-   
+
         //act
         var workout = _workoutService.GetWorkoutByTitle("WorkoutToBeUpdated");
 
@@ -150,7 +150,7 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T5UpdateWorkoutScheduleIDToNullShouldReturnNullAfterRemoval()
     {
         //arrange
-        
+
         var workout = _workoutService.GetWorkoutByTitle("UpdatedWorkout");
 
         //act
@@ -165,18 +165,18 @@ public class WorkoutServiceTest : IClassFixture<TestDatabaseFixture>
     public void T6DeleteWorkoutByIdShouldRemoveWorkoutFromDatabase()
     {
         //arrange
-      
+
         //act
         var actual = _workoutService.GetAllWorkouts().Where(x => x.Title == "UpdatedWorkout").First();
         int? actualId = actual.Id;
 
         _workoutService.DeleteWorkoutById(actualId);
-      
+
         var updatedActual = _workoutService.GetWorkoutByID(actualId);
 
         //Assert
         Assert.Null(updatedActual);
     }
 
-  
+
 }

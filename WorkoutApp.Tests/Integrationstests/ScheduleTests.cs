@@ -2,7 +2,7 @@
 using Infrastructure.Services;
 using Infrastructure.Data;
 
-namespace WorkoutApp.Tests
+namespace WorkoutApp.Tests.Integrationstests
 {
     [TestCaseOrderer(
     ordererTypeName: "WorkoutApp.Tests.AlphabeticalOrderer",

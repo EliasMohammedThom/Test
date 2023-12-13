@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WorkoutApp.Tests
+namespace WorkoutApp.Tests.Integrationstests
 {
     public class ExerciseListTests : IClassFixture<TestDatabaseFixture>
     {
@@ -18,7 +18,7 @@ namespace WorkoutApp.Tests
             var context = Fixture.CreateContext();
 
             _exerciseListService = new ExerciseListService(context);
-        }       
+        }
 
         public TestDatabaseFixture Fixture { get; }
 
@@ -26,7 +26,7 @@ namespace WorkoutApp.Tests
         public void GetAllExerciseListsShouldReturnCorrectAmountOfExercises()
         {
             //arrange
-           
+
             //act
             var exerciseList = _exerciseListService.GetAllExerciseLists();
 
@@ -37,7 +37,7 @@ namespace WorkoutApp.Tests
         public void GetExerciseListByNameShouldReturnCorrectExercise()
         {
             // arrange
-           
+
             var exerciseNameToFind = "Cocoons";
 
             // act
