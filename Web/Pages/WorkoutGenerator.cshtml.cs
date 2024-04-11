@@ -1,5 +1,7 @@
 using Core.Models;
 using Infrastructure.Data;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Reflection.PortableExecutable;
@@ -9,6 +11,8 @@ namespace Web.Pages
     public class WorkoutGeneratorModel : PageModel
     {
         private readonly ApplicationDbContext _ApplicationDbContext;
+        private readonly ScheduleService _scheduleService;
+        private readonly UserManager<IdentityUser> _userManager;
 
 
         [BindProperty]
@@ -30,9 +34,14 @@ namespace Web.Pages
         [BindProperty]
         public InputValues Placeholder { get; set; }
 
-        public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext)
+        public IdentityUser? IdentityUser { get; set; }
+        public Schedule Schedule { get; set; }
+
+        public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, ScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _ApplicationDbContext = applicationDbContext;
+            _scheduleService = scheduleService;
+            _userManager = userManager;
 
 
             DifficultyCategory = new List<string>
@@ -92,13 +101,28 @@ namespace Web.Pages
             {
                 1,2,3,4,5,6,7,8,9,10,11,12,13,14
             };
-        }
-        public void OnGet()
-        {
 
+        }
+        public async Task<IActionResult> OnGetAsync()
+        {
+            IdentityUser = await _userManager.GetUserAsync(User);
+
+
+            return Page();
         }
         public void OnPost()
         {
+
+            var doesScheduleExists = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
+
+            if(doesScheduleExists == null)
+            {
+                _scheduleService.AddSchedule(Schedule);
+            }
+
+
+
+
             _ApplicationDbContext.InputValues.Add(Placeholder);
             _ApplicationDbContext.SaveChanges();
         }
