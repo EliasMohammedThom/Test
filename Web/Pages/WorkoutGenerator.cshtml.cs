@@ -1,3 +1,4 @@
+using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
 using Infrastructure.Services;
@@ -11,7 +12,7 @@ namespace Web.Pages
     public class WorkoutGeneratorModel : PageModel
     {
         private readonly ApplicationDbContext _ApplicationDbContext;
-        private readonly ScheduleService _scheduleService;
+        private readonly IScheduleService _scheduleService;
         private readonly UserManager<IdentityUser> _userManager;
 
 
@@ -34,10 +35,12 @@ namespace Web.Pages
         [BindProperty]
         public InputValues Placeholder { get; set; }
 
-        public IdentityUser? IdentityUser { get; set; }
+        //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
-        public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, ScheduleService scheduleService, UserManager<IdentityUser> userManager)
+
+
+        public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _ApplicationDbContext = applicationDbContext;
             _scheduleService = scheduleService;
@@ -105,19 +108,38 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            IdentityUser = await _userManager.GetUserAsync(User);
+            //IdentityUser = await _userManager.GetUserAsync(User);
 
 
             return Page();
         }
-        public void OnPost()
+        public async Task OnPost()
         {
+            IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
-            var doesScheduleExists = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
+            var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
+
+            var sortedTestList = 
+                _ApplicationDbContext.ExerciseLists.Where(
+                x => x.Difficulty == Placeholder.DifficultyCategory &&
+                x.Equipment == Placeholder.WorkoutEquipment &&
+                x.Muscle == Placeholder.MuscleCategories &&
+                x.Type == Placeholder.WorkoutType).ToList();
+
+            if(sortedTestList.Count == 0 || sortedTestList == null)
+            {
+                //WIP
+            }
 
             if(doesScheduleExists == null)
             {
                 _scheduleService.AddSchedule(Schedule);
+            }
+            else
+            {
+               Schedule currentUsersSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+
+                
             }
 
 
@@ -125,6 +147,7 @@ namespace Web.Pages
 
             _ApplicationDbContext.InputValues.Add(Placeholder);
             _ApplicationDbContext.SaveChanges();
+
         }
     }
 }
