@@ -5,7 +5,10 @@ namespace WorkoutApp.Tests;
 #region TestDatabaseFixture
 public class TestDatabaseFixture
 {
-    private const string ConnectionString = @"Server=mssql-157271-0.cloudclusters.net,10043;Initial Catalog=WorkoutAppDb;Persist Security Info=False;User ID=workoutapp3;Password=Password123!;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;";
+    //Mohammeds COnnection String
+    //"Server=(localdb)\MSSQLLocalDB; Database=WorkoutAppEX;Trusted_Connection=True; Encrypt=false"
+
+    private const string ConnectionString = @"Data Source=mssql-168906-0.cloudclusters.net,10004;Initial Catalog=WorkoutAppEX;User ID=superuser;Password=Super123;Encrypt=true;TrustServerCertificate=true;";
 
     private static readonly object _lock = new();
     private static bool _databaseInitialized;
