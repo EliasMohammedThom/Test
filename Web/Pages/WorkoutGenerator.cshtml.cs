@@ -35,6 +35,8 @@ namespace Web.Pages
         [BindProperty]
         public InputValues Placeholder { get; set; }
 
+        public ExerciseList ExerciseList { get; set; }
+
         //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
@@ -119,17 +121,24 @@ namespace Web.Pages
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            var sortedTestList = 
-                _ApplicationDbContext.ExerciseLists.Where(
-                x => x.Difficulty == Placeholder.DifficultyCategory &&
-                x.Equipment == Placeholder.WorkoutEquipment &&
-                x.Muscle == Placeholder.MuscleCategories &&
-                x.Type == Placeholder.WorkoutType).ToList();
+            //var sortedTestList = 
+            //    _ApplicationDbContext.ExerciseLists.Where(
+            //    x => x.Difficulty == Placeholder.DifficultyCategory &&
+            //    x.Equipment == Placeholder.WorkoutEquipment &&
+            //    x.Muscle == Placeholder.MuscleCategories &&
+            //    x.Type == Placeholder.WorkoutType).ToList();
 
-            if(sortedTestList.Count == 0 || sortedTestList == null)
-            {
-                //WIP
-            }
+            var test =
+                _ApplicationDbContext.InputValues.Where(
+                    x => x.WorkoutEquipment == ExerciseList.Equipment &&
+                    x.DifficultyCategory == ExerciseList.Difficulty &&
+                    x.MuscleCategories == ExerciseList.Muscle &&
+                    x.WorkoutType == ExerciseList.Type).ToList();
+
+            //if(sortedTestList.Count == 0 || sortedTestList == null)
+            //{
+            //    //WIP
+            //}
 
             if(doesScheduleExists == null)
             {
