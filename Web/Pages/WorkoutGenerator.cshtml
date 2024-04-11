@@ -1,0 +1,51 @@
+﻿@page
+@model Web.Pages.WorkoutGeneratorModel
+@{
+}
+
+<form method="post">
+    <h3>Difficulty</h3>
+    <select asp-for="@Model.Placeholder.DifficultyCategory">
+        @foreach (var workoutDifficuylty in Model.DifficultyCategory)
+        {
+            <option value="@workoutDifficuylty">@workoutDifficuylty</option>
+        }
+    </select>
+
+    <h3>Equipment</h3>
+    <select asp-for="@Model.Placeholder.WorkoutEquipment">
+        @foreach (var equipment in Model.WorkoutEquipment)
+        {
+            <option value="@equipment">@equipment</option>
+        }
+    </select>
+
+    <h3>Type</h3>
+
+    <select asp-for="@Model.Placeholder.WorkoutType">
+        @foreach (var type in Model.WorkoutType)
+        {
+            <option value="@type">@type</option>
+        }
+    </select>
+
+    <h3>Muscle</h3>
+
+    <select asp-for="@Model.Placeholder.MuscleCategories">
+        @foreach (var muscle in Model.MuscleCategories)
+        {
+            <option value="@muscle">@muscle</option>
+        }
+    </select>
+
+    <h3>Workouts per week</h3>
+
+    <select asp-for="@Model.Placeholder.AmountOfWorkouts">
+        @foreach (var amount in Model.AmountOfWorkouts)
+        {
+            <option value="@amount">@amount</option>
+        }
+    </select>
+
+    <button type="submit">Generate</button>
+</form>
