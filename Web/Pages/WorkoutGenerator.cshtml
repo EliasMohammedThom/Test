@@ -10,9 +10,9 @@
 
     <h3>Difficulty</h3>
     <select asp-for="@Model.Placeholder.DifficultyCategory">
-        @foreach (var workoutDifficuylty in Model.DifficultyCategory)
+        @foreach (var workoutDifficulty in Model.DifficultyCategory)
         {
-            <option value="@workoutDifficuylty">@workoutDifficuylty</option>
+            <option value="@workoutDifficulty">@workoutDifficulty</option>
         }
     </select>
 

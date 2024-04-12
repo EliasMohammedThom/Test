@@ -108,12 +108,65 @@ namespace Web.Pages
             };
 
         }
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
+
+            MuscleCategories =  new List<string> {
+                        "Abdominals",
+                        "Abductors",
+                        "Adductors",
+                        "Biceps",
+                        "Calves",
+                        "Chest",
+                        "Forearms",
+                        "Glutes",
+                        "Hamstrings",
+                        "Lats",
+                        "Lower_back",
+                        "Middle_back",
+                        "Neck",
+                        "Quadriceps",
+                        "Traps",
+                        "Triceps"
+                    };
+
+                WorkoutEquipment = new List<string>
+            {
+                "Body_only",
+                "Barbell",
+                "Other",
+                "None",
+                "Dumbbell",
+                "Machine",
+                "Cable",
+                "Kettlebells",
+                "Bands",
+                "Foam_roll",
+                "Exercise_ball",
+                "Medicine_ball",
+                "E-z_curl_bar",
+            };
+
+                 DifficultyCategory = new List<string>
+            {
+                    "Beginner",
+                    "Intermediate",
+                    "Expert"
+            };
+
+               WorkoutType = new List<string> {
+                        "Cardio",
+                        "Olympic_weightlifting",
+                        "Plyometrics",
+                        "Powerlifting",
+                        "Strength",
+                        "Stretching",
+                        "Strongman"
+                    };
+
             //IdentityUser = await _userManager.GetUserAsync(User);
 
 
-            return Page();
         }
         public async Task OnPost()
         {
