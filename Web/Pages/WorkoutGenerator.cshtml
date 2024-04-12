@@ -8,23 +8,30 @@
 
 <form method="post">
 
-    <h3>Difficulty</h3>
-    <select asp-for="@Model.Placeholder.DifficultyCategory">
-        @foreach (var workoutDifficulty in Model.DifficultyCategory)
-        {
-            <option value="@workoutDifficulty">@workoutDifficulty</option>
-        }
-    </select>
 
-    <h3>Equipment</h3>
-    <select asp-for="@Model.Placeholder.WorkoutEquipment">
-        @foreach (var equipment in Model.WorkoutEquipment)
-        {
-            <option value="@equipment">@equipment</option>
-        }
-    </select>
+   
+        
+    @if(@Model.Placeholder != null)
+    {
+        <h3>Difficulty</h3>
+        <select asp-for="@Model.Placeholder.DifficultyCategory">
+            @foreach (var workoutDifficuylty in Model.DifficultyCategory)
+            {
+                <option value="@workoutDifficuylty">@workoutDifficuylty</option>
+            }
+        </select>
 
-    <h3>Type</h3>
+
+
+        <h3>Equipment</h3>
+        <select asp-for="@Model.Placeholder.WorkoutEquipment">
+            @foreach (var equipment in Model.WorkoutEquipment)
+            {
+                <option value="@equipment">@equipment</option>
+            }
+        </select>
+
+         <h3>Type</h3>
     <select asp-for="@Model.Placeholder.WorkoutType">
         @foreach (var type in Model.WorkoutType)
         {
@@ -48,5 +55,13 @@
         }
     </select>
 
+   
+
+
+
+    }
     <button type="submit">Generate</button>
 </form>
+   
+
+   

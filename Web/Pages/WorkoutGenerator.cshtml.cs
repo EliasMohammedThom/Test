@@ -33,7 +33,7 @@ namespace Web.Pages
 
 
         [BindProperty]
-        public InputValues Placeholder { get; set; }
+        public InputValues? Placeholder { get; set; } = default!;   
 
         public ExerciseList ExerciseList { get; set; }
 
@@ -47,71 +47,7 @@ namespace Web.Pages
             _ApplicationDbContext = applicationDbContext;
             _scheduleService = scheduleService;
             _userManager = userManager;
-
-
-            DifficultyCategory = new List<string>
-            {
-                    "Beginner",
-                    "Intermediate",
-                    "Expert"
-            };
-
-            WorkoutEquipment = new List<string>
-            {
-                "Body_only",
-                "Barbell",
-                "Other",
-                "None",
-                "Dumbbell",
-                "Machine",
-                "Cable",
-                "Kettlebells",
-                "Bands",
-                "Foam_roll",
-                "Exercise_ball",
-                "Medicine_ball",
-                "E-z_curl_bar",
-            };
-
-            WorkoutType = new List<string> {
-                        "Cardio",
-                        "Olympic_weightlifting",
-                        "Plyometrics",
-                        "Powerlifting",
-                        "Strength",
-                        "Stretching",
-                        "Strongman"
-                    };
-
-            MuscleCategories = new List<string> {
-                        "Abdominals",
-                        "Abductors",
-                        "Adductors",
-                        "Biceps",
-                        "Calves",
-                        "Chest",
-                        "Forearms",
-                        "Glutes",
-                        "Hamstrings",
-                        "Lats",
-                        "Lower_back",
-                        "Middle_back",
-                        "Neck",
-                        "Quadriceps",
-                        "Traps",
-                        "Triceps"
-                    };
-
-            AmountOfWorkouts = new List<int>
-            {
-                1,2,3,4,5,6,7,8,9,10,11,12,13,14
-            };
-
-        }
-        public void OnGet()
-        {
-
-            MuscleCategories =  new List<string> {
+               MuscleCategories =  new List<string> {
                         "Abdominals",
                         "Abductors",
                         "Adductors",
@@ -163,9 +99,65 @@ namespace Web.Pages
                         "Stretching",
                         "Strongman"
                     };
+        }
+    
+         public async Task<IActionResult> OnGetAsync()
+        {
+              MuscleCategories =  new List<string> {
+                        "Abdominals",
+                        "Abductors",
+                        "Adductors",
+                        "Biceps",
+                        "Calves",
+                        "Chest",
+                        "Forearms",
+                        "Glutes",
+                        "Hamstrings",
+                        "Lats",
+                        "Lower_back",
+                        "Middle_back",
+                        "Neck",
+                        "Quadriceps",
+                        "Traps",
+                        "Triceps"
+                    };
 
-            //IdentityUser = await _userManager.GetUserAsync(User);
+                WorkoutEquipment = new List<string>
+            {
+                "Body_only",
+                "Barbell",
+                "Other",
+                "None",
+                "Dumbbell",
+                "Machine",
+                "Cable",
+                "Kettlebells",
+                "Bands",
+                "Foam_roll",
+                "Exercise_ball",
+                "Medicine_ball",
+                "E-z_curl_bar",
+            };
 
+                 DifficultyCategory = new List<string>
+            {
+                    "Beginner",
+                    "Intermediate",
+                    "Expert"
+            };
+
+               WorkoutType = new List<string> {
+                        "Cardio",
+                        "Olympic_weightlifting",
+                        "Plyometrics",
+                        "Powerlifting",
+                        "Strength",
+                        "Stretching",
+                        "Strongman"
+                    };
+         
+
+            return Page();
 
         }
         public async Task OnPost()
