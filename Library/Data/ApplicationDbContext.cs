@@ -14,6 +14,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Nutrition> Nutritions { get; set; }
     public DbSet<ExerciseList> ExerciseLists { get; set; }
     public DbSet<InputValues> InputValues { get; set; }
+    public DbSet<GeneratedWorkout> GeneratedWorkouts { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder>? modelCustomizer = null)
     : base(options)
     {

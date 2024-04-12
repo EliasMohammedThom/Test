@@ -125,21 +125,40 @@ namespace Web.Pages
 
             var sortedTestList = 
                 _ApplicationDbContext.ExerciseLists.Where(
-                x => x.Difficulty == Placeholder.DifficultyCategory &&
+                x => 
+                x.Difficulty == Placeholder.DifficultyCategory &&
                 x.Equipment == Placeholder.WorkoutEquipment &&
                 x.Muscle == Placeholder.MuscleCategories &&
                 x.Type == Placeholder.WorkoutType).ToList();
 
-            //var test =
-            //    _ApplicationDbContext.InputValues.Where(
-            //        x => x.WorkoutEquipment == ExerciseList.Equipment &&
-            //        x.DifficultyCategory == ExerciseList.Difficulty &&
-            //        x.MuscleCategories == ExerciseList.Muscle &&
-            //        x.WorkoutType == ExerciseList.Type).ToList();
+
+
+            
+                if (sortedTestList.Count > 0 )
+                {
+
+                foreach ( var test in sortedTestList )
+                {
+                   
+                    _ApplicationDbContext.GeneratedWorkouts.Add(new GeneratedWorkout
+                    {
+                        Difficulty = test.Difficulty,
+                        Equipment = test.Equipment,
+                        Muscle = test.Muscle,
+                        Type = test.Type,
+                        Instructions = test.Instructions,
+                        Name = test.Name 
+                    });
+                }
+        }
+                
+            
+
+            
 
             if(sortedTestList.Count == 0 || sortedTestList == null)
             {
-                //WIP
+               //WIP
             }
 
             if(doesScheduleExists == null)
