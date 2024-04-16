@@ -154,8 +154,10 @@ namespace Web.Pages
                         Muscle = test.Muscle,
                         Type = test.Type,
                         Instructions = test.Instructions,
-                        Name = test.Name 
-                    });
+                        Name = test.Name,
+                        UserId = identityUser.Id
+                        
+                    });;
                 }
         }
                 
