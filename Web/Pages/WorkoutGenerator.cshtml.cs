@@ -120,10 +120,36 @@ namespace Web.Pages
                 //Får inte överskrida antal som man valt 
                 //får inte slänga in två utav samma 
                 //skall randomisas
-                foreach(var exercise in GeneratedExercises)
+
+                Random random = new Random( );  
+
+                int i = 1;
+                while(i <= Placeholder.AmountOfExercises)
                 {
-                    exercise.WorkoutId = Workout.Id;
+                    
+                var randomnumber = random.Next(0, GeneratedExercises.Count);
+                    
+                    if(GeneratedExercises[randomnumber].WorkoutId == null)
+                    {
+                        GeneratedExercises[randomnumber].WorkoutId = Workout.Id;
+                        i++;
+                    }
+                         
                 }
+                var emptyExercises = GeneratedExercises.Where(X=>X.WorkoutId == null)
+                    .ToList();
+
+                foreach( var exercise in emptyExercises )
+                {
+                     _ApplicationDbContext.FetchedExercises.Remove(exercise);
+
+                }
+
+               
+                //foreach(var exercise in GeneratedExercises)
+                //{
+                //    exercise.WorkoutId = Workout.Id;
+                //}
                 }
                 
 
