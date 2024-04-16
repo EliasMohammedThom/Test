@@ -2,20 +2,29 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @model Web.Pages.WorkoutGeneratorModel
+@using Core.Models;
 @{
     var user = await UserManager.GetUserAsync(User);
+
+    // var Difficulty = ListValue.DifficultyCategories;
+    // var Equipment = ListValue.WorkoutEquipments;
+    // var WorkoutTypes = ListValue.WorkoutTypes;
+    // var MuscleCategies = ListValue.MuscleCategories;
+    // var AmountOfWorkouts = ListValue.AmountOfWorkouts;
+    // var AmountOfExercises = ListValue.AmountOfExercises;
 }
 
 <form method="post">
 
-    <style> 
+    <style>
 
-        h3{
-            color:white;
+        h3 {
+            color: white;
         }
-        .ErrorMessageBox{
+
+        .ErrorMessageBox {
             background-color: white;
-            color:red;  
+            color: red;
         }
     </style>
     <div class="ErrorMessageBox">
@@ -23,50 +32,70 @@
     </div>
     <h3>Difficulty</h3>
     <select asp-for="@Model.Placeholder.DifficultyCategory">
-        @foreach (var workoutDifficuylty in Model.DifficultyCategory)
+        @foreach (var difficultyCategory in ListValue.DifficultyCategories)
         {
-            <option value="@workoutDifficuylty">@workoutDifficuylty</option>
+            foreach (var difficulty in difficultyCategory.Difficulty)
+            {
+                <option value="@difficulty">@difficulty</option>
+            }
         }
     </select>
 
     <h3>Equipment</h3>
     <select asp-for="@Model.Placeholder.WorkoutEquipment">
-        @foreach (var equipment in Model.WorkoutEquipment)
+        @foreach (var workoutEquipment in ListValue.WorkoutEquipments)
         {
-            <option value="@equipment">@equipment</option>
+            foreach (var equipment in workoutEquipment.Equipment)
+            {
+                <option value="@equipment">@equipment</option>
+            }
         }
     </select>
 
     <h3>Type</h3>
     <select asp-for="@Model.Placeholder.WorkoutType">
-        @foreach (var type in Model.WorkoutType)
+        @foreach (var workoutType in ListValue.WorkoutTypes)
         {
-            <option value="@type">@type</option>
+            foreach (var type in workoutType.Type)
+            {
+                <option value="@type">@type</option>
+            }
         }
     </select>
 
     <h3>Muscle</h3>
     <select asp-for="@Model.Placeholder.MuscleCategories">
-        @foreach (var muscle in Model.MuscleCategories)
+        @foreach (var muscleCategory in ListValue.MuscleCategories)
         {
-            <option value="@muscle">@muscle</option>
+            foreach (var muscle in muscleCategory.Muscle)
+            {
+                <option value="@muscle">@muscle</option>
+            }
         }
     </select>
 
     <h3>Workouts per week</h3>
     <select asp-for="@Model.Placeholder.AmountOfWorkouts">
-        @foreach (var amount in Model.AmountOfWorkouts)
+        @foreach (var amountOfWorkout in ListValue.AmountOfWorkouts)
         {
-            <option value="@amount">@amount</option>
+            foreach (var amount in amountOfWorkout.Amount)
+            {
+                <option value="@amount">@amount</option>
+            }
         }
     </select>
+
     <h3>Exercises per week</h3>
     <select asp-for="@Model.Placeholder.AmountOfExercises">
-        @foreach(var amount in Model.AmountOfExercises)
+        @foreach (var amountOfExercise in ListValue.AmountOfExercises)
         {
-            <option value="@amount">@amount</option>
+            foreach (var amount in amountOfExercise.Amount)
+            {
+                <option value="@amount">@amount</option>
+            }
         }
     </select>
+
 
     <button type="submit">Generate</button>
 </form>
