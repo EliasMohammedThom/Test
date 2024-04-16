@@ -42,6 +42,9 @@ namespace Web.Pages
         //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
+        [BindProperty]
+        public string ErrorMessage { get; set; }
+
 
 
         public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
@@ -130,9 +133,9 @@ namespace Web.Pages
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            var sortedTestList = 
+            var sortedTestList =
                 _ApplicationDbContext.ExerciseLists.Where(
-                x => 
+                x =>
                 x.Difficulty == Placeholder.DifficultyCategory &&
                 x.Equipment == Placeholder.WorkoutEquipment &&
                 x.Muscle == Placeholder.MuscleCategories &&
@@ -140,13 +143,12 @@ namespace Web.Pages
 
 
 
-            
-                if (sortedTestList.Count > 0 )
-                {
 
-                foreach ( var test in sortedTestList )
-                {
-                   
+            if (sortedTestList.Count > 0)
+            {
+
+                foreach (var test in sortedTestList)
+                {                   
                     _ApplicationDbContext.GeneratedExercises.Add(new GeneratedExercises
                     {
                         Difficulty = test.Difficulty,
@@ -159,32 +161,31 @@ namespace Web.Pages
                         
                     });;
                 }
-        }
-                
-            
-
-            
-
-            if(sortedTestList.Count == 0 || sortedTestList == null)
-            {
-               //WIP
             }
 
-            if(doesScheduleExists == null)
+            if (sortedTestList.Count == 0 || sortedTestList == null)
+            {
+                ErrorMessage = "Can not find exercises with given parameters, try again!";
+            }
+
+            if (doesScheduleExists == null)
             {
                 _scheduleService.AddSchedule(Schedule);
             }
             else
             {
-               Schedule currentUsersSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+                Schedule currentUsersSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-                
+
+            }
+            if(sortedTestList.Count != 0)
+            {
+                _ApplicationDbContext.InputValues.Add(Placeholder);
+
             }
 
 
 
-
-            _ApplicationDbContext.InputValues.Add(Placeholder);
             _ApplicationDbContext.SaveChanges();
 
         }

@@ -13,8 +13,14 @@
         h3{
             color:white;
         }
+        .ErrorMessageBox{
+            background-color: white;
+            color:red;  
+        }
     </style>
-
+    <div class="ErrorMessageBox">
+        <p>@Model.ErrorMessage</p>
+    </div>
     <h3>Difficulty</h3>
     <select asp-for="@Model.Placeholder.DifficultyCategory">
         @foreach (var workoutDifficuylty in Model.DifficultyCategory)
