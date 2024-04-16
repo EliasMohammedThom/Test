@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Models
 {
-    public class GeneratedWorkout
+    public class GeneratedExercises
     {
         public int Id { get; set; }
         public string? Name { get; set; }

@@ -147,7 +147,7 @@ namespace Web.Pages
                 foreach ( var test in sortedTestList )
                 {
                    
-                    _ApplicationDbContext.GeneratedWorkouts.Add(new GeneratedWorkout
+                    _ApplicationDbContext.GeneratedExercises.Add(new GeneratedExercises
                     {
                         Difficulty = test.Difficulty,
                         Equipment = test.Equipment,
