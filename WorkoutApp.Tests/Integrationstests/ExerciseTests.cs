@@ -10,7 +10,7 @@ namespace WorkoutApp.Tests.Integrationstests;
 
 public class ExerciseTests : IClassFixture<TestDatabaseFixture>
 {
-    private ExercisesAPI _Exercise = new();
+    private FetchedExercises _Exercise = new();
     private ExerciseService _exerciseService { get; set; }
     public ExerciseTests(TestDatabaseFixture fixture)
     {

@@ -25,7 +25,7 @@ namespace Web.Pages
         public List<Workout>? AllWorkoutsByCurrentUser { get; set; }
 
         [BindProperty]
-        public List<ExercisesAPI> AllExercisesByCurrentUser { get; set; }
+        public List<FetchedExercises> AllExercisesByCurrentUser { get; set; }
 
         [BindProperty]
         public int SelectedWorkoutToUpdate { get; set; }

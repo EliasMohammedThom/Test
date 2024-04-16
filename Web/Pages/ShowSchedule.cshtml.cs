@@ -40,7 +40,7 @@ namespace Web.Pages
         public int? CurrentUserScheduleId { get; set; }
 
         [BindProperty]
-        public List<ExercisesAPI> SortedExercise { get; set; }
+        public List<FetchedExercises> SortedExercise { get; set; }
       
         public List<Workout> workouts { get; set; }
         #endregion

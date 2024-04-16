@@ -10,7 +10,7 @@ namespace Core.Commands.Exercises
 {
     public class ImportValues : IImportValues
     {
-        public ExercisesAPI AssignValuesToNewExercise(ExercisesAPI newExercise, ExerciseList exerciseFromList, Workout workout)
+        public FetchedExercises AssignValuesToNewExercise(FetchedExercises newExercise, ExerciseList exerciseFromList, Workout workout)
         {
             newExercise.WorkoutId = workout.Id;
             newExercise.Name = exerciseFromList.Name;

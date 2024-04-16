@@ -33,13 +33,13 @@ namespace Web.Pages
         public string SelectedExerciseName { get; set; }
 
         [BindProperty]
-        public ExercisesAPI SetsAndReps { get; set; }
+        public FetchedExercises SetsAndReps { get; set; }
         [BindProperty]
         public string SelectedItemWorkout { get; set; }
         [BindProperty]
         public Workout ChosenWorkout { get; set; }
         [BindProperty]
-        public ExercisesAPI ExerciseToAdd { get; set; }
+        public FetchedExercises ExerciseToAdd { get; set; }
 
         [BindProperty]
         public List<Workout>? WorkoutList { get; set; }

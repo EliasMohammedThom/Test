@@ -9,7 +9,7 @@ namespace Core.Interfaces.Commands.Exercises
 {
     public interface IImportValues
     {
-        public  ExercisesAPI AssignValuesToNewExercise(ExercisesAPI newExercise, ExerciseList exerciseFromList, Workout workout)
+        public  FetchedExercises AssignValuesToNewExercise(FetchedExercises newExercise, ExerciseList exerciseFromList, Workout workout)
         {
             return newExercise;
         }

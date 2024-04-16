@@ -9,12 +9,12 @@ public class ApplicationDbContext : IdentityDbContext
 {
     private readonly Action<ApplicationDbContext, ModelBuilder>? _modelCustomizer;
     public DbSet<Workout> Workouts {  get; set; }
-    public DbSet<ExercisesAPI> ExercisesAPIs { get; set; }
+    public DbSet<FetchedExercises> FetchedExercises { get; set; }
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
     public DbSet<ExerciseList> ExerciseLists { get; set; }
     public DbSet<InputValues> InputValues { get; set; }
-    public DbSet<GeneratedExercises> GeneratedExercises { get; set; }
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder>? modelCustomizer = null)
     : base(options)
     {

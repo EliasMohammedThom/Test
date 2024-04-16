@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Core.Models
 {
-    public class ExercisesAPI
+    public class FetchedExercises
     {
 
         [Key]
@@ -30,5 +30,7 @@ namespace Core.Models
         public string? Instructions { get; set; }
         public int? Sets { get; set; }
         public int? Repetitions { get; set; }
+        public bool? Generated { get; set; }
+        public string? UserId { get; set; }
     }
 }

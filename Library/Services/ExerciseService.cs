@@ -19,16 +19,16 @@ namespace Infrastructure.Services
         }
 
         //Testas ej men används i tester
-        public List<ExercisesAPI>? GetAllExercisesAPIs()
-            => _ExercisesAPIContext.ExercisesAPIs.OrderBy(s => s.Name).ToList();
+        public List<FetchedExercises>? GetAllExercisesAPIs()
+            => _ExercisesAPIContext.FetchedExercises.OrderBy(s => s.Name).ToList();
 
         //Testas ej men används i tester
-        public ExercisesAPI? GetExerciseById(int id)
-            => _ExercisesAPIContext.ExercisesAPIs.FirstOrDefault(s => s.Id == id);
+        public FetchedExercises? GetExerciseById(int id)
+            => _ExercisesAPIContext.FetchedExercises.FirstOrDefault(s => s.Id == id);
 
-        public void AddExercise(ExercisesAPI ExercisesAPI)
+        public void AddExercise(FetchedExercises ExercisesAPI)
         {
-            _ExercisesAPIContext.ExercisesAPIs.Add(ExercisesAPI);
+            _ExercisesAPIContext.FetchedExercises.Add(ExercisesAPI);
             _ExercisesAPIContext.SaveChanges();
 
         }
@@ -41,11 +41,11 @@ namespace Infrastructure.Services
 			_ExercisesAPIContext?.SaveChanges();
 		}
 
-		public List<ExercisesAPI> GetExercisesByWorkoutId(int? workoutid)
-            => _ExercisesAPIContext.ExercisesAPIs.Where(s => s.WorkoutId == workoutid).ToList();
+		public List<FetchedExercises> GetExercisesByWorkoutId(int? workoutid)
+            => _ExercisesAPIContext.FetchedExercises.Where(s => s.WorkoutId == workoutid).ToList();
 
-        public ExercisesAPI GetByWorkoutName(string workoutName)
-         => _ExercisesAPIContext.ExercisesAPIs.Where(X=>X.Name == workoutName).First();
+        public FetchedExercises GetByWorkoutName(string workoutName)
+         => _ExercisesAPIContext.FetchedExercises.Where(X=>X.Name == workoutName).First();
         
     }
 }

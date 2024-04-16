@@ -21,7 +21,7 @@ namespace Core
                 if (response.IsSuccessStatusCode)
                 {
                     string result = await response.Content.ReadAsStringAsync();
-                    List<ExercisesAPI> exercises = JsonConvert.DeserializeObject<List<ExercisesAPI>>(result);
+                    List<FetchedExercises> exercises = JsonConvert.DeserializeObject<List<FetchedExercises>>(result);
                     return response;
                 }
                 else

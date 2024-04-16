@@ -35,7 +35,7 @@ namespace Web.Pages
         public List<int> AmountOfExercises { get; set; }
 
 
-        public List<GeneratedExercises> GeneratedExercises { get; set; } = default!;
+        public List<FetchedExercises> GeneratedExercises { get; set; } = default!;
 
         [BindProperty]
         public InputValues Placeholder { get; set; }
@@ -162,7 +162,7 @@ namespace Web.Pages
 
                 foreach ( var exercise in sortedExercises )
                 {
-                    var fetchedExercise = new GeneratedExercises
+                    var fetchedExercise = new FetchedExercises
 
                     {
                         Difficulty = exercise.Difficulty,
@@ -177,7 +177,7 @@ namespace Web.Pages
                     GeneratedExercises.Add(fetchedExercise);
 
 
-                    _ApplicationDbContext.GeneratedExercises.Add(fetchedExercise);
+                    _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
 
                 }
 

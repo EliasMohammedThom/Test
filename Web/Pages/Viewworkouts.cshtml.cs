@@ -15,7 +15,7 @@ namespace Web.Pages
 		[BindProperty]
 		public List<Workout>? SortedWorkoutList { get; set; }
 		[BindProperty]
-		public List<ExercisesAPI>? Exercises { get; set; }
+		public List<FetchedExercises>? Exercises { get; set; }
 		public View_workoutsModel(IWorkoutService workoutService, UserManager<IdentityUser> userManager, IExerciseService exerciseService)
 		{
 			_workoutService = workoutService;
