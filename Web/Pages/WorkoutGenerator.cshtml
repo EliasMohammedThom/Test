@@ -8,6 +8,13 @@
 
 <form method="post">
 
+    <style> 
+
+        h3{
+            color:white;
+        }
+    </style>
+
     <h3>Difficulty</h3>
     <select asp-for="@Model.Placeholder.DifficultyCategory">
         @foreach (var workoutDifficuylty in Model.DifficultyCategory)
