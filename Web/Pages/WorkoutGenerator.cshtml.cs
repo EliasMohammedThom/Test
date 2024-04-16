@@ -5,6 +5,7 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Reflection.PortableExecutable;
 
 namespace Web.Pages
@@ -34,6 +35,8 @@ namespace Web.Pages
         public List<int> AmountOfExercises { get; set; }
 
 
+        public List<GeneratedExercises> GeneratedExercises { get; set; } = default!;
+
         [BindProperty]
         public InputValues Placeholder { get; set; }
 
@@ -42,8 +45,12 @@ namespace Web.Pages
         //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
+
         [BindProperty]
         public string ErrorMessage { get; set; }
+
+        public Workout Workout { get; set; }
+
 
 
 
@@ -119,21 +126,24 @@ namespace Web.Pages
 
             Placeholder = new();
 
+            Workout = new Workout();
+            GeneratedExercises = new();
+        
+            Workout.Date = DateOnly.FromDateTime(DateTime.Now);
+
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            //IdentityUser = await _userManager.GetUserAsync(User);
-
-
             return Page();
         }
         public async Task OnPost()
         {
+
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            var sortedTestList =
+            var sortedExercises =
                 _ApplicationDbContext.ExerciseLists.Where(
                 x =>
                 x.Difficulty == Placeholder.DifficultyCategory &&
@@ -141,29 +151,43 @@ namespace Web.Pages
                 x.Muscle == Placeholder.MuscleCategories &&
                 x.Type == Placeholder.WorkoutType).ToList();
 
+                if (sortedExercises.Count > 0 )
+                {
+                Workout.UserId = identityUser.Id;
+                _ApplicationDbContext.Workouts.Add(Workout);
+                _ApplicationDbContext.SaveChanges();
 
 
+                foreach ( var exercise in sortedExercises )
+                {
+                    var fetchedExercise = new GeneratedExercises
 
-            if (sortedTestList.Count > 0)
-            {
-
-                foreach (var test in sortedTestList)
-                {                   
-                    _ApplicationDbContext.GeneratedExercises.Add(new GeneratedExercises
                     {
-                        Difficulty = test.Difficulty,
-                        Equipment = test.Equipment,
-                        Muscle = test.Muscle,
-                        Type = test.Type,
-                        Instructions = test.Instructions,
-                        Name = test.Name,
+                        Difficulty = exercise.Difficulty,
+                        Equipment = exercise.Equipment,
+                        Muscle = exercise.Muscle,
+                        Type = exercise.Type,
+                        Instructions = exercise.Instructions,
+                        Name = exercise.Name,
                         UserId = identityUser.Id
-                        
-                    });;
-                }
-            }
+                    };
 
-            if (sortedTestList.Count == 0 || sortedTestList == null)
+                    GeneratedExercises.Add(fetchedExercise);
+
+
+                    _ApplicationDbContext.GeneratedExercises.Add(fetchedExercise);
+
+                }
+
+
+                foreach(var exercise in GeneratedExercises)
+                {
+                    exercise.WorkoutId = Workout.Id;
+                }
+        }
+                
+
+            if (sortedExercises.Count == 0 || sortedExercises == null)
             {
                 ErrorMessage = "Can not find exercises with given parameters, try again!";
             }
@@ -178,7 +202,7 @@ namespace Web.Pages
 
 
             }
-            if(sortedTestList.Count != 0)
+            if(sortedExercises.Count != 0)
             {
                 _ApplicationDbContext.InputValues.Add(Placeholder);
 

@@ -23,6 +23,7 @@ namespace Core.Models
         public string? Instructions { get; set; }
 
         public string? UserId { get; set; }
+        public int? WorkoutId { get; set; }
 
     }
 }
