@@ -18,28 +18,46 @@ else
     <strong class="CenterText" style="font-size: 2.5em; font-family: 'Pacifico', cursive; color: white;">Current workouts in your schedule:</strong>
 
     <div class="workout-container">
-        @foreach (var workout in Model.SortedWorkoutList)
+        @for (int i = 1; i <= DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); i++)
         {
-            <div class="workout-box">
-                <strong>@workout.Title</strong>
-                <p>@workout.Date</p>
-                <p>@workout.Description</p>
+            var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
+            var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
 
-                <ul class="exercise-list">
-                    @foreach (var exercise in workout.Exercises)
-                    {
-                        <li class="exercise-item">
-                            @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
-                        </li>
-                    }
-                </ul>
+            if (workoutsForCurrentDate.Any())
+            {
+                foreach (var workout in workoutsForCurrentDate)
+                {
+                    <div class="workout-box">
+                        <strong>@workout.Title</strong>
+                        <p>@workout.Date</p>
+                        <p>@workout.Description</p>
 
-                <form method="post">
-                    <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                    <button type="submit" class="btn btn-outline-danger">X</button>
-                </form>
-            </div>
+                        <ul class="exercise-list">
+                            @foreach (var exercise in workout.Exercises)
+                            {
+                                <li class="exercise-item">
+                                    @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                                </li>
+                            }
+                        </ul>
+
+                        <form method="post">
+                            <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                            <button type="submit" class="btn btn-outline-danger">X</button>
+                        </form>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="workout-box">
+                    <strong>Empty</strong>
+                    <p>No workout scheduled for @currentDate</p>
+                </div>
+            }
         }
+
+
     </div>
 
     <div id="workoutPopup" class="popup">

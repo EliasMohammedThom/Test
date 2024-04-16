@@ -78,5 +78,19 @@ namespace Web.Pages
            
             return Redirect("/ShowSchedule");
         }
+        public void GetCalender()
+        {
+            int currentMonth = DateTime.Now.Month;
+            int currentYear = DateTime.Now.Year;
+
+            int daysInMonth = DateTime.DaysInMonth(currentMonth, currentYear);
+
+            for (int i = 1; i <= daysInMonth; i++)
+            {
+                DateTime currentDate = new DateTime(currentYear, currentMonth, i);
+                string dayOfWeek = currentDate.ToString("dddd");
+                //Schedule.Add((currentDate, dayOfWeek));
+            }
+        }
     }
 }
