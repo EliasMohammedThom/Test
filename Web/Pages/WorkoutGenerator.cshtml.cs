@@ -30,6 +30,8 @@ namespace Web.Pages
 
         [BindProperty]
         public List<int> AmountOfWorkouts { get; set; }
+        [BindProperty]
+        public List<int> AmountOfExercises { get; set; }
 
 
         [BindProperty]
@@ -105,6 +107,11 @@ namespace Web.Pages
             AmountOfWorkouts = new List<int>
             {
                 1,2,3,4,5,6,7,8,9,10,11,12,13,14
+            };
+
+            AmountOfExercises = new List<int>
+            {
+                1,2,3,4,5,6,7,8,9,10
             };
 
             Placeholder = new();

@@ -47,6 +47,13 @@
             <option value="@amount">@amount</option>
         }
     </select>
+    <h3>Exercises per week</h3>
+    <select asp-for="@Model.Placeholder.AmountOfExercises">
+        @foreach(var amount in Model.AmountOfExercises)
+        {
+            <option value="@amount">@amount</option>
+        }
+    </select>
 
     <button type="submit">Generate</button>
 </form>
