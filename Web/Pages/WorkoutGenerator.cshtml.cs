@@ -1,3 +1,4 @@
+
 using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
@@ -5,6 +6,7 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Reflection.PortableExecutable;
 
 namespace Web.Pages
@@ -16,29 +18,26 @@ namespace Web.Pages
         private readonly UserManager<IdentityUser> _userManager;
 
 
-        //[BindProperty]
-        //public List<string> DifficultyCategory { get; set; }
+        [BindProperty]
+        public List<string> DifficultyCategory { get; set; }
 
-        //[BindProperty]
-        //public List<string> WorkoutEquipment { get; set; }
+        [BindProperty]
+        public List<string> WorkoutEquipment { get; set; }
 
-        //[BindProperty]
-        //public List<string> WorkoutType { get; set; }
+        [BindProperty]
+        public List<string> WorkoutType { get; set; }
 
-        //[BindProperty]
-        //public List<string> MuscleCategories { get; set; }
+        [BindProperty]
+        public List<string> MuscleCategories { get; set; }
 
-        //[BindProperty]
-        //public List<int> AmountOfWorkouts { get; set; }
-        //[BindProperty]
-        //public List<int> AmountOfExercises { get; set; }
+        [BindProperty]
+        public List<int> AmountOfWorkouts { get; set; }
+        [BindProperty]
+        public List<int> AmountOfExercises { get; set; }
 
 
-<<<<<<< Updated upstream
         public List<FetchedExercises> GeneratedExercises { get; set; } = default!;
 
-=======
->>>>>>> Stashed changes
         [BindProperty]
         public InputValues Placeholder { get; set; }
 
@@ -47,10 +46,13 @@ namespace Web.Pages
         //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
+
         [BindProperty]
         public string ErrorMessage { get; set; }
 
-        public ListValue Listvalues { get; set; }
+        public Workout Workout { get; set; }
+
+         public ListValue Listvalues { get; set; }
 
         public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
@@ -61,23 +63,25 @@ namespace Web.Pages
 
             Placeholder = new();
 
+            Workout = new Workout();
+            GeneratedExercises = new();
+        
+            Workout.Date = DateOnly.FromDateTime(DateTime.Now);
+
+            Listvalues = new();
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            Listvalues = new();
-
-            //IdentityUser = await _userManager.GetUserAsync(User);
-
-
             return Page();
         }
         public async Task OnPost()
         {
+
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
-            var sortedTestList =
+            var sortedExercises =
                 _ApplicationDbContext.ExerciseLists.Where(
                 x =>
                 x.Difficulty == Placeholder.DifficultyCategory &&
@@ -88,31 +92,24 @@ namespace Web.Pages
                 if (sortedExercises.Count > 0 )
                 {
                 Workout.UserId = identityUser.Id;
+                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
                 _ApplicationDbContext.Workouts.Add(Workout);
+
                 _ApplicationDbContext.SaveChanges();
 
 
-<<<<<<< Updated upstream
                 foreach ( var exercise in sortedExercises )
                 {
                     var fetchedExercise = new FetchedExercises
-=======
-            if (sortedTestList.Count > 0)
-            {
->>>>>>> Stashed changes
 
-                foreach (var test in sortedTestList)
-                {                   
-                    _ApplicationDbContext.GeneratedExercises.Add(new GeneratedExercises
                     {
-                        Difficulty = test.Difficulty,
-                        Equipment = test.Equipment,
-                        Muscle = test.Muscle,
-                        Type = test.Type,
-                        Instructions = test.Instructions,
-                        Name = test.Name,
+                        Difficulty = exercise.Difficulty,
+                        Equipment = exercise.Equipment,
+                        Muscle = exercise.Muscle,
+                        Type = exercise.Type,
+                        Instructions = exercise.Instructions,
+                        Name = exercise.Name,
                         UserId = identityUser.Id
-<<<<<<< Updated upstream
                     };
 
                     GeneratedExercises.Add(fetchedExercise);
@@ -127,12 +124,7 @@ namespace Web.Pages
                 {
                     exercise.WorkoutId = Workout.Id;
                 }
-=======
-                        
-                    });;
->>>>>>> Stashed changes
                 }
-        }
                 
 
             if (sortedExercises.Count == 0 || sortedExercises == null)
@@ -150,7 +142,7 @@ namespace Web.Pages
 
 
             }
-            if(sortedTestList.Count != 0)
+            if(sortedExercises.Count != 0)
             {
                 _ApplicationDbContext.InputValues.Add(Placeholder);
 
