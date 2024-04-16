@@ -154,7 +154,9 @@ namespace Web.Pages
                 if (sortedExercises.Count > 0 )
                 {
                 Workout.UserId = identityUser.Id;
+                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
                 _ApplicationDbContext.Workouts.Add(Workout);
+
                 _ApplicationDbContext.SaveChanges();
 
 
@@ -184,7 +186,7 @@ namespace Web.Pages
                 {
                     exercise.WorkoutId = Workout.Id;
                 }
-        }
+                }
                 
 
             if (sortedExercises.Count == 0 || sortedExercises == null)
