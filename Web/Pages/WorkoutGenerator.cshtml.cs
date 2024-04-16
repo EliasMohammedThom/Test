@@ -35,7 +35,6 @@ namespace Web.Pages
         [BindProperty]
         public List<int> AmountOfExercises { get; set; }
 
-
         public List<FetchedExercises> GeneratedExercises { get; set; } = default!;
 
         [BindProperty]
@@ -45,7 +44,6 @@ namespace Web.Pages
 
         //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
-
 
         [BindProperty]
         public string ErrorMessage { get; set; }
@@ -119,7 +117,9 @@ namespace Web.Pages
 
                 }
 
-
+                //Får inte överskrida antal som man valt 
+                //får inte slänga in två utav samma 
+                //skall randomisas
                 foreach(var exercise in GeneratedExercises)
                 {
                     exercise.WorkoutId = Workout.Id;
