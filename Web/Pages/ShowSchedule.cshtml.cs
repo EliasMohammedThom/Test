@@ -46,6 +46,9 @@ namespace Web.Pages
 
         [BindProperty]
         public int DaysToLoop { get; set; }
+
+        [BindProperty]
+        public List<string>? Weekdays { get; set; }
         #endregion
 
         public ShowScheduleModel(IWorkoutService workoutService,
@@ -61,6 +64,11 @@ namespace Web.Pages
             _extensionService = extensions;
 
            DaysToLoop =  DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); 
+
+
+            Weekdays = new List<string>();
+            Weekdays = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+
         }
         public async Task<IActionResult> OnGet()
         {
