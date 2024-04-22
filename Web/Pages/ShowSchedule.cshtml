@@ -37,16 +37,12 @@ else
          @for (int i = 1; i <= DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); i++)
         {
            
-           
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
             var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
 
             <div class="js-day">
             @if (workoutsForCurrentDate.Any())
             {
-
-               
-                  
                     @foreach (var workout in workoutsForCurrentDate)
                     {
                        
@@ -54,14 +50,15 @@ else
                             <p>@workout.Date</p>
                             <p>@workout.Description</p>
 
-                           
+                            <ul class="exercise-list">
                                 @foreach (var exercise in workout.Exercises)
                                 {
-                                    <li >
+                            <li class="exercise-item">
                                         @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
                                     </li>
                                 }
-                            
+                        </ul>
+
 
                             <form method="post">
                                 <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
@@ -69,9 +66,8 @@ else
                             </form> 
                         
                     }
+                   
              
-            
-
             }
 
             else
