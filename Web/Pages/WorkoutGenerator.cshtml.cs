@@ -90,13 +90,12 @@ namespace Web.Pages
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
             List<ExerciseList>? sortedExercises = FilterExercises();
 
+            var findScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
+
             for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
             {
-                Workout = new Workout();
-                Workout.UserId = identityUser.Id;
-                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
-                Workout.Title = InputValues.WorkoutTitle;
-                Workout.Description = InputValues.WorkoutDescription;
+                
+                CreateNewWorkout(findScheduleId, InputValues, identityUser.Id);
 
                 if (sortedExercises.Count > 0)
                 {
@@ -134,22 +133,7 @@ namespace Web.Pages
 
                     }
 
-                    Random random = new Random();
-
-                    int j = 1;
-                    while (j <= InputValues.AmountOfExercises)
-                    {
-                        var randomnumber = random.Next(0, GeneratedExercises.Count);
-
-                        if (GeneratedExercises[randomnumber].WorkoutId == null)
-                        {
-                            GeneratedExercises[randomnumber].WorkoutId = Workout.Id;
-                            j++;
-                        }
-
-                    }
-                    var emptyExercises = GeneratedExercises.Where(X => X.WorkoutId == null)
-                        .ToList();
+                    AddExercisesToWorkout(InputValues, GeneratedExercises);
                 }
             }
 
@@ -177,6 +161,35 @@ namespace Web.Pages
 
             return RedirectToPage("/ShowSchedule");
 
+        }
+
+        public void AddExercisesToWorkout(InputValues inputValues, List<FetchedExercises> generatedexercises)
+        {
+            Random random = new Random();
+
+            int j = 1;
+            while (j <= InputValues.AmountOfExercises)
+            {
+                var randomnumber = random.Next(0, generatedexercises.Count);
+
+                if (generatedexercises[randomnumber].WorkoutId == null)
+                {
+                    generatedexercises[randomnumber].WorkoutId = Workout.Id;
+                    j++;
+                }
+
+            }
+        }
+
+        public void CreateNewWorkout(int scheduleId, InputValues inputValues, string userId)
+        {
+            Workout = new Workout();
+            Workout.UserId = userId;
+            Workout.ScheduleId = scheduleId;
+            Workout.Title = inputValues.WorkoutTitle;
+            Workout.Description = inputValues.WorkoutDescription;
+
+            //_scheduleService.GetScheduleByUserId(identityUser.Id).Id;
         }
 
         private List<ExerciseList> FilterExercises()
