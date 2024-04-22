@@ -24,8 +24,15 @@
     <div class="ErrorMessageBox">
         <p>@Model.ErrorMessage</p>
     </div>
+
+    <h3>Title for workout</h3>
+    <input asp-for="@Model.InputValues.WorkoutTitle" type="text"/>
+
+    <h3>Description for workout</h3>
+    <input asp-for="@Model.InputValues.WorkoutDescription" type="text" />
+
     <h3>Difficulty</h3>
-    <select asp-for="@Model.Placeholder.DifficultyCategory">
+    <select asp-for="@Model.InputValues.DifficultyCategory">
         @foreach (var difficultyCategory in ListValue.DifficultyCategories)
         {
             foreach (var difficulty in difficultyCategory.Difficulty)
@@ -36,7 +43,7 @@
     </select>
 
     <h3>Equipment</h3>
-    <select asp-for="@Model.Placeholder.WorkoutEquipment">
+    <select asp-for="@Model.InputValues.WorkoutEquipment">
         @foreach (var workoutEquipment in ListValue.WorkoutEquipments)
         {
             foreach (var equipment in workoutEquipment.Equipment)
@@ -47,7 +54,7 @@
     </select>
 
     <h3>Type</h3>
-    <select asp-for="@Model.Placeholder.WorkoutType">
+    <select asp-for="@Model.InputValues.WorkoutType">
         @foreach (var workoutType in ListValue.WorkoutTypes)
         {
             foreach (var type in workoutType.Type)
@@ -58,7 +65,7 @@
     </select>
 
     <h3>Muscle</h3>
-    <select asp-for="@Model.Placeholder.MuscleCategories">
+    <select asp-for="@Model.InputValues.MuscleCategories">
         @foreach (var muscleCategory in ListValue.MuscleCategories)
         {
             foreach (var muscle in muscleCategory.Muscle)
@@ -69,7 +76,7 @@
     </select>
 
     <h3>Workouts per week</h3> 
-    <select asp-for="@Model.Placeholder.AmountOfWorkouts">
+    <select asp-for="@Model.InputValues.AmountOfWorkouts">
         @foreach (var amountOfWorkout in ListValue.AmountOfWorkouts)
         {
             foreach (var amount in amountOfWorkout.Amount)
@@ -80,7 +87,7 @@
     </select>
 
     <h3>Exercises per week</h3>
-    <select asp-for="@Model.Placeholder.AmountOfExercises">
+    <select asp-for="@Model.InputValues.AmountOfExercises">
         @foreach (var amountOfExercise in ListValue.AmountOfExercises)
         {
             foreach (var amount in amountOfExercise.Amount)

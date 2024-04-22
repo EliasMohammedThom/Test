@@ -39,7 +39,7 @@ namespace Web.Pages
         public List<FetchedExercises> GeneratedExercises { get; set; } = default!;
 
         [BindProperty]
-        public InputValues Placeholder { get; set; }
+        public InputValues InputValues { get; set; }
 
         public ExerciseList ExerciseList { get; set; }
 
@@ -55,13 +55,16 @@ namespace Web.Pages
 
         public ListValue Listvalues { get; set; }
 
+        [BindProperty]
+        public string WorkoutTitle { get; set; }
+
         public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
             _ApplicationDbContext = applicationDbContext;
             _scheduleService = scheduleService;
             _userManager = userManager;
 
-            Placeholder = new();
+            InputValues = new();
 
             //WorkoutList = GenerateWorkouts(Placeholder.AmountOfWorkouts);
             
@@ -98,11 +101,13 @@ namespace Web.Pages
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
             List<ExerciseList>? sortedExercises = FilterExercises();
 
-            for (int i = 0; i < Placeholder.AmountOfWorkouts; i++)
+            for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
             {
                  Workout = new Workout();
                  Workout.UserId = identityUser.Id;
                  Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
+                Workout.Title = InputValues.WorkoutTitle;
+                Workout.Description = InputValues.WorkoutDescription;
 
 
                 if (sortedExercises.Count > 0)
@@ -148,7 +153,7 @@ namespace Web.Pages
                 Random random = new Random();
 
                 int j = 1;
-                while (j <= Placeholder.AmountOfExercises)
+                while (j <= InputValues.AmountOfExercises)
                 {
 
                     var randomnumber = random.Next(0, GeneratedExercises.Count);
@@ -191,7 +196,7 @@ namespace Web.Pages
             }
             if (sortedExercises.Count != 0)
             {
-                _ApplicationDbContext.InputValues.Add(Placeholder);
+                _ApplicationDbContext.InputValues.Add(InputValues);
 
             }
 
@@ -208,10 +213,10 @@ namespace Web.Pages
         {
             return _ApplicationDbContext.ExerciseLists.Where(
                 x =>
-                x.Difficulty == Placeholder.DifficultyCategory &&
-                x.Equipment == Placeholder.WorkoutEquipment &&
-                x.Muscle == Placeholder.MuscleCategories &&
-                x.Type == Placeholder.WorkoutType).ToList();
+                x.Difficulty == InputValues.DifficultyCategory &&
+                x.Equipment == InputValues.WorkoutEquipment &&
+                x.Muscle == InputValues.MuscleCategories &&
+                x.Type == InputValues.WorkoutType).ToList();
         }
     }
 }

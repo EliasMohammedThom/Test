@@ -15,5 +15,7 @@ namespace Core.Models
         public string MuscleCategories { get; set; }
         public int AmountOfWorkouts { get; set; }
         public int AmountOfExercises { get; set; }
+        public string WorkoutTitle { get; set; }
+        public string WorkoutDescription { get; set;}
     }
 }
