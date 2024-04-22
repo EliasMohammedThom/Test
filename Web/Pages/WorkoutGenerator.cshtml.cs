@@ -67,11 +67,11 @@ namespace Web.Pages
             InputValues = new();
 
             //WorkoutList = GenerateWorkouts(Placeholder.AmountOfWorkouts);
-            
+
 
             GeneratedExercises = new();
-        
-            
+
+
 
             Listvalues = new();
         }
@@ -93,7 +93,7 @@ namespace Web.Pages
             return workoutList;
         }
 
-        public async Task OnPost()
+        public async Task<IActionResult> OnPost()
         {
 
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
@@ -103,81 +103,81 @@ namespace Web.Pages
 
             for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
             {
-                 Workout = new Workout();
-                 Workout.UserId = identityUser.Id;
-                 Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
+                Workout = new Workout();
+                Workout.UserId = identityUser.Id;
+                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
                 Workout.Title = InputValues.WorkoutTitle;
                 Workout.Description = InputValues.WorkoutDescription;
 
 
                 if (sortedExercises.Count > 0)
                 {
-                    var date = new DateOnly(DateTime.Now.Year ,DateTime.Now.Month, DateTime.Now.Day);
-                    
-                    
-                    var workoutsOnday = _ApplicationDbContext.Workouts.Where(X=>X.Date.Day  == date.Day  && X.Date.Month == date.Month);
-                    
+                    var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+
+                    var workoutsOnday = _ApplicationDbContext.Workouts.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
+
                     while (workoutsOnday.Count() != 0)
                     {
                         date = date.AddDays(1);
-                        workoutsOnday = _ApplicationDbContext.Workouts.Where(X=>X.Date.Day  == date.Day  && X.Date.Month == date.Month);
+                        workoutsOnday = _ApplicationDbContext.Workouts.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
                         Workout.Date = date;
                     }
 
-                _ApplicationDbContext.Workouts.Add(Workout);
+                    _ApplicationDbContext.Workouts.Add(Workout);
 
-                _ApplicationDbContext.SaveChanges();
+                    _ApplicationDbContext.SaveChanges();
 
-                foreach (var exercise in sortedExercises)
-                {
-                    var fetchedExercise = new FetchedExercises
-
+                    foreach (var exercise in sortedExercises)
                     {
-                        Difficulty = exercise.Difficulty,
-                        Equipment = exercise.Equipment,
-                        Muscle = exercise.Muscle,
-                        Type = exercise.Type,
-                        Instructions = exercise.Instructions,
-                        Name = exercise.Name,
-                        UserId = identityUser.Id
-                    };
+                        var fetchedExercise = new FetchedExercises
 
-                    GeneratedExercises.Add(fetchedExercise);
+                        {
+                            Difficulty = exercise.Difficulty,
+                            Equipment = exercise.Equipment,
+                            Muscle = exercise.Muscle,
+                            Type = exercise.Type,
+                            Instructions = exercise.Instructions,
+                            Name = exercise.Name,
+                            UserId = identityUser.Id
+                        };
 
-
-                    _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
-
-                }
+                        GeneratedExercises.Add(fetchedExercise);
 
 
-                Random random = new Random();
+                        _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
 
-                int j = 1;
-                while (j <= InputValues.AmountOfExercises)
-                {
-
-                    var randomnumber = random.Next(0, GeneratedExercises.Count);
-
-                    if (GeneratedExercises[randomnumber].WorkoutId == null)
-                    {
-                        GeneratedExercises[randomnumber].WorkoutId = Workout.Id;
-                        j++;
                     }
 
+
+                    Random random = new Random();
+
+                    int j = 1;
+                    while (j <= InputValues.AmountOfExercises)
+                    {
+
+                        var randomnumber = random.Next(0, GeneratedExercises.Count);
+
+                        if (GeneratedExercises[randomnumber].WorkoutId == null)
+                        {
+                            GeneratedExercises[randomnumber].WorkoutId = Workout.Id;
+                            j++;
+                        }
+
+                    }
+                    var emptyExercises = GeneratedExercises.Where(X => X.WorkoutId == null)
+                        .ToList();
+
+                    //foreach (var exercise in emptyExercises)
+                    //{
+                    //    _ApplicationDbContext.FetchedExercises.Remove(exercise);
+
+                    //}
+
+
                 }
-                var emptyExercises = GeneratedExercises.Where(X => X.WorkoutId == null)
-                    .ToList();
-
-                //foreach (var exercise in emptyExercises)
-                //{
-                //    _ApplicationDbContext.FetchedExercises.Remove(exercise);
-
-                //}
-
-
             }
-        }
-            
+
 
             if (sortedExercises.Count == 0 || sortedExercises == null)
             {
@@ -202,10 +202,13 @@ namespace Web.Pages
 
 
 
-            var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X=>X.WorkoutId == null).ToList();
+            var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
             _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
 
             _ApplicationDbContext.SaveChanges();
+
+
+            return RedirectToPage("/ShowSchedule");
 
         }
 
