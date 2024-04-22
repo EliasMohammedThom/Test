@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Reflection.PortableExecutable;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Pages
 {
@@ -50,7 +51,9 @@ namespace Web.Pages
 
         public Workout Workout { get; set; }
 
-         public ListValue Listvalues { get; set; }
+        public List<Workout> WorkoutList { get; set; }
+
+        public ListValue Listvalues { get; set; }
 
         public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager)
         {
@@ -58,13 +61,14 @@ namespace Web.Pages
             _scheduleService = scheduleService;
             _userManager = userManager;
 
-
             Placeholder = new();
 
-            Workout = new Workout();
+            //WorkoutList = GenerateWorkouts(Placeholder.AmountOfWorkouts);
+            
+
             GeneratedExercises = new();
         
-            Workout.Date = DateOnly.FromDateTime(DateTime.Now);
+            
 
             Listvalues = new();
         }
@@ -72,31 +76,54 @@ namespace Web.Pages
         {
             return Page();
         }
+
+        public List<Workout> GenerateWorkouts(int workoutsPerWeek)
+        {
+            List<Workout> workoutList = new List<Workout>();
+
+            for (int i = 0; i <= workoutsPerWeek; i++)
+            {
+                Workout workout = new Workout();
+                workoutList.Append(workout);
+            }
+
+            return workoutList;
+        }
+
         public async Task OnPost()
         {
 
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            List<ExerciseList>? sortedExercises = FilterExercises();
 
-            var sortedExercises =
-                _ApplicationDbContext.ExerciseLists.Where(
-                x =>
-                x.Difficulty == Placeholder.DifficultyCategory &&
-                x.Equipment == Placeholder.WorkoutEquipment &&
-                x.Muscle == Placeholder.MuscleCategories &&
-                x.Type == Placeholder.WorkoutType).ToList();
+            for (int i = 0; i < Placeholder.AmountOfWorkouts; i++)
+            {
+                 Workout = new Workout();
+                 Workout.UserId = identityUser.Id;
+                 Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
 
-                if (sortedExercises.Count > 0 )
+
+                if (sortedExercises.Count > 0)
                 {
-                Workout.UserId = identityUser.Id;
-                Workout.ScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
+                    var date = new DateOnly(DateTime.Now.Year ,DateTime.Now.Month, DateTime.Now.Day);
+                    
+                    
+                    var workoutsOnday = _ApplicationDbContext.Workouts.Where(X=>X.Date.Day  == date.Day  && X.Date.Month == date.Month);
+                    
+                    while (workoutsOnday.Count() != 0)
+                    {
+                        date = date.AddDays(1);
+                        workoutsOnday = _ApplicationDbContext.Workouts.Where(X=>X.Date.Day  == date.Day  && X.Date.Month == date.Month);
+                        Workout.Date = date;
+                    }
+
                 _ApplicationDbContext.Workouts.Add(Workout);
 
                 _ApplicationDbContext.SaveChanges();
 
-
-                foreach ( var exercise in sortedExercises )
+                foreach (var exercise in sortedExercises)
                 {
                     var fetchedExercise = new FetchedExercises
 
@@ -117,34 +144,35 @@ namespace Web.Pages
 
                 }
 
-             
-                Random random = new Random( );  
 
-                int i = 1;
-                while(i <= Placeholder.AmountOfExercises)
+                Random random = new Random();
+
+                int j = 1;
+                while (j <= Placeholder.AmountOfExercises)
                 {
-                    
-                var randomnumber = random.Next(0, GeneratedExercises.Count);
-                    
-                    if(GeneratedExercises[randomnumber].WorkoutId == null)
+
+                    var randomnumber = random.Next(0, GeneratedExercises.Count);
+
+                    if (GeneratedExercises[randomnumber].WorkoutId == null)
                     {
                         GeneratedExercises[randomnumber].WorkoutId = Workout.Id;
-                        i++;
+                        j++;
                     }
-                         
+
                 }
-                var emptyExercises = GeneratedExercises.Where(X=>X.WorkoutId == null)
+                var emptyExercises = GeneratedExercises.Where(X => X.WorkoutId == null)
                     .ToList();
 
-                foreach( var exercise in emptyExercises )
-                {
-                     _ApplicationDbContext.FetchedExercises.Remove(exercise);
+                //foreach (var exercise in emptyExercises)
+                //{
+                //    _ApplicationDbContext.FetchedExercises.Remove(exercise);
 
-                }
+                //}
 
-               
-                }
-                
+
+            }
+        }
+            
 
             if (sortedExercises.Count == 0 || sortedExercises == null)
             {
@@ -161,7 +189,7 @@ namespace Web.Pages
 
 
             }
-            if(sortedExercises.Count != 0)
+            if (sortedExercises.Count != 0)
             {
                 _ApplicationDbContext.InputValues.Add(Placeholder);
 
@@ -169,8 +197,21 @@ namespace Web.Pages
 
 
 
+            var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X=>X.WorkoutId == null).ToList();
+            _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
+
             _ApplicationDbContext.SaveChanges();
 
+        }
+
+        private List<ExerciseList> FilterExercises()
+        {
+            return _ApplicationDbContext.ExerciseLists.Where(
+                x =>
+                x.Difficulty == Placeholder.DifficultyCategory &&
+                x.Equipment == Placeholder.WorkoutEquipment &&
+                x.Muscle == Placeholder.MuscleCategories &&
+                x.Type == Placeholder.WorkoutType).ToList();
         }
     }
 }
