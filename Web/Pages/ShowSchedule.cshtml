@@ -34,7 +34,7 @@ else
     <div class="schedule-list">
 
        
-         @for (int i = 1; i <= DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); i++)
+         @for (int i = 1; i <= Model.DaysToLoop; i++)
         {
            
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);

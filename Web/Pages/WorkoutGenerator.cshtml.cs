@@ -117,10 +117,7 @@ namespace Web.Pages
 
                 }
 
-                //Får inte överskrida antal som man valt 
-                //får inte slänga in två utav samma 
-                //skall randomisas
-
+             
                 Random random = new Random( );  
 
                 int i = 1;
@@ -146,10 +143,6 @@ namespace Web.Pages
                 }
 
                
-                //foreach(var exercise in GeneratedExercises)
-                //{
-                //    exercise.WorkoutId = Workout.Id;
-                //}
                 }
                 
 

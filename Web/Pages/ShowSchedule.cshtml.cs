@@ -43,6 +43,9 @@ namespace Web.Pages
         public List<FetchedExercises> SortedExercise { get; set; }
       
         public List<Workout> workouts { get; set; }
+
+        [BindProperty]
+        public int DaysToLoop { get; set; }
         #endregion
 
         public ShowScheduleModel(IWorkoutService workoutService,
@@ -56,6 +59,8 @@ namespace Web.Pages
             _userManager = userManager;
             _exerciseService = exerciseService;
             _extensionService = extensions;
+
+           DaysToLoop =  DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); 
         }
         public async Task<IActionResult> OnGet()
         {
