@@ -17,10 +17,15 @@ else
 {
     <strong class="CenterText" style="font-size: 2.5em; font-family: 'Pacifico', cursive; color: white;">Current workouts in your schedule:</strong>
 
-     <div class="flex-container">
+     <div class="schedule-list">
     @foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
     {
-            <div class="weekday">@day</div>
+            <div class="js-day">
+            <div class="workout-box">
+                    @day
+            </div>
+            </div>
+            
     }
     </div>
 
