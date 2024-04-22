@@ -42,8 +42,6 @@ namespace Web.Pages
         public InputValues InputValues { get; set; }
 
         public ExerciseList ExerciseList { get; set; }
-
-        //public IdentityUser? IdentityUser { get; set; }
         public Schedule Schedule { get; set; }
 
         [BindProperty]
@@ -63,16 +61,8 @@ namespace Web.Pages
             _ApplicationDbContext = applicationDbContext;
             _scheduleService = scheduleService;
             _userManager = userManager;
-
             InputValues = new();
-
-            //WorkoutList = GenerateWorkouts(Placeholder.AmountOfWorkouts);
-
-
             GeneratedExercises = new();
-
-
-
             Listvalues = new();
         }
         public async Task<IActionResult> OnGetAsync()
@@ -89,7 +79,6 @@ namespace Web.Pages
                 Workout workout = new Workout();
                 workoutList.Append(workout);
             }
-
             return workoutList;
         }
 
@@ -109,11 +98,9 @@ namespace Web.Pages
                 Workout.Title = InputValues.WorkoutTitle;
                 Workout.Description = InputValues.WorkoutDescription;
 
-
                 if (sortedExercises.Count > 0)
                 {
                     var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
 
                     var workoutsOnday = _ApplicationDbContext.Workouts.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
 
@@ -131,7 +118,6 @@ namespace Web.Pages
                     foreach (var exercise in sortedExercises)
                     {
                         var fetchedExercise = new FetchedExercises
-
                         {
                             Difficulty = exercise.Difficulty,
                             Equipment = exercise.Equipment,
@@ -144,18 +130,15 @@ namespace Web.Pages
 
                         GeneratedExercises.Add(fetchedExercise);
 
-
                         _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
 
                     }
-
 
                     Random random = new Random();
 
                     int j = 1;
                     while (j <= InputValues.AmountOfExercises)
                     {
-
                         var randomnumber = random.Next(0, GeneratedExercises.Count);
 
                         if (GeneratedExercises[randomnumber].WorkoutId == null)
@@ -167,17 +150,8 @@ namespace Web.Pages
                     }
                     var emptyExercises = GeneratedExercises.Where(X => X.WorkoutId == null)
                         .ToList();
-
-                    //foreach (var exercise in emptyExercises)
-                    //{
-                    //    _ApplicationDbContext.FetchedExercises.Remove(exercise);
-
-                    //}
-
-
                 }
             }
-
 
             if (sortedExercises.Count == 0 || sortedExercises == null)
             {
@@ -191,22 +165,15 @@ namespace Web.Pages
             else
             {
                 Schedule currentUsersSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
-
-
             }
-            if (sortedExercises.Count != 0)
-            {
+
+            if (sortedExercises.Count != 0)            
                 _ApplicationDbContext.InputValues.Add(InputValues);
-
-            }
-
-
 
             var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
             _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
 
             _ApplicationDbContext.SaveChanges();
-
 
             return RedirectToPage("/ShowSchedule");
 

@@ -12,85 +12,68 @@
     <p style="color:white;">You need to add workouts to your schedule first, click on the button to add a workout, then edit your schedule <a class="btn btn-primary" asp-page="/Addworkout">Here</a> to continue</p>
 }
 
-
 else
 {
     <strong class="CenterText" style="font-size: 2.5em; font-family: 'Pacifico', cursive; color: white;">Current workouts in your schedule:</strong>
 
     <div class="schedule-list">
-          
-           
-            
-           @foreach(string weekday in Model.Weekdays)
-            {
-
-                <div class="js-day">
-                    <div class="workout-box">
-                        @weekday
-                    </div>
+        @foreach (string weekday in Model.Weekdays)
+        {
+            <div class="js-day">
+                <div class="workout-box">
+                    @weekday
                 </div>
-            }
-        
+            </div>
+        }
     </div>
-
-   
 
     <div class="schedule-list">
 
-       
-         @for (int i = 1; i <= Model.DaysToLoop; i++)
+
+        @for (int i = 1; i <= Model.DaysToLoop; i++)
         {
-           
+
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
             var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
 
             <div class="js-day">
-            @if (workoutsForCurrentDate.Any())
-            {
+                @if (workoutsForCurrentDate.Any())
+                {
                     @foreach (var workout in workoutsForCurrentDate)
                     {
-                       
-                            <strong>@workout.Title</strong>
-                            <p>@workout.Date</p>
-                            <p>@workout.Description</p>
 
-                            <ul class="exercise-list">
-                                @foreach (var exercise in workout.Exercises)
-                                {
-                            <li class="exercise-item">
-                                        @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
-                                    </li>
-                                }
+                        <strong>@workout.Title</strong>
+                        <p>@workout.Date</p>
+                        <p>@workout.Description</p>
+
+                        <ul class="exercise-list">
+                            @foreach (var exercise in workout.Exercises)
+                            {
+                                <li class="exercise-item">
+                                    @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                                </li>
+                            }
                         </ul>
 
 
-                            <form method="post">
-                                <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                                <button type="submit" class="btn btn-outline-danger">X</button>
-                            </form> 
-                        
+                        <form method="post">
+                            <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                            <button type="submit" class="btn btn-outline-danger">X</button>
+                        </form>
                     }
-                   
-             
-            }
-
-            else
-            {
-                <div class="workout-box">
-                    <strong>Empty</strong>
-                    <p>No workout scheduled for @currentDate</p>
-                 </div> 
-            }
+                }
+                else
+                {
+                    <div class="workout-box">
+                        <strong>Empty</strong>
+                        <p>No workout scheduled for @currentDate</p>
+                    </div>
+                }
             </div>
-
         }
-     
+    </div>
 
-        </div>
-
-  
-
-    <div id="workoutPopup" class="popup">
+@*     <div id="workoutPopup" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>
             <h2 id="popupTitle"></h2>
@@ -102,6 +85,6 @@ else
             <br>
             <b>Amount of Repetitions: </b><a id="popupRepetitions" style="font-weight: normal"></a>
         </div>
-    </div>
+    </div> *@
 
 }

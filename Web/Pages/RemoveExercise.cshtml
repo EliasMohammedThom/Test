@@ -9,10 +9,8 @@
 }
 @if (Model.DoesUserHaveWorkouts.Count > 0)
 {
-
     @foreach (var item in Model.AllWorkoutsByCurrentUser)
     {
-
         <div class="exercise-box">
             <p>Workoutname: @item.Title</p>
 
@@ -24,17 +22,11 @@
             }
         </div>
     }
-    
 }
 else
 {
     <p class="alert alert-danger">You currently don't have any Exercies in any workouts, Click <a asp-page="/AddExercise">HERE</a> to add a Exercise to a workout</p>
 }
-
-
-
-
-
 <style>
     .exercise-box {
         border: 1px solid #ccc;

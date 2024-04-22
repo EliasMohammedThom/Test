@@ -25,7 +25,6 @@ namespace Web.Pages
 
         public async Task <IActionResult> OnGetAsync()
         {
-            //Not yet implemented
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
             if(identityUser != null)
             {
