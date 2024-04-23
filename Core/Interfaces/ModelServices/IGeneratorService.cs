@@ -11,7 +11,7 @@ namespace Core.Interfaces.ModelServices
     {
         public string ReturnErrorMessage(List<ExerciseList>? sortedExercises, string ErrorMessage);
 
-        public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout);
+        public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout, int scheduleId);
 
         public void AddExercisesToWorkout(InputValues inputValues, List<FetchedExercises> generatedexercises, Workout workout);
 

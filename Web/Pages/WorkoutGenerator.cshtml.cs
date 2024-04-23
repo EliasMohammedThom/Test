@@ -74,23 +74,15 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnGetAsync()
         {
-            var userid = IdentityUser.Id;
-            var doesUserHaveSchedule = _scheduleService.GetScheduleByUserId(userid);
-
-            if (doesUserHaveSchedule == null)
-            {
-                Schedule schedule = new Schedule{ UserId = userid};
-                _ApplicationDbContext.Schedules.Add(schedule);
-                _ApplicationDbContext.SaveChanges();
-            }
+           
 
             IdentityUser = await _userManager.GetUserAsync(User);
         
-            UserSchedule = _scheduleService.GetScheduleByUserId(userid);
+            UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
 
             if (UserSchedule == null)
             {
-                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule, userid);
+                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule, IdentityUser.Id);
                 UserSchedule = newlyCreatedSchedule;
             }
             return Page();
@@ -98,7 +90,10 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
+           
 
+            IdentityUser = await _userManager.GetUserAsync(User);
+            UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
                 List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
 
 
@@ -118,7 +113,7 @@ namespace Web.Pages
                 {
                     var workoutList = _ApplicationDbContext.Workouts.ToList();
 
-                    _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout);
+                    _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
 
                     _ApplicationDbContext.Workouts.Add(newWorkout);
 

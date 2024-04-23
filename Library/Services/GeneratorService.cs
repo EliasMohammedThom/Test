@@ -37,18 +37,20 @@ namespace Infrastructure.Services
             }
         }
 
-        public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout)
+        public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout, int scheduleId)
         {
-            var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+           var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-            var workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
+            var workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month && X.ScheduleId == scheduleId);
 
-            while (workoutsOnday.Count() != 0)
+            while (workoutsOnday.Any())
             {
                 date = date.AddDays(1);
-                workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
-                workout.Date = date;
+                workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month && X.ScheduleId == scheduleId);
             }
+
+            // At this point, 'date' contains the first empty workout day found
+            workout.Date = date;
         }
 
         public void AddExercisesToWorkout(InputValues inputValues, List<FetchedExercises> generatedexercises, Workout workout)
