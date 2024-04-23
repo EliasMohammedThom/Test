@@ -77,7 +77,7 @@ namespace Web.Pages
         {
 
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            List<ExerciseList>? sortedExercises = FilterExercises();
+            List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
 
             var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
             var findScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
@@ -136,99 +136,13 @@ namespace Web.Pages
 
         }
 
-        private List<ExerciseList> FilterExercises()
-        {
-            return _ApplicationDbContext.ExerciseLists.Where(
-                x =>
-                x.Difficulty == InputValues.DifficultyCategory &&
-                x.Equipment == InputValues.WorkoutEquipment &&
-                x.Muscle == InputValues.MuscleCategories &&
-                x.Type == InputValues.WorkoutType).ToList();
-        }
+
         public void CheckIfUserHasSchedule(Schedule? doesScheduleExists)
         {
             if (doesScheduleExists == null)
             {
                 _scheduleService.AddSchedule(Schedule);
             }
-        }
-
-
-
-
-
-
-
-
-
-
-        //private void CheckIfUserHasSchedule(Schedule? doesScheduleExists)
-        //{
-        //    if (doesScheduleExists == null)
-        //    {
-        //        _scheduleService.AddSchedule(Schedule);
-        //    }
-        //}
-
-        //private void ReturnErrorMessage(List<ExerciseList>? sortedExercises)
-        //{
-        //    if (sortedExercises.Count == 0 || sortedExercises == null)
-        //    {
-        //        ErrorMessage = "Can not find exercises with given parameters, try again!";
-        //    }
-        //}
-
-        //private void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList)
-        //{
-        //    var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-        //    var workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
-
-        //    while (workoutsOnday.Count() != 0)
-        //    {
-        //        date = date.AddDays(1);
-        //        workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month);
-        //        Workout.Date = date;
-        //    }
-        //}
-
-        //public void AddExercisesToWorkout(InputValues inputValues, List<FetchedExercises> generatedexercises)
-        //{
-        //    Random random = new Random();
-
-        //    int j = 1;
-        //    while (j <= InputValues.AmountOfExercises)
-        //    {
-        //        var randomnumber = random.Next(0, generatedexercises.Count);
-
-        //        if (generatedexercises[randomnumber].WorkoutId == null)
-        //        {
-        //            generatedexercises[randomnumber].WorkoutId = Workout.Id;
-        //            j++;
-        //        }
-
-        //    }
-        //}
-
-        //public void CreateNewWorkout(int scheduleId, InputValues inputValues, string userId)
-        //{
-        //    Workout = new Workout();
-        //    Workout.UserId = userId;
-        //    Workout.ScheduleId = scheduleId;
-        //    Workout.Title = inputValues.WorkoutTitle;
-        //    Workout.Description = inputValues.WorkoutDescription;
-
-        //    //_scheduleService.GetScheduleByUserId(identityUser.Id).Id;
-        //}
-
-        //private List<ExerciseList> FilterExercises()
-        //{
-        //    return _ApplicationDbContext.ExerciseLists.Where(
-        //        x =>
-        //        x.Difficulty == InputValues.DifficultyCategory &&
-        //        x.Equipment == InputValues.WorkoutEquipment &&
-        //        x.Muscle == InputValues.MuscleCategories &&
-        //        x.Type == InputValues.WorkoutType).ToList();
-        //}
+        }  
     }
 }
