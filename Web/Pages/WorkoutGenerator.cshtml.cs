@@ -90,20 +90,11 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
-           
-
             IdentityUser = await _userManager.GetUserAsync(User);
             UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
-                List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
+            List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
 
-
-
-
-          
-            //var findScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id);
-
-           
-
+         
             for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
             {
 
