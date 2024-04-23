@@ -18,12 +18,13 @@ namespace Infrastructure.Services
         {
             _ApplicationDbContext = scheduleContext;
         }
-        public Schedule CreateIfScheduleIfUserHasNone(Schedule? doesScheduleExists, Schedule schedule)
+        public Schedule CreateIfScheduleIfUserHasNone(Schedule? doesScheduleExists, Schedule schedule, string userId)
         {
             if (doesScheduleExists == null)
             {
-                schedule = new Schedule();
+                schedule = new Schedule { UserId = userId};
                 _ApplicationDbContext.Schedules.Add(schedule);
+                _ApplicationDbContext.SaveChanges();
             }
             return schedule;
         }

@@ -69,7 +69,7 @@ namespace Infrastructure.Services
             }
         }
 
-        public Workout CreateNewWorkout(int scheduleId, InputValues inputValues, string userId)
+        public Workout? CreateNewWorkout(int scheduleId, InputValues inputValues, string userId)
         {
 
             var workout = new Workout();

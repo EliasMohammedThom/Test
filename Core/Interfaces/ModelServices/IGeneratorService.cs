@@ -15,7 +15,7 @@ namespace Core.Interfaces.ModelServices
 
         public void AddExercisesToWorkout(InputValues inputValues, List<FetchedExercises> generatedexercises, Workout workout);
 
-        public Workout CreateNewWorkout(int scheduleId, InputValues inputValues, string userId);
+        public Workout? CreateNewWorkout(int scheduleId, InputValues inputValues, string userId);
         
         public List<ExerciseList> FilterExercises(InputValues inputValues);
     }

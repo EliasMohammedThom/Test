@@ -70,16 +70,27 @@ namespace Web.Pages
             InputValues = new();
             GeneratedExercises = new();
             Listvalues = new();
+            IdentityUser = new();
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            var userid = IdentityUser.Id;
+            var doesUserHaveSchedule = _scheduleService.GetScheduleByUserId(userid);
+
+            if (doesUserHaveSchedule == null)
+            {
+                Schedule schedule = new Schedule{ UserId = userid};
+                _ApplicationDbContext.Schedules.Add(schedule);
+                _ApplicationDbContext.SaveChanges();
+            }
+
             IdentityUser = await _userManager.GetUserAsync(User);
         
-            UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
+            UserSchedule = _scheduleService.GetScheduleByUserId(userid);
 
             if (UserSchedule == null)
             {
-                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule);
+                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule, userid);
                 UserSchedule = newlyCreatedSchedule;
             }
             return Page();
