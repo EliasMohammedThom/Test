@@ -42,6 +42,7 @@ namespace Web
             builder.Services.AddScoped<IScheduleService, ScheduleService>();
             builder.Services.AddScoped<IImportValues, ImportValues>();
             builder.Services.AddScoped<IExtensions, Extensions>();
+            builder.Services.AddScoped<IGeneratorService, GeneratorService>();
             builder.Services.AddScoped<IProfanityFilter, ProfanityFilter.ProfanityFilter>();
             builder.Services.AddHttpClient();
             builder.Services.AddHealthChecks();
