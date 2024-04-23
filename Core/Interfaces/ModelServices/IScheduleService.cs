@@ -15,5 +15,6 @@ namespace Core.Interfaces.ModelServices
         public void UpdateSchedule(string oldString, string newString);
         public void DeleteScheduleByScheduleId(int? scheduleId, Schedule? schedule);
         public Schedule? GetScheduleByUserId(string? userId);
+        public Schedule CreateIfScheduleIfUserHasNone(Schedule? doesScheduleExists, Schedule schedule);
     }
 }

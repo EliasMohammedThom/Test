@@ -56,6 +56,9 @@ namespace Web.Pages
 
         [BindProperty]
         public string WorkoutTitle { get; set; }
+
+        public Schedule UserSchedule { get; set; }
+        public IdentityUser? IdentityUser { get; set; }
         #endregion
 
         public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager, IGeneratorService generatorService)
@@ -70,22 +73,35 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnGetAsync()
         {
+            IdentityUser = await _userManager.GetUserAsync(User);
+        
+            UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
+
+            if (UserSchedule == null)
+            {
+                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule);
+                UserSchedule = newlyCreatedSchedule;
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPost()
         {
 
-            IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
+                List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
 
-            var doesScheduleExists = _scheduleService.GetScheduleByUserId(identityUser.Id);
-            var findScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id).Id;
+
+
+
+          
+            //var findScheduleId = _scheduleService.GetScheduleByUserId(identityUser.Id);
+
+           
 
             for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
             {
 
-                var newWorkout = _generatorService.CreateNewWorkout(findScheduleId, InputValues, identityUser.Id);
+                var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
 
                 if (sortedExercises.Count > 0)
                 {
@@ -107,7 +123,7 @@ namespace Web.Pages
                             Type = exercise.Type,
                             Instructions = exercise.Instructions,
                             Name = exercise.Name,
-                            UserId = identityUser.Id
+                            UserId = IdentityUser.Id
                         };
 
                         GeneratedExercises.Add(fetchedExercise);
@@ -122,7 +138,7 @@ namespace Web.Pages
 
             _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
 
-            CheckIfUserHasSchedule(doesScheduleExists);
+            
 
             if (sortedExercises.Count != 0)
                 _ApplicationDbContext.InputValues.Add(InputValues);
@@ -135,14 +151,5 @@ namespace Web.Pages
             return RedirectToPage("/ShowSchedule");
 
         }
-
-
-        public void CheckIfUserHasSchedule(Schedule? doesScheduleExists)
-        {
-            if (doesScheduleExists == null)
-            {
-                _scheduleService.AddSchedule(Schedule);
-            }
-        }  
     }
 }

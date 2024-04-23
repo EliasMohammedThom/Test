@@ -11,6 +11,20 @@ namespace Infrastructure.Services
 {
     public class GeneratorService : IGeneratorService
     {
+        private readonly ApplicationDbContext _applicationDbContext;
+        public GeneratorService(ApplicationDbContext applicationDbContext)
+        {
+            _applicationDbContext = applicationDbContext;
+        }
+        public List<ExerciseList> FilterExercises(InputValues inputValues)
+        {
+            return _applicationDbContext.ExerciseLists.Where(
+                x =>
+                x.Difficulty == inputValues.DifficultyCategory &&
+                x.Equipment == inputValues.WorkoutEquipment &&
+                x.Muscle == inputValues.MuscleCategories &&
+                x.Type == inputValues.WorkoutType).ToList();
+        }
         public string ReturnErrorMessage(List<ExerciseList>? sortedExercises, string ErrorMessage)
         {
             if (sortedExercises.Count == 0 || sortedExercises == null)
