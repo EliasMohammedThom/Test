@@ -1,11 +1,6 @@
 ﻿using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
@@ -48,8 +43,6 @@ namespace Infrastructure.Services
                 date = date.AddDays(1);
                 workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month && X.ScheduleId == scheduleId);
             }
-
-            // At this point, 'date' contains the first empty workout day found
             workout.Date = date;
         }
 
@@ -67,7 +60,6 @@ namespace Infrastructure.Services
                     generatedexercises[randomnumber].WorkoutId = workout.Id;
                     j++;
                 }
-
             }
         }
 

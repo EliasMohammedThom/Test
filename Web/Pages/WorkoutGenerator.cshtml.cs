@@ -1,14 +1,9 @@
-
 using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Reflection.PortableExecutable;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Web.Pages
 {
@@ -74,8 +69,6 @@ namespace Web.Pages
         }
         public async Task<IActionResult> OnGetAsync()
         {
-           
-
             IdentityUser = await _userManager.GetUserAsync(User);
         
             UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
@@ -135,8 +128,6 @@ namespace Web.Pages
 
             _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
 
-            
-
             if (sortedExercises.Count != 0)
                 _ApplicationDbContext.InputValues.Add(InputValues);
 
@@ -146,7 +137,6 @@ namespace Web.Pages
             _ApplicationDbContext.SaveChanges();
 
             return RedirectToPage("/ShowSchedule");
-
         }
     }
 }
