@@ -36,12 +36,20 @@ namespace Infrastructure.Services
         {
            var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 
-            var workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month && X.ScheduleId == scheduleId);
+            var workoutsOnday = workoutList.Where(
+                    X => X.Date.Day == date.Day && 
+                    X.Date.Month == date.Month && 
+                    X.ScheduleId == scheduleId
+                    );
 
             while (workoutsOnday.Any())
             {
                 date = date.AddDays(1);
-                workoutsOnday = workoutList.Where(X => X.Date.Day == date.Day && X.Date.Month == date.Month && X.ScheduleId == scheduleId);
+                workoutsOnday = workoutList.Where(
+                    X => X.Date.Day == date.Day &&
+                    X.Date.Month == date.Month && 
+                    X.ScheduleId == scheduleId
+                    );
             }
             workout.Date = date;
         }

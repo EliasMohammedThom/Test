@@ -56,7 +56,14 @@ namespace Web.Pages
         public IdentityUser? IdentityUser { get; set; }
         #endregion
 
-        public WorkoutGeneratorModel(ApplicationDbContext applicationDbContext, IScheduleService scheduleService, UserManager<IdentityUser> userManager, IGeneratorService generatorService)
+        public WorkoutGeneratorModel
+            (
+            ApplicationDbContext applicationDbContext, 
+            IScheduleService scheduleService, 
+            UserManager<IdentityUser> userManager, 
+            IGeneratorService generatorService
+            )
+
         {
             _ApplicationDbContext = applicationDbContext;
             _scheduleService = scheduleService;
@@ -67,6 +74,8 @@ namespace Web.Pages
             Listvalues = new();
             IdentityUser = new();
         }
+
+
         public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser = await _userManager.GetUserAsync(User);
