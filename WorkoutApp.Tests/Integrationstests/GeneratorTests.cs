@@ -54,34 +54,10 @@ namespace WorkoutApp.Tests.Integrationstests
             Assert.Equal(errorMessage, secondResult);
             Assert.Null(result);
         }
-
-        //public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout, int scheduleId)
-        //{
-        //    var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-
-        //    var workoutsOnday = workoutList.Where(
-        //            X => X.Date.Day == date.Day &&
-        //            X.Date.Month == date.Month &&
-        //            X.ScheduleId == scheduleId
-        //            );
-
-        //    while (workoutsOnday.Any())
-        //    {
-        //        date = date.AddDays(1);
-        //        workoutsOnday = workoutList.Where(
-        //            X => X.Date.Day == date.Day &&
-        //            X.Date.Month == date.Month &&
-        //            X.ScheduleId == scheduleId
-        //            );
-        //    }
-        //    workout.Date = date;
-        //}
-
         [Fact]
         public void FindEmptyWorkoutDaysInSchedule_ShouldFindEmptyDay()
         {
             // Arrange
-
             var workoutList = new List<Workout>
             {
                 new Workout {Date = new DateOnly(2024, 4,25), ScheduleId = 1},
@@ -92,12 +68,8 @@ namespace WorkoutApp.Tests.Integrationstests
             var workout = new Workout();
             int scheduleid = 1;
 
-
-
             // Act
-
             _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, workout, scheduleid);
-
 
             // Assert
             Assert.Equal(new DateOnly(2024, 4,28), workout.Date);
