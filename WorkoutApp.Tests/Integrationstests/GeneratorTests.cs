@@ -25,9 +25,9 @@ namespace WorkoutApp.Tests.Integrationstests
 
         [Theory]
         [InlineData(1, "test", "test", "test", "test", "test", "test")]
-        public void GetAllExerciseListsShouldReturnCorrectAmountOfExercises(
+        public void GetAllExerciseLists_ShouldReturnErrorMessage_WhenListIsEmpty(
         int id, string name, string type, string muscle, string equipment, string difficulty, string instructions)
-       
+
         {
             var sortedExercises = new List<ExerciseList>();
             var emptysortedExersises = new List<ExerciseList>();
@@ -54,22 +54,56 @@ namespace WorkoutApp.Tests.Integrationstests
             Assert.Equal(errorMessage, secondResult);
             Assert.Null(result);
         }
-    
+
+        //public void FindEmptyWorkoutDaysInSchedule(List<Workout> workoutList, Workout workout, int scheduleId)
+        //{
+        //    var date = new DateOnly(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+
+        //    var workoutsOnday = workoutList.Where(
+        //            X => X.Date.Day == date.Day &&
+        //            X.Date.Month == date.Month &&
+        //            X.ScheduleId == scheduleId
+        //            );
+
+        //    while (workoutsOnday.Any())
+        //    {
+        //        date = date.AddDays(1);
+        //        workoutsOnday = workoutList.Where(
+        //            X => X.Date.Day == date.Day &&
+        //            X.Date.Month == date.Month &&
+        //            X.ScheduleId == scheduleId
+        //            );
+        //    }
+        //    workout.Date = date;
+        //}
+
+        [Fact]
+        public void FindEmptyWorkoutDaysInSchedule_ShouldFindEmptyDay()
+        {
+            // Arrange
+
+            var workoutList = new List<Workout>
+            {
+                new Workout {Date = new DateOnly(2024, 4,25), ScheduleId = 1},
+                new Workout {Date = new DateOnly(2024, 4,26), ScheduleId = 1},
+                new Workout {Date = new DateOnly(2024, 4,27), ScheduleId = 1}
+            };
+
+            var workout = new Workout();
+            int scheduleid = 1;
 
 
-[Fact]
-public void GetExerciseListByNameShouldReturnCorrectExercise()
-{
-    //// arrange
 
-    //var exerciseNameToFind = "Cocoons";
+            // Act
 
-    //// act
-    //var result = _exerciseListService.GetExerciseListByName(exerciseNameToFind);
+            _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, workout, scheduleid);
 
-    //// assert
-    //Assert.NotNull(result);
-    //Assert.Equal(exerciseNameToFind, result.Name);
-}
+
+            // Assert
+            Assert.Equal(new DateOnly(2024, 4,28), workout.Date);
+
+        }
+
+
     }
 }
