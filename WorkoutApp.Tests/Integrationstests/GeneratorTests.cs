@@ -30,6 +30,7 @@ namespace WorkoutApp.Tests.Integrationstests
        
         {
             var sortedExercises = new List<ExerciseList>();
+            var emptysortedExersises = new List<ExerciseList>();
 
             var exercise = new ExerciseList
             {
@@ -42,13 +43,15 @@ namespace WorkoutApp.Tests.Integrationstests
                 Instructions = instructions
             };
             sortedExercises.Add(exercise);
-         
-            string errorMessage = "Test Error Message";
+
+            string errorMessage = "Can not find exercises with given parameters, try again!";
 
             // Act
             var result = _generatorService.ReturnErrorMessage(sortedExercises, errorMessage);
+            var secondResult = _generatorService.ReturnErrorMessage(emptysortedExersises, errorMessage);
 
             // Assert
+            Assert.Equal(errorMessage, secondResult);
             Assert.Null(result);
         }
     
