@@ -22,6 +22,7 @@ namespace Core.Models
         [RegularExpression(@"^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed for the workout title.")]
         [StringLength(30, ErrorMessage = "The workout title must be between {2} and {1} characters long.", MinimumLength = 2)]
 
+
         public string WorkoutTitle { get; set; }
 
         [RegularExpression(@"^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed for the workout description.")]
