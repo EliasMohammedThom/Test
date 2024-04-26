@@ -92,6 +92,13 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
+
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+
             IdentityUser = await _userManager.GetUserAsync(User);
             UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
             List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);

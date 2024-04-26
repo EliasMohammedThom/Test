@@ -9,7 +9,7 @@
 }
 
 <form method="post">
-
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <style>
 
         h3 {
@@ -27,9 +27,11 @@
 
     <h3>Title for workout</h3>
     <input asp-for="@Model.InputValues.WorkoutTitle" type="text"/>
+    <span asp-validation-for="@Model.InputValues.WorkoutTitle" class="text-danger"></span>
 
     <h3>Description for workout</h3>
     <input asp-for="@Model.InputValues.WorkoutDescription" type="text" />
+    <span asp-validation-for="@Model.InputValues.WorkoutDescription" class="text-danger"></span>
 
     <h3>Difficulty</h3>
     <select asp-for="@Model.InputValues.DifficultyCategory">
