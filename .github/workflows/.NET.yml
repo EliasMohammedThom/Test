@@ -40,9 +40,9 @@ name: Build Debug and release
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "Feature-LogicImplemention" ]
   pull_request:
-    branches: [ "main", "dev" ]
+    branches: [ "main", "dev", "Feature-LogicImplemention" ]
 
 jobs:
 
