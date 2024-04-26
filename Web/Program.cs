@@ -12,6 +12,7 @@ using ProfanityFilter;
 using ProfanityFilter.Interfaces;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Web
 {
@@ -47,12 +48,18 @@ namespace Web
             builder.Services.AddHttpClient();
             builder.Services.AddHealthChecks();
 
-            
+            builder.Services.AddControllersWithViews(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
 
 
 
 
             var app = builder.Build();
+            app.MapControllerRoute(
+                    name:"default",
+                    pattern:"{controller=Home}/{action=Index}/{id?}");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
