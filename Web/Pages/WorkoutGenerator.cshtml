@@ -7,7 +7,19 @@
     var user = await UserManager.GetUserAsync(User);
 
 }
+<style>
+    #dataDiv {
+        max-height: 200px; /* Set maximum height for the div */
+        overflow-y: auto; /* Enable vertical scrolling */
+        border: 1px solid #ccc; /* Optional: Add border for better visualization */
+        padding: 10px; /* Optional: Add padding for better spacing */
+        color:white;
+    }
+</style>
 
+
+<div style="display:flex; justify-content: space-between;">
+    <div> 
 <form method="post">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <style>
@@ -102,3 +114,87 @@
 
     <button type="submit">Generate</button>
 </form>
+    </div>
+
+    <div id = "dataDiv">
+
+      
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", fetchData);
+
+    function fetchData() {
+        updateData();
+
+        var selects = document.querySelectorAll('select');
+
+        // Function to track the value change
+        function trackSelectValue(select) {
+            select.addEventListener('change', function () {
+                console.log(select.name + ' changed to: ' + select.value);
+                updateData(); // Update data when select value changes
+            });
+        }
+
+        // Loop through each select element and attach event listener
+        selects.forEach(trackSelectValue);
+    }
+
+    function updateData() {
+        // Get selected values from the select elements
+        var difficulty = document.querySelector('select[name="InputValues.DifficultyCategory"]').value;
+        var type = document.querySelector('select[name="InputValues.WorkoutType"]').value;
+        var muscle = document.querySelector('select[name="InputValues.MuscleCategories"]').value;
+        var equipment = document.querySelector('select[name="InputValues.WorkoutEquipment"]').value;
+
+        fetch(`/api/exerciselist?Difficulty=${difficulty}&type=${type}&muscle=${muscle}&equipment=${equipment}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear previous data
+                document.getElementById('dataDiv').innerHTML = '';
+
+                // Handle the fetched data
+                data.forEach(item => {
+                    console.log(item);
+                    populateDiv(item);
+                });
+            })
+            .catch(error => {
+                // Handle errors
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    function populateDiv(item) {
+        // Assuming you have a div with the id "dataDiv" where you want to append the text
+        const targetDiv = document.getElementById('dataDiv');
+
+        // Create a new paragraph element
+        const paragraph = document.createElement('p');
+
+        // Set the text content of the paragraph to the item data
+        paragraph.textContent = item.name;
+
+      
+
+        // Append the paragraph to the target div
+       
+
+        if (targetDiv.childElementCount == 0)
+        {
+            paragraph.textContent = "No exercises found with these parameters";
+
+        }
+         targetDiv.appendChild(paragraph);
+    }
+
+    
+</script>
