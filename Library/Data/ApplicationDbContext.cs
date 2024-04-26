@@ -13,7 +13,7 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Schedule> Schedules { get; set; }
     public DbSet<Nutrition> Nutritions { get; set; }
     public DbSet<ExerciseList> ExerciseLists { get; set; }
-    public DbSet<InputValues> InputValues { get; set; }
+    //public DbSet<InputValues> InputValues { get; set; }
 
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, Action<ApplicationDbContext, ModelBuilder>? modelCustomizer = null)
     : base(options)

@@ -144,8 +144,8 @@ namespace Web.Pages
 
             _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
 
-            if (sortedExercises.Count != 0)
-                _ApplicationDbContext.InputValues.Add(InputValues);
+            //if (sortedExercises.Count != 0)
+            //    _ApplicationDbContext.InputValues.Add(InputValues);
 
             var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
             _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
