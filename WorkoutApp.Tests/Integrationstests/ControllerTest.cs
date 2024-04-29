@@ -12,7 +12,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 {
     private ExerciseListService _exerciseListService { get; set; }
     private ExerciseListController _exerciseController;
-    private Mock<ApplicationDbContext> _mockDbContext;
+    
 
     public ExerciseControllerTests(TestDatabaseFixture fixture)
     {
@@ -122,7 +122,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     }
 
    private void FilteredExercisesByDifficulty(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-{
+   {
     foreach (var property in properties)
     {
         var result = _exerciseController.Get(property, null, null, null);
@@ -130,9 +130,9 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         Assert.NotNull(result);
         Assert.NotEmpty(result);
     }
-}
+   }
    private void FilteredExercisesByType(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-{
+   {
     foreach (var property in properties)
     {
         var result = _exerciseController.Get(null, property, null, null);
@@ -140,9 +140,9 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         Assert.NotNull(result);
         Assert.NotEmpty(result);
     }
-}
+   }
    private void FilteredExercisesByMuscle(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-{
+   {
     foreach (var property in properties)
     {
         var result = _exerciseController.Get(null, null,property, null);
@@ -150,9 +150,9 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         Assert.NotNull(result);
         Assert.NotEmpty(result);
     }
-}
+   }
    private void FilteredExercisesByEquipment(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-{
+   {
     foreach (var property in properties)
     {
         var result = _exerciseController.Get(null, null, null, property);
@@ -160,7 +160,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         Assert.NotNull(result);
         Assert.NotEmpty(result);
     }
-}
+   }
 
 
 
