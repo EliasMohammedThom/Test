@@ -29,6 +29,7 @@ namespace WorkoutApp.Tests.Integrationstests
         int id, string name, string type, string muscle, string equipment, string difficulty, string instructions)
 
         {
+            //Arrange
             var sortedExercises = new List<ExerciseList>();
             var emptysortedExersises = new List<ExerciseList>();
 

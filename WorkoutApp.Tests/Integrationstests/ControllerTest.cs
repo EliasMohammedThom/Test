@@ -1,18 +1,13 @@
-﻿using Xunit;
-using Moq;
-using System.Collections.Generic;
-using System.Linq;
-using Core.Models;
-using Web.Controllers;
-using Infrastructure.Data;
+﻿using Web.Controllers;
 using Infrastructure.Services;
 using WorkoutApp.Tests;
 
-public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
+namespace WorkoutApp.Tests.Integrationstests
+{
+    public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 {
     private ExerciseListService _exerciseListService { get; set; }
     private ExerciseListController _exerciseController;
-    
 
     public ExerciseControllerTests(TestDatabaseFixture fixture)
     {
@@ -29,15 +24,13 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByDifficulty_ReturnsFilteredExercises()
     {
         // Arrange
-   
         List<string> skillLevels =
         [
-            
             "beginner",
             "intermediate",
             "expert",
         ];
-        
+
         //Act & Assert
         FilteredExercisesByDifficulty(skillLevels);
     }
@@ -46,8 +39,8 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByType_ReturnsFilteredExercises()
 
     {
-          // Arrange
-         List<string> types = new List<string>
+        // Arrange
+        List<string> types = new List<string>
         {
             "cardio",
             "olympic_weightlifting",
@@ -60,15 +53,15 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 
         //Act & Assert
         FilteredExercisesByType(types);
-       
+
     }
 
     [Fact]
     public void Get_FilterByMuscles_ReturnsFilteredExercises()
 
     {
-         // Arrange
-         List<string> muscles = new List<string>
+        // Arrange
+        List<string> muscles = new List<string>
         {
             "abdominals",
             "abductors",
@@ -90,18 +83,17 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 
         //Act & Assert
         FilteredExercisesByMuscle(muscles);
-       
+
     }
 
     [Fact]
     public void Get_FilterByEquipment_ReturnsFilteredExercises()
 
     {
-         // Arrange
-         List<string> equipment =
-        [
-            
-            "barbell",
+        // Arrange
+        List<string> equipment =
+       [
+           "barbell",
             "dumbbell",
             "body_only",
             "other",
@@ -113,57 +105,59 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "bands",
             "kettlebells",
             "None",
-            
+
         ];
 
         //Act & Assert
         FilteredExercisesByEquipment(equipment);
-       
+
     }
 
-   private void FilteredExercisesByDifficulty(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-   {
-    foreach (var property in properties)
+    private void FilteredExercisesByDifficulty(IEnumerable<string> properties)
     {
-        var result = _exerciseController.Get(property, null, null, null);
-            
-        Assert.NotNull(result);
-        Assert.NotEmpty(result);
+        foreach (var property in properties)
+        {
+            var result = _exerciseController.Get(property, null, null, null);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
     }
-   }
-   private void FilteredExercisesByType(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-   {
-    foreach (var property in properties)
+
+
+
+
+    private void FilteredExercisesByType(IEnumerable<string> properties)
     {
-        var result = _exerciseController.Get(null, property, null, null);
-            
-        Assert.NotNull(result);
-        Assert.NotEmpty(result);
+        foreach (var property in properties)
+        {
+            var result = _exerciseController.Get(null, property, null, null);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
     }
-   }
-   private void FilteredExercisesByMuscle(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-   {
-    foreach (var property in properties)
+    private void FilteredExercisesByMuscle(IEnumerable<string> properties)
     {
-        var result = _exerciseController.Get(null, null,property, null);
-            
-        Assert.NotNull(result);
-        Assert.NotEmpty(result);
+        foreach (var property in properties)
+        {
+            var result = _exerciseController.Get(null, null, property, null);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
     }
-   }
-   private void FilteredExercisesByEquipment(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
-   {
-    foreach (var property in properties)
+    private void FilteredExercisesByEquipment(IEnumerable<string> properties)
     {
-        var result = _exerciseController.Get(null, null, null, property);
-            
-        Assert.NotNull(result);
-        Assert.NotEmpty(result);
+        foreach (var property in properties)
+        {
+            var result = _exerciseController.Get(null, null, null, property);
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
     }
-   }
-
-
-
-
-   
 }
+}
+
+
