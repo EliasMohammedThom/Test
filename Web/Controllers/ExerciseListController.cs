@@ -51,6 +51,8 @@ namespace Web.Controllers
             {
                 query = query.Where(o => o.Equipment == equipment);
             }
+            
+           
 
 
             return query.ToList();
