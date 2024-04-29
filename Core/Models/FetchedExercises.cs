@@ -32,5 +32,8 @@ namespace Core.Models
         public int? Repetitions { get; set; }
         public bool? Generated { get; set; }
         public string? UserId { get; set; }
+        public int? Weight { get; set; }
+        public float? Distance { get; set; }
+        public DateTime? Time { get; set; }
     }
 }
