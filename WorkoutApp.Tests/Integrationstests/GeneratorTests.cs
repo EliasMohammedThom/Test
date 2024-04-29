@@ -53,6 +53,7 @@ namespace WorkoutApp.Tests.Integrationstests
             // Assert
             Assert.Equal(errorMessage, secondResult);
             Assert.Null(result);
+            Assert.NotEmpty(result);
         }
         [Fact]
         public void FindEmptyWorkoutDaysInSchedule_ShouldFindEmptyDay()
@@ -73,6 +74,7 @@ namespace WorkoutApp.Tests.Integrationstests
 
             // Assert
             Assert.Equal(new DateOnly(2024, 4,28), workout.Date);
+            
 
         }
 

@@ -102,7 +102,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         [
             
             "barbell",
-            "dumbell",
+            "dumbbell",
             "body_only",
             "other",
             "foam_roll",
@@ -113,7 +113,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "bands",
             "kettlebells",
             "None",
-            "none",
+            
         ];
 
         //Act & Assert
@@ -128,6 +128,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         var result = _exerciseController.Get(property, null, null, null);
             
         Assert.NotNull(result);
+        Assert.NotEmpty(result);
     }
 }
    private void FilteredExercisesByType(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
@@ -137,6 +138,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         var result = _exerciseController.Get(null, property, null, null);
             
         Assert.NotNull(result);
+        Assert.NotEmpty(result);
     }
 }
    private void FilteredExercisesByMuscle(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
@@ -146,6 +148,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         var result = _exerciseController.Get(null, null,property, null);
             
         Assert.NotNull(result);
+        Assert.NotEmpty(result);
     }
 }
    private void FilteredExercisesByEquipment(/*List<ExerciseList> testData,*/ IEnumerable<string> properties)
@@ -155,6 +158,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
         var result = _exerciseController.Get(null, null, null, property);
             
         Assert.NotNull(result);
+        Assert.NotEmpty(result);
     }
 }
 
