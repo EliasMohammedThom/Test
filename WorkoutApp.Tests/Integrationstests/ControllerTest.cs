@@ -16,14 +16,12 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 
     public ExerciseControllerTests(TestDatabaseFixture fixture)
     {
-       
-            Fixture = fixture;
+        Fixture = fixture;
 
-            var context = Fixture.CreateContext();
+        var context = Fixture.CreateContext();
 
-            _exerciseListService = new ExerciseListService(context);
+        _exerciseListService = new ExerciseListService(context);
         _exerciseController = new(context);
-       
     }
 
     public TestDatabaseFixture Fixture { get; }
@@ -31,9 +29,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByDifficulty_ReturnsFilteredExercises()
     {
         // Arrange
-        
-        //var testData = _exerciseListService.GetAllExerciseLists();
-
+   
         List<string> skillLevels =
         [
             
@@ -42,6 +38,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "expert",
         ];
         
+        //Act & Assert
         FilteredExercisesByDifficulty(skillLevels);
     }
 
@@ -49,6 +46,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByType_ReturnsFilteredExercises()
 
     {
+          // Arrange
          List<string> types = new List<string>
         {
             "cardio",
@@ -59,7 +57,9 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "stretching",
             "strongman"
         };
-         FilteredExercisesByType(types);
+
+        //Act & Assert
+        FilteredExercisesByType(types);
        
     }
 
@@ -67,7 +67,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByMuscles_ReturnsFilteredExercises()
 
     {
-        
+         // Arrange
          List<string> muscles = new List<string>
         {
             "abdominals",
@@ -87,8 +87,9 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "traps",
             "triceps"
         };
-        
-         FilteredExercisesByMuscle(muscles);
+
+        //Act & Assert
+        FilteredExercisesByMuscle(muscles);
        
     }
 
@@ -96,6 +97,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
     public void Get_FilterByEquipment_ReturnsFilteredExercises()
 
     {
+         // Arrange
          List<string> equipment =
         [
             
@@ -114,6 +116,7 @@ public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
             "none",
         ];
 
+        //Act & Assert
         FilteredExercisesByEquipment(equipment);
        
     }
