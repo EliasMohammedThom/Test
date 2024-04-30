@@ -100,16 +100,10 @@
         }
     </select>
 
-    <h3>Exercises per week</h3>
-    <select asp-for="@Model.InputValues.AmountOfExercises">
-        @foreach (var amountOfExercise in ListValue.AmountOfExercises)
-        {
-            foreach (var amount in amountOfExercise.Amount)
-            {
-                <option value="@amount">@amount</option>
-            }
-        }
-    </select>
+    <h3>Exercises per workout</h3>
+            <select asp-for="@Model.InputValues.AmountOfExercises" id="dynamicSelect">
+                <!-- Options will be added dynamically -->
+            </select>
 
 
     <button type="submit">Generate</button>
@@ -134,8 +128,13 @@
         // Function to track the value change
         function trackSelectValue(select) {
             select.addEventListener('change', function () {
+                // Only update data if the changed select element is not dynamicSelect
+                if (select.id !== 'dynamicSelect') {
+                   
+                    updateData(); // Update data when select value changes
+                }
                 console.log(select.name + ' changed to: ' + select.value);
-                updateData(); // Update data when select value changes
+
             });
         }
 
@@ -149,6 +148,7 @@
         var type = document.querySelector('select[name="InputValues.WorkoutType"]').value;
         var muscle = document.querySelector('select[name="InputValues.MuscleCategories"]').value;
         var equipment = document.querySelector('select[name="InputValues.WorkoutEquipment"]').value;
+        var exercises = document.querySelector('select[name="InputValues.AmountOfExercises"]').value;
 
         fetch(`/api/exerciselist?Difficulty=${difficulty}&type=${type}&muscle=${muscle}&equipment=${equipment}`)
             .then(response => {
@@ -159,18 +159,26 @@
             })
             .then(data => {
                 // Clear previous data
-                document.getElementById('dataDiv').innerHTML = '';
+                var dataDiv = document.getElementById('dataDiv');
+                dataDiv.innerHTML = '';
 
+                let updatedOptionsList = [];
+                populateSelect(updatedOptionsList);
+                let i = 1;
                 // Handle the fetched data
                 if (data.length === 0) {
                     // If no exercises found, display a message
-                    document.getElementById('dataDiv').textContent = "No exercises found with these parameters.";
+                    dataDiv.textContent = "No exercises found with these parameters.";
                 } else {
                     // If exercises found, populate the div with the data
                     data.forEach(item => {
-                        console.log(item);
                         populateDiv(item);
+                        updatedOptionsList.push(i)
+                        i++;
                     });
+
+                    // Update the select element with the new options
+                    populateSelect(updatedOptionsList);
                 }
             })
             .catch(error => {
@@ -192,5 +200,20 @@
         // Append the paragraph to the target div
         targetDiv.appendChild(paragraph);
     }
+
+    function populateSelect(options) {
+        var selectElement = document.getElementById("dynamicSelect");
+
+        // Clear existing options
+        selectElement.innerHTML = '';
+
+        // Add options from the list
+        options.forEach(function (option) {
+            var optionElement = document.createElement("option");
+            optionElement.textContent = option;
+            selectElement.appendChild(optionElement);
+        });
+    }
 </script>
+
 

@@ -24,7 +24,7 @@ namespace Infrastructure.Services
         {
             if (sortedExercises.Count == 0 || sortedExercises == null)
             {
-                return ErrorMessage = "Can not find exercises with given parameters, try again!";
+                return "Can not find exercises with given parameters, try again!";
             }
             else
             {

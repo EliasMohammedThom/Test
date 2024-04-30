@@ -39,9 +39,8 @@ namespace Web.Pages
 
         public ExerciseList ExerciseList { get; set; }
         public Schedule Schedule { get; set; }
-
         [BindProperty]
-        public string ErrorMessage { get; set; }
+        public string? ErrorMessage { get; set; }
 
         public Workout Workout { get; set; }
 
@@ -49,8 +48,7 @@ namespace Web.Pages
 
         public ListValue Listvalues { get; set; }
 
-        [BindProperty]
-        public string WorkoutTitle { get; set; }
+       
 
         public Schedule UserSchedule { get; set; }
         public IdentityUser? IdentityUser { get; set; }
@@ -92,16 +90,25 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
+            
+       
+               if (!ModelState.IsValid)
+                            {
+                                return Page();
+                            }
+        
+                  if (ModelState.IsValid)
+                            {
+                              
 
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-
-            IdentityUser = await _userManager.GetUserAsync(User);
+                 IdentityUser = await _userManager.GetUserAsync(User);
             UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
             List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
+                ErrorMessage = _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
+                if (ErrorMessage != null)
+                {
+                    return Page();
+                }
 
          
             for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
@@ -117,9 +124,11 @@ namespace Web.Pages
 
                     _ApplicationDbContext.Workouts.Add(newWorkout);
 
-                    _ApplicationDbContext.SaveChanges();
 
-                    foreach (var exercise in sortedExercises)
+
+                        _ApplicationDbContext.SaveChanges();
+
+                        foreach (var exercise in sortedExercises)
                     {
                         var fetchedExercise = new FetchedExercises
                         {
@@ -142,7 +151,9 @@ namespace Web.Pages
                 }
             }
 
-            _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
+               
+
+
 
             //if (sortedExercises.Count != 0)
             //    _ApplicationDbContext.InputValues.Add(InputValues);
@@ -153,6 +164,18 @@ namespace Web.Pages
             _ApplicationDbContext.SaveChanges();
 
             return RedirectToPage("/ShowSchedule");
+
+
+                            }
+
+            else
+            {
+                return Page();
+            }
+        
+
+
+           
         }
     }
 }
