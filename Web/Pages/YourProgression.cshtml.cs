@@ -5,38 +5,72 @@ using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace Web.Pages
 {
     public class YourProgressionModel : PageModel
     {
         ApplicationDbContext ApplicationDbContext { get; set; }
-        public List<Workout> Workouts { get; set; }
+        public List<Workout>? Workouts { get; set; }
         public IWorkoutService _WorkoutService { get; set; }
+        public IScheduleService _scheduleservice { get; set; }
         public IdentityUser? IdentityUser { get; set; }
-        private readonly UserManager<IdentityUser> _userManager;
-        public List<FetchedExercises> ExerciseList { get; set; }
+
+        private readonly UserManager<IdentityUser>? _userManager;
+        public List<FetchedExercises>? ExerciseList { get; set; }
+        public TypeList? Cardio { get; set; } = new TypeList{Name="Cardio"};
+        public TypeList? Olympic { get; set; } = new TypeList{Name="Olympic"};
+        public TypeList? Plyometrics { get; set; } = new TypeList{Name="Plyometrics"};
+        public TypeList? Powerlifting { get; set; } = new TypeList{Name="PowerLifting"};
+        public TypeList? Strength { get; set; } = new TypeList{Name="Strength"};
+        public TypeList? Stretching { get; set; } = new TypeList{Name="Stretching"};
+        public TypeList? Strongman { get; set; } = new TypeList{Name="Strongman"};
+        public List<TypeList>? Types { get; set; }
 
         public YourProgressionModel
             (
             ApplicationDbContext applicationDbContext,
             IWorkoutService workoutService,
-            UserManager<IdentityUser> userManager 
+            UserManager<IdentityUser> userManager,
+            IScheduleService scheduleService
             )
         {
             ApplicationDbContext = applicationDbContext;
             _WorkoutService = workoutService;
             _userManager = userManager;
+            _scheduleservice = scheduleService;
+
+         
         }
 
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
+            ExerciseList = await ApplicationDbContext.FetchedExercises.ToListAsync();
             IdentityUser = await _userManager.GetUserAsync(User);
+            var CurrentUserScheduleId = _scheduleservice.GetScheduleByUserId(IdentityUser.Id).Id;
 
-            Workouts = _WorkoutService.GetWorkoutsByUserId(IdentityUser.Id);
+            Workouts = _WorkoutService.GetWorkoutsByScheduleId(CurrentUserScheduleId);
+
+            var workoutIds = Workouts.Select(workout => workout.Id).ToList();
+
+            var filteredExercises = ExerciseList.Where(exercise => workoutIds.Contains(exercise.WorkoutId)).ToList();
+
             
 
+            Cardio.Exercises = filteredExercises.Where(X=>X.Type == "cardio").ToList();
+            Olympic.Exercises = filteredExercises.Where(X=>X.Type == "olympic_weightlifting").ToList();
+            Plyometrics.Exercises = filteredExercises.Where(X=>X.Type == "plyometrics").ToList();
+            Powerlifting.Exercises = filteredExercises.Where(X=>X.Type == "powerlifting").ToList();
+            Strength.Exercises = filteredExercises.Where(X=>X.Type == "strength").ToList();
+            Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
+            Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
+            
+
+
+            return Page();
 
             //hämta alla workouts 
             //Dela upp exercises baserat på deras type
