@@ -18,6 +18,8 @@ namespace Core.Models
         public string MuscleCategories { get; set; }
         public int AmountOfWorkouts { get; set; }
         public int AmountOfExercises { get; set; }
+        public int? AmountOfSets { get; set; }
+        public int? AmountOfRepetitions { get; set; }
 
         [RegularExpression(@"^[a-zA-ZåäöÅÄÖ\s]+$", ErrorMessage = "Only letters and spaces are allowed for the workout title.")]
         [StringLength(30, ErrorMessage = "The workouttitle can be max 30 letters long") ]

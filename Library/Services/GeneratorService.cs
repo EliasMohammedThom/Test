@@ -79,7 +79,6 @@ namespace Infrastructure.Services
             workout.ScheduleId = scheduleId;
             workout.Title = inputValues.WorkoutTitle;
             workout.Description = inputValues.WorkoutDescription;
-
             return workout;
         }
 
