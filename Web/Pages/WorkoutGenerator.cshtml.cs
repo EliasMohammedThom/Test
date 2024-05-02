@@ -96,8 +96,6 @@ namespace Web.Pages
 
             if (ModelState.IsValid)
             {
-
-
                 IdentityUser = await _userManager.GetUserAsync(User);
                 UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
                 List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
@@ -110,7 +108,6 @@ namespace Web.Pages
 
                 for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
                 {
-
                     var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
 
                     if (sortedExercises.Count > 0)
@@ -120,8 +117,6 @@ namespace Web.Pages
                         _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
 
                         _ApplicationDbContext.Workouts.Add(newWorkout);
-
-
 
                         _ApplicationDbContext.SaveChanges();
 
@@ -143,16 +138,17 @@ namespace Web.Pages
                             GeneratedExercises.Add(fetchedExercise);
 
                             _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                            _ApplicationDbContext.SaveChanges();
+
 
                         }
 
                         _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
                     }
+                    _ApplicationDbContext.SaveChanges();
                 }
 
-
-
-
+                _ApplicationDbContext.SaveChanges();
 
                 //if (sortedExercises.Count != 0)
                 //    _ApplicationDbContext.InputValues.Add(InputValues);

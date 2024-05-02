@@ -102,7 +102,7 @@
 
 
             <h3>Sets per exercise</h3>
-            <select asp-for="@Model.InputValues.AmountOfSets">
+            <select asp-for="@Model.InputValues.AmountOfSets" id="sets">
                 @foreach(var amount in ListValue.AmountOfSets)
                 {
                     <option value="@amount">@amount</option>
@@ -110,7 +110,7 @@
             </select>
 
             <h3>Repetitions per exercise</h3>
-            <select asp-for="@Model.InputValues.AmountOfRepetitions">
+            <select asp-for="@Model.InputValues.AmountOfRepetitions" id="reps">
                 @foreach (var amount in ListValue.AmountOfRepetitions)
                 {
                     <option value="@amount">@amount</option>
@@ -138,17 +138,18 @@
         function trackSelectValue(select) {
             select.addEventListener('change', function () {
                 // Only update data if the changed select element is not dynamicSelect
-                if (select.id !== 'dynamicSelect' && select.id !== 'amountOfWorkouts') {
+                if (
+                    select.id !== 'dynamicSelect' && 
+                    select.id !== 'amountOfWorkouts' && 
+                    select.id !== 'sets' &&
+                    select.id !== 'reps'
+                    ) 
+                    {
 
                     updateData(); // Update data when select value changes
-                }
+                    }
 
-                // if (select.id !== 'amountOfWorkouts') {
-                // updateData();
-                // }
-
-
-
+           
                 console.log(select.name + ' changed to: ' + select.value);
 
             });
