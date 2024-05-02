@@ -1,21 +1,21 @@
 ﻿using Web.Controllers;
 using Infrastructure.Services;
 using WorkoutApp.Tests;
+using Core.Models;
 
 namespace WorkoutApp.Tests.Integrationstests
 {
     public class ExerciseControllerTests : IClassFixture<TestDatabaseFixture>
 {
-    private ExerciseListService _exerciseListService { get; set; }
     private ExerciseListController _exerciseController;
-
+    public ListValue List { get; set; } = new ListValue();
     public ExerciseControllerTests(TestDatabaseFixture fixture)
     {
         Fixture = fixture;
 
         var context = Fixture.CreateContext();
 
-        _exerciseListService = new ExerciseListService(context);
+        
         _exerciseController = new(context);
     }
 
@@ -24,12 +24,8 @@ namespace WorkoutApp.Tests.Integrationstests
     public void Get_FilterByDifficulty_ReturnsFilteredExercises()
     {
         // Arrange
-        List<string> skillLevels =
-        [
-            "beginner",
-            "intermediate",
-            "expert",
-        ];
+        List<string> skillLevels = ListValue.DifficultyCategories;
+        
 
         //Act & Assert
         FilteredExercisesByDifficulty(skillLevels);
@@ -40,16 +36,7 @@ namespace WorkoutApp.Tests.Integrationstests
 
     {
         // Arrange
-        List<string> types = new List<string>
-        {
-            "cardio",
-            "olympic_weightlifting",
-            "plyometrics",
-            "powerlifting",
-            "strength",
-            "stretching",
-            "strongman"
-        };
+        var types = ListValue.WorkoutTypes;
 
         //Act & Assert
         FilteredExercisesByType(types);
@@ -61,25 +48,7 @@ namespace WorkoutApp.Tests.Integrationstests
 
     {
         // Arrange
-        List<string> muscles = new List<string>
-        {
-            "abdominals",
-            "abductors",
-            "adductors",
-            "biceps",
-            "calves",
-            "chest",
-            "forearms",
-            "glutes",
-            "hamstrings",
-            "lats",
-            "lower_back",
-            "middle_back",
-            "neck",
-            "quadriceps",
-            "traps",
-            "triceps"
-        };
+        var muscles = ListValue.WorkoutTypes;
 
         //Act & Assert
         FilteredExercisesByMuscle(muscles);
@@ -91,26 +60,10 @@ namespace WorkoutApp.Tests.Integrationstests
 
     {
         // Arrange
-        List<string> equipment =
-       [
-           "barbell",
-            "dumbbell",
-            "body_only",
-            "other",
-            "foam_roll",
-            "exercise_ball",
-            "e-z_curl_bar",
-            "cable",
-            "machine",
-            "bands",
-            "kettlebells",
-            "None",
-
-        ];
+        var equipment = ListValue.WorkoutEquipments;
 
         //Act & Assert
         FilteredExercisesByEquipment(equipment);
-
     }
 
     private void FilteredExercisesByDifficulty(IEnumerable<string> properties)

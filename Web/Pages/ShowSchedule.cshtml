@@ -30,7 +30,7 @@ else
     <div class="schedule-list">
 
 
-        @for (int i = 1; i <= Model.DaysToLoop; i++)
+        @for (int i = 1; i <= Model.CurrentMonth; i++)
         {
 
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
@@ -71,8 +71,54 @@ else
                 }
             </div>
         }
+        
+       
+
     </div>
 
+     <div class="schedule-list">
+    @for (int i = 1; i <= Model.NextMonth; i++)
+    {
+
+        var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month +1, i);
+        var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
+
+        <div class="js-day">
+            @if (workoutsForCurrentDate.Any())
+            {
+                @foreach (var workout in workoutsForCurrentDate)
+                {
+
+                    <strong>@workout.Title</strong>
+                    <p>@workout.Date</p>
+                    <p>@workout.Description</p>
+
+                    <ul class="exercise-list">
+                        @foreach (var exercise in workout.Exercises)
+                        {
+                            <li class="exercise-item">
+                                @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                            </li>
+                        }
+                    </ul>
+
+
+                    <form method="post">
+                        <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                        <button type="submit" class="btn btn-outline-danger">X</button>
+                    </form>
+                }
+            }
+            else
+            {
+                <div class="workout-box">
+                    <strong>Empty</strong>
+                    <p>No workout scheduled for @currentDate</p>
+                </div>
+            }
+        </div>
+    }
+    </div>
 @*     <div id="workoutPopup" class="popup">
         <div class="popup-content">
             <span class="close" onclick="closePopup()">&times;</span>

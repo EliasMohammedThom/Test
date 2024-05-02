@@ -45,7 +45,10 @@ namespace Web.Pages
         public List<Workout> workouts { get; set; }
 
         [BindProperty]
-        public int DaysToLoop { get; set; }
+        public int CurrentMonth { get; set; }
+          [BindProperty]
+        public int NextMonth { get; set; }
+      
 
         [BindProperty]
         public List<string>? Weekdays { get; set; }
@@ -63,7 +66,17 @@ namespace Web.Pages
             _exerciseService = exerciseService;
             _extensionService = extensions;
 
-           DaysToLoop =  DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); 
+           
+            
+           
+            int currentMonth = DateTime.Today.Month;
+            int nextMonth = currentMonth == 12 ? 1 : currentMonth + 1;
+            int nextYear = currentMonth == 12 ? DateTime.Today.Year + 1 : DateTime.Today.Year;
+            int daysInNextMonth = DateTime.DaysInMonth(nextYear, nextMonth);
+            
+
+           CurrentMonth =  DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); 
+           NextMonth = daysInNextMonth;
 
 
             Weekdays = new List<string>();

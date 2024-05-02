@@ -19,12 +19,12 @@ namespace Core.Models
         public int AmountOfWorkouts { get; set; }
         public int AmountOfExercises { get; set; }
 
-        [RegularExpression(@"^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed for the workout title.")]
-        [StringLength(30, ErrorMessage = "The workout title must be between {2} and {1} characters long.", MinimumLength = 2)]
+        [RegularExpression(@"^[a-zA-ZåäöÅÄÖ\s]+$", ErrorMessage = "Only letters and spaces are allowed for the workout title.")]
+        [StringLength(30, ErrorMessage = "The workouttitle can be max 30 letters long") ]
         public string WorkoutTitle { get; set; }
 
-        [RegularExpression(@"^[a-zA-ZåäöÅÄÖ]+$", ErrorMessage = "Only letters are allowed for the workout description.")]
-        [StringLength(200, ErrorMessage = "The workout description must be between {2} and {1} characters long.", MinimumLength = 10)]
+        [RegularExpression(@"^[a-zA-ZåäöÅÄÖ\s]+$", ErrorMessage = "Only letters and spaces are allowed for the workout title.")]
+        [StringLength(200, ErrorMessage = "The description can be max 200 letters long") ]
         public string WorkoutDescription { get; set;}
     }
 }
