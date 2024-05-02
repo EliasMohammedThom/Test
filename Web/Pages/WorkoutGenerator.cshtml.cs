@@ -48,7 +48,7 @@ namespace Web.Pages
 
         public ListValue Listvalues { get; set; }
 
-       
+
 
         public Schedule UserSchedule { get; set; }
         public IdentityUser? IdentityUser { get; set; }
@@ -56,9 +56,9 @@ namespace Web.Pages
 
         public WorkoutGeneratorModel
             (
-            ApplicationDbContext applicationDbContext, 
-            IScheduleService scheduleService, 
-            UserManager<IdentityUser> userManager, 
+            ApplicationDbContext applicationDbContext,
+            IScheduleService scheduleService,
+            UserManager<IdentityUser> userManager,
             IGeneratorService generatorService
             )
 
@@ -73,11 +73,10 @@ namespace Web.Pages
             IdentityUser = new();
         }
 
-
         public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser = await _userManager.GetUserAsync(User);
-        
+
             UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
 
             if (UserSchedule == null)
@@ -90,92 +89,86 @@ namespace Web.Pages
 
         public async Task<IActionResult> OnPost()
         {
-            
-       
-               if (!ModelState.IsValid)
-                            {
-                                return Page();
-                            }
-        
-                  if (ModelState.IsValid)
-                            {
-                              
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
 
-                 IdentityUser = await _userManager.GetUserAsync(User);
-            UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
-            List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
+            if (ModelState.IsValid)
+            {
+
+
+                IdentityUser = await _userManager.GetUserAsync(User);
+                UserSchedule = _scheduleService.GetScheduleByUserId(IdentityUser.Id);
+                List<ExerciseList>? sortedExercises = _generatorService.FilterExercises(InputValues);
                 ErrorMessage = _generatorService.ReturnErrorMessage(sortedExercises, ErrorMessage);
                 if (ErrorMessage != null)
                 {
                     return Page();
                 }
 
-         
-            for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
-            {
 
-                var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
-
-                if (sortedExercises.Count > 0)
+                for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
                 {
-                    var workoutList = _ApplicationDbContext.Workouts.ToList();
 
-                    _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
+                    var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
 
-                    _ApplicationDbContext.Workouts.Add(newWorkout);
+                    if (sortedExercises.Count > 0)
+                    {
+                        var workoutList = _ApplicationDbContext.Workouts.ToList();
+
+                        _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
+
+                        _ApplicationDbContext.Workouts.Add(newWorkout);
 
 
 
                         _ApplicationDbContext.SaveChanges();
 
                         foreach (var exercise in sortedExercises)
-                    {
-                        var fetchedExercise = new FetchedExercises
                         {
-                            Difficulty = exercise.Difficulty,
-                            Equipment = exercise.Equipment,
-                            Muscle = exercise.Muscle,
-                            Type = exercise.Type,
-                            Instructions = exercise.Instructions,
-                            Name = exercise.Name,
-                            UserId = IdentityUser.Id
-                        };
+                            var fetchedExercise = new FetchedExercises
+                            {
+                                Difficulty = exercise.Difficulty,
+                                Equipment = exercise.Equipment,
+                                Muscle = exercise.Muscle,
+                                Type = exercise.Type,
+                                Instructions = exercise.Instructions,
+                                Name = exercise.Name,
+                                UserId = IdentityUser.Id
+                            };
 
-                        GeneratedExercises.Add(fetchedExercise);
+                            GeneratedExercises.Add(fetchedExercise);
 
-                        _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                            _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
 
+                        }
+
+                        _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
                     }
-
-                    _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
                 }
+
+
+
+
+
+                //if (sortedExercises.Count != 0)
+                //    _ApplicationDbContext.InputValues.Add(InputValues);
+
+                var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
+                _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
+
+                _ApplicationDbContext.SaveChanges();
+
+                return RedirectToPage("/ShowSchedule");
+
+
             }
-
-               
-
-
-
-            //if (sortedExercises.Count != 0)
-            //    _ApplicationDbContext.InputValues.Add(InputValues);
-
-            var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
-            _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
-
-            _ApplicationDbContext.SaveChanges();
-
-            return RedirectToPage("/ShowSchedule");
-
-
-                            }
 
             else
             {
                 return Page();
             }
-        
-
-
-           
         }
     }
 }

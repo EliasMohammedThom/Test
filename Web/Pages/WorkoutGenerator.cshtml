@@ -47,56 +47,51 @@
 
     <h3>Difficulty</h3>
     <select asp-for="@Model.InputValues.DifficultyCategory">
-        @foreach (var difficultyCategory in ListValue.DifficultyCategories)
+        @foreach (var difficulty in ListValue.DifficultyCategories)
         {
-            foreach (var difficulty in difficultyCategory.Difficulty)
-            {
+            
                 <option value="@difficulty">@difficulty</option>
-            }
+            
         }
     </select>
 
     <h3>Equipment</h3>
     <select asp-for="@Model.InputValues.WorkoutEquipment">
-        @foreach (var workoutEquipment in ListValue.WorkoutEquipments)
+        @foreach (var equipment in ListValue.WorkoutEquipments)
         {
-            foreach (var equipment in workoutEquipment.Equipment)
-            {
+           
                 <option value="@equipment">@equipment</option>
-            }
+            
         }
     </select>
 
     <h3>Type</h3>
     <select asp-for="@Model.InputValues.WorkoutType">
-        @foreach (var workoutType in ListValue.WorkoutTypes)
+        @foreach (var type in ListValue.WorkoutTypes)
         {
-            foreach (var type in workoutType.Type)
-            {
+           
                 <option value="@type">@type</option>
-            }
+            
         }
     </select>
 
     <h3>Muscle</h3>
     <select asp-for="@Model.InputValues.MuscleCategories">
-        @foreach (var muscleCategory in ListValue.MuscleCategories)
+        @foreach (var muscle in ListValue.MuscleCategories)
         {
-            foreach (var muscle in muscleCategory.Muscle)
-            {
+            
                 <option value="@muscle">@muscle</option>
-            }
+            
         }
     </select>
 
     <h3>Workouts per week</h3> 
     <select asp-for="@Model.InputValues.AmountOfWorkouts" id="amountOfWorkouts">
-        @foreach (var amountOfWorkout in ListValue.AmountOfWorkouts)
+        @foreach (var amount in ListValue.AmountOfWorkouts)
         {
-            foreach (var amount in amountOfWorkout.Amount)
-            {
+          
                 <option value="@amount">@amount</option>
-            }
+            
         }
     </select>
 

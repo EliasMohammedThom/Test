@@ -8,62 +8,29 @@ namespace Core.Models
 {
     public class ListValue
     {
-        public class DifficultyCategory
-        {
-            public List<string> Difficulty { get; set; }
-        }
-        public class WorkoutEquipment
-        {
-            public List<string> Equipment { get; set; }
-        }
-        public class WorkoutType
-        {
-            public List<string> Type { get; set; }
-        }
-        public class MuscleCategory
-        {
-            public List<string> Muscle { get; set; }
-        }
-        public class AmountOfWorkout
-        {
-            public List<int> Amount { get; set; }
-        }
-        public class AmountOfExercise
-        {
-            public List<int> Amount { get; set; }
-        }
-
-
-        public static List<DifficultyCategory> DifficultyCategories { get; set; }
-        public static List<WorkoutEquipment> WorkoutEquipments { get; set; }
-        public static List<WorkoutType> WorkoutTypes { get; set; }
-        public static List<MuscleCategory> MuscleCategories { get; set; }
-        public static List<AmountOfWorkout> AmountOfWorkouts { get; set; }
-        public static List<AmountOfExercise> AmountOfExercises { get; set; }
+      
+        public static List<string> DifficultyCategories { get; set; }
+        public static List<string> WorkoutEquipments { get; set; }
+        public static List<string> WorkoutTypes { get; set; }
+        public static List<string> MuscleCategories { get; set; }
+        public static List<int> AmountOfWorkouts { get; set; }
+        public static List<int> AmountOfExercises { get; set; }
 
 
         static ListValue()
         {
 
-            DifficultyCategories = new List<DifficultyCategory>
-            {
-                new DifficultyCategory
+            DifficultyCategories = new List<string>
                 {
-                    Difficulty = new List<string>
-                    {
-                        "Beginner",
+                 "Beginner",
                         "Intermediate",
                         "Expert"
-                    }
-                }
             };
 
-            WorkoutEquipments = new List<WorkoutEquipment>
+
+            WorkoutEquipments = new List<string>
             {
-                new WorkoutEquipment
-                {
-                    Equipment = new List<string>
-                    {
+              
                         "Body_only",
                         "Barbell",
                         "Other",
@@ -76,17 +43,13 @@ namespace Core.Models
                         "Foam_roll",
                         "Exercise_ball",
                         "Medicine_ball",
-                        "E-z_curl_bar",
-                    }
-                }
+                        "E-z_curl_bar"
+                    
             };
 
-            WorkoutTypes = new List<WorkoutType>
+
+            WorkoutTypes = new List<string>
             {
-                new WorkoutType
-                {
-                    Type = new List<string>
-                    {
                         "Cardio",
                         "Olympic_weightlifting",
                         "Plyometrics",
@@ -94,15 +57,13 @@ namespace Core.Models
                         "Strength",
                         "Stretching",
                         "Strongman"
-                    }
-                }
+                    
             };
-            MuscleCategories = new List<MuscleCategory>
+
+
+            MuscleCategories = new List<string>
             {
-                new MuscleCategory
-                {
-                    Muscle = new List<string>
-                    {
+               
                         "Abdominals",
                         "Abductors",
                         "Adductors",
@@ -119,29 +80,23 @@ namespace Core.Models
                         "Quadriceps",
                         "Traps",
                         "Triceps"
-                    }
-                }
+                    
+                
             };
 
-            AmountOfWorkouts = new List<AmountOfWorkout>
+            AmountOfWorkouts = new List<int>
             {
-                new AmountOfWorkout
-                {
-                    Amount = new List<int>
-                    {
+               
                         1,2,3,4,5,6,7,8,9,10,11,12,13,14
-                    }
-                }
+                    
+                
             };
-            AmountOfExercises = new List<AmountOfExercise>
+            AmountOfExercises = new List<int>
             {
-                new AmountOfExercise
-                {
-                    Amount = new List<int>
-                    {
+                
                          1,2,3,4,5,6,7,8,9,10
-                    }
-                }
+                    
+                
             };
         }
     }
