@@ -8,13 +8,15 @@ namespace Core.Models
 {
     public class ListValue
     {
-      
+
         public static List<string> DifficultyCategories { get; set; }
         public static List<string> WorkoutEquipments { get; set; }
         public static List<string> WorkoutTypes { get; set; }
         public static List<string> MuscleCategories { get; set; }
         public static List<int> AmountOfWorkouts { get; set; }
         public static List<int> AmountOfExercises { get; set; }
+        public static List<int> AmountOfSets { get; set; }
+        public static List<int> AmountOfRepetitions { get; set; }
 
 
         static ListValue()
@@ -30,7 +32,7 @@ namespace Core.Models
 
             WorkoutEquipments = new List<string>
             {
-              
+
                         "Body_only",
                         "Barbell",
                         "Other",
@@ -44,7 +46,7 @@ namespace Core.Models
                         "Exercise_ball",
                         "Medicine_ball",
                         "E-z_curl_bar"
-                    
+
             };
 
 
@@ -57,13 +59,13 @@ namespace Core.Models
                         "Strength",
                         "Stretching",
                         "Strongman"
-                    
+
             };
 
 
             MuscleCategories = new List<string>
             {
-               
+
                         "Abdominals",
                         "Abductors",
                         "Adductors",
@@ -80,23 +82,28 @@ namespace Core.Models
                         "Quadriceps",
                         "Traps",
                         "Triceps"
-                    
-                
+
+
             };
 
             AmountOfWorkouts = new List<int>
             {
-               
+
                         1,2,3,4,5,6,7,8,9,10,11,12,13,14
-                    
-                
+
+
             };
             AmountOfExercises = new List<int>
             {
-                
                          1,2,3,4,5,6,7,8,9,10
-                    
-                
+            };
+            AmountOfSets = new List<int>
+            {
+                1,2,3,4,5,6,7,8,9,10
+            };
+            AmountOfRepetitions = new List<int>
+            {
+                1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
             };
         }
     }

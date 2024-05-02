@@ -13,101 +13,115 @@
         overflow-y: auto; /* Enable vertical scrolling */
         border: 1px solid #ccc; /* Optional: Add border for better visualization */
         padding: 10px; /* Optional: Add padding for better spacing */
-        color:white;
+        color: white;
     }
 </style>
 
 
 <div style="display:flex; justify-content: space-between;">
-    <div> 
-<form method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-    <style>
+    <div>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <style>
 
-        h3 {
-            color: white;
-        }
+                h3 {
+                    color: white;
+                }
 
-        .ErrorMessageBox {
-            background-color: white;
-            color: red;
-        }
-    </style>
-    <div class="ErrorMessageBox">
-        <p>@Model.ErrorMessage</p>
-    </div>
+                .ErrorMessageBox {
+                    background-color: white;
+                    color: red;
+                }
+            </style>
+            <div class="ErrorMessageBox">
+                <p>@Model.ErrorMessage</p>
+            </div>
 
-    <h3>Title for workout</h3>
-    <input asp-for="@Model.InputValues.WorkoutTitle" type="text"/>
-    <span asp-validation-for="@Model.InputValues.WorkoutTitle" class="text-danger"></span>
+            <h3>Title for workout</h3>
+            <input asp-for="@Model.InputValues.WorkoutTitle" type="text" />
+            <span asp-validation-for="@Model.InputValues.WorkoutTitle" class="text-danger"></span>
 
-    <h3>Description for workout</h3>
-    <input asp-for="@Model.InputValues.WorkoutDescription" type="text" />
-    <span asp-validation-for="@Model.InputValues.WorkoutDescription" class="text-danger"></span>
+            <h3>Description for workout</h3>
+            <input asp-for="@Model.InputValues.WorkoutDescription" type="text" />
+            <span asp-validation-for="@Model.InputValues.WorkoutDescription" class="text-danger"></span>
 
-    <h3>Difficulty</h3>
-    <select asp-for="@Model.InputValues.DifficultyCategory">
-        @foreach (var difficulty in ListValue.DifficultyCategories)
-        {
-            
-                <option value="@difficulty">@difficulty</option>
-            
-        }
-    </select>
+            <h3>Difficulty</h3>
+            <select asp-for="@Model.InputValues.DifficultyCategory">
+                @foreach (var difficulty in ListValue.DifficultyCategories)
+                {
 
-    <h3>Equipment</h3>
-    <select asp-for="@Model.InputValues.WorkoutEquipment">
-        @foreach (var equipment in ListValue.WorkoutEquipments)
-        {
-           
-                <option value="@equipment">@equipment</option>
-            
-        }
-    </select>
+                    <option value="@difficulty">@difficulty</option>
 
-    <h3>Type</h3>
-    <select asp-for="@Model.InputValues.WorkoutType">
-        @foreach (var type in ListValue.WorkoutTypes)
-        {
-           
-                <option value="@type">@type</option>
-            
-        }
-    </select>
+                }
+            </select>
 
-    <h3>Muscle</h3>
-    <select asp-for="@Model.InputValues.MuscleCategories">
-        @foreach (var muscle in ListValue.MuscleCategories)
-        {
-            
-                <option value="@muscle">@muscle</option>
-            
-        }
-    </select>
+            <h3>Equipment</h3>
+            <select asp-for="@Model.InputValues.WorkoutEquipment">
+                @foreach (var equipment in ListValue.WorkoutEquipments)
+                {
 
-    <h3>Workouts per week</h3> 
-    <select asp-for="@Model.InputValues.AmountOfWorkouts" id="amountOfWorkouts">
-        @foreach (var amount in ListValue.AmountOfWorkouts)
-        {
-          
-                <option value="@amount">@amount</option>
-            
-        }
-    </select>
+                    <option value="@equipment">@equipment</option>
 
-    <h3>Exercises per workout</h3>
+                }
+            </select>
+
+            <h3>Type</h3>
+            <select asp-for="@Model.InputValues.WorkoutType">
+                @foreach (var type in ListValue.WorkoutTypes)
+                {
+
+                    <option value="@type">@type</option>
+
+                }
+            </select>
+
+            <h3>Muscle</h3>
+            <select asp-for="@Model.InputValues.MuscleCategories">
+                @foreach (var muscle in ListValue.MuscleCategories)
+                {
+
+                    <option value="@muscle">@muscle</option>
+
+                }
+            </select>
+
+            <h3>Workouts per week</h3>
+            <select asp-for="@Model.InputValues.AmountOfWorkouts" id="amountOfWorkouts">
+                @foreach (var amount in ListValue.AmountOfWorkouts)
+                {
+
+                    <option value="@amount">@amount</option>
+
+                }
+            </select>
+
+            <h3>Exercises per workout</h3>
             <select asp-for="@Model.InputValues.AmountOfExercises" id="dynamicSelect">
                 <!-- Options will be added dynamically -->
             </select>
 
 
-    <button type="submit">Generate</button>
-</form>
+            <h3>Sets per exercise</h3>
+            <select asp-for="@Model.InputValues.AmountOfSets">
+                @foreach(var amount in ListValue.AmountOfSets)
+                {
+                    <option value="@amount">@amount</option>
+                }
+            </select>
+
+            <h3>Repetitions per exercise</h3>
+            <select asp-for="@Model.InputValues.AmountOfRepetitions">
+                @foreach (var amount in ListValue.AmountOfRepetitions)
+                {
+                    <option value="@amount">@amount</option>
+                }
+            </select>
+
+            <button type="submit">Generate</button>
+        </form>
     </div>
 
-    <div id = "dataDiv">
-
-      
+    <div id="dataDiv">
     </div>
 
 </div>
@@ -125,7 +139,7 @@
             select.addEventListener('change', function () {
                 // Only update data if the changed select element is not dynamicSelect
                 if (select.id !== 'dynamicSelect' && select.id !== 'amountOfWorkouts') {
-                   
+
                     updateData(); // Update data when select value changes
                 }
 

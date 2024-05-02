@@ -135,7 +135,9 @@ namespace Web.Pages
                                 Type = exercise.Type,
                                 Instructions = exercise.Instructions,
                                 Name = exercise.Name,
-                                UserId = IdentityUser.Id
+                                UserId = IdentityUser.Id,
+                                Sets = InputValues.AmountOfSets,
+                                Repetitions = InputValues.AmountOfRepetitions
                             };
 
                             GeneratedExercises.Add(fetchedExercise);
