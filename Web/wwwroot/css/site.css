@@ -210,6 +210,7 @@ body {
     list-style-type: none;
     padding: 0;
     margin-bottom: 5px;
+    margin-top: 1rem;
 }
 
 .exercise-item {
@@ -233,3 +234,11 @@ body {
 .exercise-item {
     margin-bottom: 5px;
 }
+
+
+.workout-item {
+    display: block; /* Ensures each container takes up the full width */
+    margin-bottom: 10px; /* Adds some space between each item */
+    text-align: center;
+}
+
