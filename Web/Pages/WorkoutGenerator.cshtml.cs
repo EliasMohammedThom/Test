@@ -110,42 +110,51 @@ namespace Web.Pages
                 {
                     var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
 
-                    if (sortedExercises.Count > 0)
+                    using (var transaction = _ApplicationDbContext.Database.BeginTransaction())
                     {
-                        var workoutList = _ApplicationDbContext.Workouts.ToList();
-
-                        _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
-
-                        _ApplicationDbContext.Workouts.Add(newWorkout);
-
-                        _ApplicationDbContext.SaveChanges();
-
-                        foreach (var exercise in sortedExercises)
+                        try
                         {
-                            var fetchedExercise = new FetchedExercises
+                            if (sortedExercises.Count > 0)
                             {
-                                Difficulty = exercise.Difficulty,
-                                Equipment = exercise.Equipment,
-                                Muscle = exercise.Muscle,
-                                Type = exercise.Type,
-                                Instructions = exercise.Instructions,
-                                Name = exercise.Name,
-                                UserId = IdentityUser.Id,
-                                Sets = InputValues.AmountOfSets,
-                                Repetitions = InputValues.AmountOfRepetitions
-                            };
+                                var workoutList = _ApplicationDbContext.Workouts.ToList();
 
-                            GeneratedExercises.Add(fetchedExercise);
+                                _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
 
-                            _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
-                            _ApplicationDbContext.SaveChanges();
+                                _ApplicationDbContext.Workouts.Add(newWorkout);
+                                _ApplicationDbContext.SaveChanges();
 
+                                foreach (var exercise in sortedExercises)
+                                {
+                                    var fetchedExercise = new FetchedExercises
+                                    {
+                                        Difficulty = exercise.Difficulty,
+                                        Equipment = exercise.Equipment,
+                                        Muscle = exercise.Muscle,
+                                        Type = exercise.Type,
+                                        Instructions = exercise.Instructions,
+                                        Name = exercise.Name,
+                                        UserId = IdentityUser.Id,
+                                        Sets = InputValues.AmountOfSets,
+                                        Repetitions = InputValues.AmountOfRepetitions
+                                    };
 
+                                    GeneratedExercises.Add(fetchedExercise);
+
+                                    _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                                    _ApplicationDbContext.SaveChanges();
+                                }
+
+                                _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
+                            }
+
+                            transaction.Commit();
                         }
-
-                        _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            // Handle exception
+                        }
                     }
-                    _ApplicationDbContext.SaveChanges();
                 }
 
                 _ApplicationDbContext.SaveChanges();

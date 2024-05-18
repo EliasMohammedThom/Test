@@ -11,5 +11,12 @@ namespace Core.Models
         public string? Name { get; set; }
         public List<FetchedExercises>? Exercises { get; set; }
 
+        public List<Tablevalues> Tablevalues { get; set; } = new List<Tablevalues>();
+    }
+
+    public class Tablevalues
+    {
+        public string Name { get; set; }
+        public int Weight { get; set; }
     }
 }

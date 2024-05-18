@@ -58,8 +58,6 @@ namespace Web.Pages
 
             var filteredExercises = ExerciseList.Where(exercise => workoutIds.Contains(exercise.WorkoutId)).ToList();
 
-            
-
             Cardio.Exercises = filteredExercises.Where(X=>X.Type == "cardio").ToList();
             Olympic.Exercises = filteredExercises.Where(X=>X.Type == "olympic_weightlifting").ToList();
             Plyometrics.Exercises = filteredExercises.Where(X=>X.Type == "plyometrics").ToList();
@@ -67,6 +65,16 @@ namespace Web.Pages
             Strength.Exercises = filteredExercises.Where(X=>X.Type == "strength").ToList();
             Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
             Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
+
+            foreach(var exercise in Strongman.Exercises)
+            {
+                Tablevalues tablevalues = new();
+
+                tablevalues.Name  = exercise.Name;
+                tablevalues.Weight = (int)exercise.Weight;
+                
+                Strongman.Tablevalues.Add(tablevalues);
+            }
             
 
 

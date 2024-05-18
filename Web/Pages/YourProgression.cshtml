@@ -1,7 +1,13 @@
 ﻿@page
 @model Web.Pages.YourProgressionModel
 @{
+    var strongmanvalues = Model.Strongman.Tablevalues;
+
+    List<int> weights = new List<int>();
+
+   
 }
+
 
 <style>
 
@@ -18,11 +24,27 @@
     var ctx = document.getElementById('myChart').getContext('2d');
 
     // Define your data
+    @{
+        foreach (var value in strongmanvalues)
+        {
+
+            weights.Add(value.Weight);
+        }
+
+
+        int[] weightsArray = weights.ToArray();
+        string weightsJson = Newtonsoft.Json.JsonConvert.SerializeObject(weightsArray);
+
+    }
+
+    var weightsArray = @Html.Raw(weightsJson);
+
+    console.log(weightsArray)
     var data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        labels: weightsArray.map((_, index) => 'time'), // Map all data points to the label "time"
         datasets: [{
             label: 'My First Dataset',
-            data: [20, 30, 40, 50, 60, 70, 81],
+            data: weightsArray,
             backgroundColor: 'rgba(255, 99, 132, 0.2)',
             borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1
@@ -32,15 +54,22 @@
     // Define your options
     var options = {
         scales: {
-            y: {
-                beginAtZero: true
+            x: {
+                ticks: {
+                    display: false // Hide individual ticks
+                },
+                title: {
+                    display: true,
+                    text: 'time' // Display a single label
+                }
             }
         }
     };
 
     // Create the chart
+    var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'bar', // or any other type you need
         data: data,
         options: options
     });
