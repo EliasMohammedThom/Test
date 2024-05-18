@@ -42,7 +42,7 @@ namespace Web.Pages
             _userManager = userManager;
             _scheduleservice = scheduleService;
 
-         
+    
         }
 
 
@@ -66,21 +66,36 @@ namespace Web.Pages
             Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
             Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
 
-            foreach(var exercise in Strongman.Exercises)
-            {
-                Tablevalues tablevalues = new();
+           foreach(var exercise in Strongman.Exercises)
+           {
+                // Check if a TableList already exists for this exercise
+                TableList existingTableList = Strongman.TableLists.FirstOrDefault(tl => tl.ExerciseName == exercise.Name);
+    
+                if(existingTableList == null)
+                {
+                    // If no TableList exists for this exercise, create a new one
+                    TableList newTableList = new TableList();
+                    newTableList.ExerciseName = exercise.Name;
+                    newTableList.TableValues.Add((int)exercise.Weight);
+        
+                    Strongman.TableLists.Add(newTableList);
+                }
+                else
+                {
+                    // If a TableList already exists for this exercise, add weight to its TableValues
+                    existingTableList.TableValues.Add((int)exercise.Weight);
+                }
 
-                tablevalues.Name  = exercise.Name;
-                tablevalues.Weight = (int)exercise.Weight;
-                
-                Strongman.Tablevalues.Add(tablevalues);
-            }
+
+           }
+
 
               foreach(var exercise in Powerlifting.Exercises)
             {
+
                 Tablevalues tablevalues = new();
 
-                tablevalues.Name  = exercise.Name;
+               
                 tablevalues.Weight = (int)exercise.Weight;
                 
                 Powerlifting.Tablevalues.Add(tablevalues);
@@ -90,7 +105,7 @@ namespace Web.Pages
                {
                 Tablevalues tablevalues = new();
 
-                tablevalues.Name  = exercise.Name;
+               
                 tablevalues.Weight = (int)exercise.Weight;
                 
                 Strength.Tablevalues.Add(tablevalues);
