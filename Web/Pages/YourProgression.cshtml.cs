@@ -75,6 +75,27 @@ namespace Web.Pages
                 
                 Strongman.Tablevalues.Add(tablevalues);
             }
+
+              foreach(var exercise in Powerlifting.Exercises)
+            {
+                Tablevalues tablevalues = new();
+
+                tablevalues.Name  = exercise.Name;
+                tablevalues.Weight = (int)exercise.Weight;
+                
+                Powerlifting.Tablevalues.Add(tablevalues);
+            }
+
+               foreach(var exercise in Strength.Exercises)
+               {
+                Tablevalues tablevalues = new();
+
+                tablevalues.Name  = exercise.Name;
+                tablevalues.Weight = (int)exercise.Weight;
+                
+                Strength.Tablevalues.Add(tablevalues);
+               }
+
             
 
 
