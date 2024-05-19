@@ -1,7 +1,11 @@
 ﻿using Core.Interfaces.ModelServices;
 using Core.Models;
+
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,13 +14,13 @@ namespace Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FetchedExerciseController : ControllerBase
+    public class FetchedExerciseDateController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly IScheduleService _scheduleService;
         private readonly IWorkoutService _workoutService;
         // GET: api/<OrderController>
-        public FetchedExerciseController(
+        public FetchedExerciseDateController(
             ApplicationDbContext applicationDbContext,
             IScheduleService scheduleService,
             IWorkoutService workoutService
@@ -28,7 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public List<int?>? Get(string? exerciseName, string? userId)
+        public List<DateOnly?>? Get(string? exerciseName, string? userId)
         {
             List<Workout> workouts;
             int? scheduleId;
@@ -40,7 +44,6 @@ namespace Web.Controllers
             {
                 query = query.Where(o => o.Name == exerciseName);
             }
-
 
             if (!userId.IsNullOrEmpty())
             {
@@ -54,15 +57,15 @@ namespace Web.Controllers
 
             }
 
-            List<int?> weightData = new List<int?>();
+            List<DateOnly?>? dateData = new List<DateOnly?>();
 
-            foreach (var weights in query) 
+            foreach (var date in query) 
                 {
-                weightData.Add(weights.Weight);
+                dateData.Add(date.Date);
                 }
 
 
-            return weightData;
+            return dateData;
         }
 
 

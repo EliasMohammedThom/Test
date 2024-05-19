@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
+
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+
 
 namespace Core.Models
 {
@@ -35,5 +32,6 @@ namespace Core.Models
         public int? Weight { get; set; }
         public float? Distance { get; set; }
         public DateTime? Time { get; set; }
+        public DateOnly? Date { get; set; }
     }
 }

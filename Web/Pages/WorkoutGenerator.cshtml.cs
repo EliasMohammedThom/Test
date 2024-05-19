@@ -135,7 +135,8 @@ namespace Web.Pages
                                         Name = exercise.Name,
                                         UserId = IdentityUser.Id,
                                         Sets = InputValues.AmountOfSets,
-                                        Repetitions = InputValues.AmountOfRepetitions
+                                        Repetitions = InputValues.AmountOfRepetitions,
+                                        Date = newWorkout.Date
                                     };
 
                                     GeneratedExercises.Add(fetchedExercise);

@@ -25,7 +25,7 @@
     @section Scripts {
         <script>
             let selectElement;
-            let myChart = null;
+           
             document.addEventListener("DOMContentLoaded", function () {
                 selectElement = document.getElementById("datasetSelect");
                 const defaultExerciseName = selectElement.value;
@@ -41,52 +41,74 @@
 
             function fetchDataAndRenderChart(exerciseName, userId) {
                 const baseUrl = 'https://localhost:44389/api/fetchedExercise';
+                const baseUrlDate = 'https://localhost:44389/api/fetchedExerciseDate';
+
                 const url = new URL(baseUrl);
+                const urlDate = new URL(baseUrlDate);
+
                 url.searchParams.append('exerciseName', exerciseName);
                 url.searchParams.append('userId', userId);
 
-                fetch(url, {
+                urlDate.searchParams.append('exerciseName', exerciseName);
+                urlDate.searchParams.append('userId', userId);
+
+                const fetchOptions = {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log(data);
-                        updateChart(data);
+                };
+
+                // Fetch data from both URLs concurrently
+                Promise.all([
+                    fetch(url, fetchOptions).then(response => response.json()),
+                    fetch(urlDate, fetchOptions).then(response => response.json())
+                ])
+                    .then(([data, dateData]) => {
+                        console.log('Exercise Data:', data);
+                        console.log('Date Data:', dateData);
+
+                        // Pass data and dateData as separate parameters to updateChart function
+                        updateChart(data, dateData);
                     })
                     .catch(error => console.error('Error:', error));
             }
 
-            function updateChart(data) {
+
+            let myChart;  // Global variable to hold the chart instance
+
+            function updateChart(data, dateData) {
                 const ctx = document.getElementById('myChart').getContext('2d');
 
+                // If a chart instance already exists, destroy it
                 if (myChart) {
                     myChart.destroy();
                 }
 
+
+                var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                // Create a new chart instance and assign it to the global variable
                 myChart = new Chart(ctx, {
-                    type: 'line', // or any other chart type
+                    type: "bar",
                     data: {
-                        labels: data.labels,
+                        labels: dateData,
                         datasets: [{
-                            label: 'Exercise Data',
-                            data: data,
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
+                            label: 'Dataset',
+                            data: data
                         }]
                     },
                     options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "World Wine Production 2018"
                         }
                     }
                 });
             }
+
+
         </script>
     }
     }
