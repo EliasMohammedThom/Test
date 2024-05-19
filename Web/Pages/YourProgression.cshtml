@@ -3,11 +3,10 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
+    ViewData["Title"] = "Dynamic Chart";
     var user = await UserManager.GetUserAsync(User);
-    var strongmanvalues = Model.Strongman.TableLists;
-    // var powerliftingvalues = Model.Powerlifting.TableLists;
+    var strongmanValues = Model.Strongman.TableLists;
 }
-
 
 <head>
     <title>Dynamic Chart</title>
@@ -15,17 +14,80 @@
 </head>
 <body>
     <select id="datasetSelect">
-        @foreach (var item in strongmanvalues)
+        @foreach (var item in strongmanValues)
         {
             <option value="@item.ExerciseName">@item.ExerciseName</option>
         }
     </select>
-    
 
+    <canvas id="myChart"></canvas>
 
+    @section Scripts {
+        <script>
+            let selectElement;
+            let myChart = null;
+            document.addEventListener("DOMContentLoaded", function () {
+                selectElement = document.getElementById("datasetSelect");
+                const defaultExerciseName = selectElement.value;
+                const userId = '@user.Id';  // Get user ID from the model
 
+                fetchDataAndRenderChart(defaultExerciseName, userId);
 
+                selectElement.addEventListener("change", function () {
+                    const selectedExerciseName = selectElement.value;
+                    fetchDataAndRenderChart(selectedExerciseName, userId);
+                });
+            });
+
+            function fetchDataAndRenderChart(exerciseName, userId) {
+                const baseUrl = 'https://localhost:44389/api/fetchedExercise';
+                const url = new URL(baseUrl);
+                url.searchParams.append('exerciseName', exerciseName);
+                url.searchParams.append('userId', userId);
+
+                fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        updateChart(data);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            function updateChart(data) {
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+                myChart = new Chart(ctx, {
+                    type: 'line', // or any other chart type
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: 'Exercise Data',
+                            data: data,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        </script>
+    }
+    }
 </body>
-
-
-<script> </script>
