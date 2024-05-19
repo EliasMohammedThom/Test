@@ -1,109 +1,30 @@
 ﻿@page
 @model Web.Pages.YourProgressionModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
-
-    var strongmanvalues = Model.Strongman.Tablevalues;
-
-    List<int> strongmanweights = new List<int>();
-
-    var powerliftingvalues = Model.Powerlifting.Tablevalues;
-
-    List<int> powerliftingweights = new List<int>();
-
+    var user = await UserManager.GetUserAsync(User);
+    var strongmanvalues = Model.Strongman.TableLists;
+    // var powerliftingvalues = Model.Powerlifting.TableLists;
 }
 
-<select id="datasetSelect">
-    <option value="strongmanWeightsArray">Strongman</option>
-    <option value="powerliftingWeightsArray">Powerlifting</option>
-    <option value="weightsJson3">Dataset 3</option>
-</select>
-<canvas id="myChart"></canvas>
-
-<style>
-    body {
-        background-image: none;
-    }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    // Get the canvas element
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    // Define your data
-    @{
-        foreach (var value in strongmanvalues)
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <select id="datasetSelect">
+        @foreach (var item in strongmanvalues)
         {
-            strongmanweights.Add(value.Weight);
+            <option value="@item.ExerciseName">@item.ExerciseName</option>
         }
+    </select>
+    
 
-        int[] strongmanarray = strongmanweights.ToArray();
-        string strongmanjson = Newtonsoft.Json.JsonConvert.SerializeObject(strongmanarray);
 
-        foreach (var value in powerliftingvalues)
-        {
-            powerliftingweights.Add(value.Weight);
-        }
 
-        int[] powerliftingarray = powerliftingweights.ToArray();
-        string powerliftingjson = Newtonsoft.Json.JsonConvert.SerializeObject(powerliftingarray);
-    }
 
-        var strongmanWeightsArray = @Html.Raw(strongmanjson);
-    var powerliftingWeightsArray = @Html.Raw(powerliftingjson);
-
-    var datasets = {
-        strongmanWeightsArray: strongmanWeightsArray,
-        powerliftingWeightsArray: powerliftingWeightsArray,
-        weightsJson3: [] // Placeholder for Dataset 3, update as needed
-    };
-
-    var data = {
-        labels: strongmanWeightsArray.map((_, index) => 'time'),
-        datasets: [{
-            label: 'Exercise',
-            data: strongmanWeightsArray,
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    var options = {
-        scales: {
-            x: {
-                ticks: {
-                    display: false // Hide individual ticks
-                },
-                title: {
-                    display: true,
-                    text: 'time' // Display a single label
-                }
-            },
-            y: {
-                title: {
-                    display: true,
-                    text: 'Weight (kg)' // Y-axis label
-                }
-            }
-        }
-    };
-
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: options
-    });
-
-    function updateChart(datasetKey) {
-        var weightsArray = datasets[datasetKey];
-        myChart.data.labels = weightsArray.map((_, index) => 'time');
-        myChart.data.datasets[0].data = weightsArray;
-        myChart.update();
-    }
-
-    document.getElementById('datasetSelect').addEventListener('change', function () {
-        updateChart(this.value);
-    });
-</script>
+</body>
+</html>

@@ -66,7 +66,7 @@ namespace Web.Pages
             Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
             Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
 
-           foreach(var exercise in Strongman.Exercises)
+              foreach(var exercise in Strongman.Exercises)
            {
                 // Check if a TableList already exists for this exercise
                 TableList existingTableList = Strongman.TableLists.FirstOrDefault(tl => tl.ExerciseName == exercise.Name);
