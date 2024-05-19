@@ -32,7 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<FetchedExercises> Get(string? exerciseName, string? userId)
+        public  List<int?>? Get(string? exerciseName, string? userId)
         {
             List<Workout> workouts;
             int? scheduleId;
@@ -55,9 +55,18 @@ namespace Web.Controllers
 
             // Filter the query based on the extracted WorkoutId values
             query = query.Where(o => workoutIds.Contains(o.WorkoutId));
+
             }
 
-            return query.ToList();
+            List<int?> weightData = new List<int?>();
+
+            foreach (var weights in query) 
+                {
+                weightData.Add(weights.Weight);
+                }
+
+
+            return weightData;
         }
 
 
