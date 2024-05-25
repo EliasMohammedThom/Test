@@ -13,32 +13,46 @@
 	@if(Model.SortedWorkoutList?.Count != 0)
 	{
 
-		@foreach (var item in Model.SortedWorkoutList)
-		{
-			<div class="workout-box">
-				<strong>Workout name: @item.Title</strong>
-				@if (Model.Exercises.Any(x => x.WorkoutId == item.Id))
-				{
-					@foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
-					{
-						<ul class="exercise-list">
-							<strong>Exercise name: @item2.Name</strong>
-							<li class="exercise-item">Difficulty: @item2.Difficulty</li>
-							<li class="exercise-item">Exercise type: @item2.Type</li>
-							<li class="exercise-item">Equipment: @item2.Equipment</li>
-							<li class="exercise-item">Instructions: @item2.Instructions</li>
-							<li class="exercise-item">Sets: @item2.Sets</li>
-							<li class="exercise-item">Reps: @item2.Repetitions</li>
-						</ul>
-					}
-				}
-				else
-				{
-					<p class="danger alert-danger">No exercises yet!</p>
-					<a asp-page="/AddExercise" asp-route-workoutId="@item.Id" class="btn btn-primary">Add exercise</a>
-				}
-			</div>
-		}
+        @foreach (var item in Model.SortedWorkoutList)
+        {
+            <div class="workout-box">
+                <strong>Workout name: @item.Title</strong>
+                @if (Model.Exercises.Any(x => x.WorkoutId == item.Id))
+                {
+                    @foreach (var item2 in Model.Exercises.Where(x => x.WorkoutId == item.Id))
+                    {
+                        <ul class="exercise-list">
+                            <strong>Exercise name: @item2.Name</strong>
+                            <li class="exercise-item">Difficulty: @item2.Difficulty</li>
+                            <li class="exercise-item">Exercise type: @item2.Type</li>
+                            <li class="exercise-item">Equipment: @item2.Equipment</li>
+                            <li class="exercise-item">Instructions: @item2.Instructions</li>
+                            <form method="post">
+                                <input type="hidden" name="ExerciseId" value="@item2.Id" />
+                            <li class="exercise-item">
+                                Sets: <input type="number" name="Sets" value="@item2.Sets" min="1" />
+                            </li>
+                            <li class="exercise-item">
+                                Reps: <input type="number" name="Reps" value="@item2.Repetitions" min="1" />
+                            </li>
+                            <li class="exercise-item">
+                                Weight(kg): <input type="number" name="Weight" value="@item2.Weight" step="0.1" />
+                            </li>
+                            <li>
+                                <button type="submit" class="btn btn-primary">Save</button>
+                            </li>
+                            </form>
+                        </ul>
+                    }
+                }
+                else
+                {
+                    <p class="danger alert-danger">No exercises yet!</p>
+                    <a asp-page="/AddExercise" asp-route-workoutId="@item.Id" class="btn btn-primary">Add exercise</a>
+                }
+            </div>
+        }
+
 	}
 	else
 	{
