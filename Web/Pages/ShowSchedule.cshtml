@@ -62,15 +62,11 @@ else
     </div>
 
 
-
-
-
     <div class="schedule-list">
 
 
         @for (int i = 1; i <= Model.CurrentMonth; i++)
         {
-
             var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, i);
             var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
 

@@ -5,14 +5,12 @@
 @{
 	ViewData["Title"] = "View workouts";
 	var user = await UserManager.GetUserAsync(User);
-
 }
 
 @if (SignInManager.IsSignedIn(User))
 {
 	@if(Model.SortedWorkoutList?.Count != 0)
 	{
-
         @foreach (var item in Model.SortedWorkoutList)
         {
             <div class="workout-box">
@@ -52,7 +50,6 @@
                 }
             </div>
         }
-
 	}
 	else
 	{
