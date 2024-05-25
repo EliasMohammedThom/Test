@@ -1,47 +1,115 @@
 ﻿@page
 @model Web.Pages.YourProgressionModel
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 @{
+    ViewData["Title"] = "Dynamic Chart";
+    var user = await UserManager.GetUserAsync(User);
+    var strongmanValues = Model.Strongman.TableLists;
 }
 
-<style>
-
-    body{
-        background-image:none;
-    }
-</style>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<canvas id="myChart" width="400" height="400" style="color:white"></canvas>
-<script>
-    // Get the canvas element
-    var ctx = document.getElementById('myChart').getContext('2d');
-
-    // Define your data
-    var data = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-            label: 'My First Dataset',
-            data: [20, 30, 40, 50, 60, 70, 81],
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            borderWidth: 1
-        }]
-    };
-
-    // Define your options
-    var options = {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+<head>
+    <title>Dynamic Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <select id="datasetSelect">
+        @foreach (var item in strongmanValues)
+        {
+            <option value="@item.ExerciseName">@item.ExerciseName</option>
         }
-    };
+    </select>
 
-    // Create the chart
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: data,
-        options: options
-    });
-</script>
+    <canvas id="myChart"></canvas>
+
+    @section Scripts {
+        <script>
+            let selectElement;
+           
+            document.addEventListener("DOMContentLoaded", function () {
+                selectElement = document.getElementById("datasetSelect");
+                const defaultExerciseName = selectElement.value;
+                const userId = '@user.Id';  // Get user ID from the model
+
+                fetchDataAndRenderChart(defaultExerciseName, userId);
+
+                selectElement.addEventListener("change", function () {
+                    const selectedExerciseName = selectElement.value;
+                    fetchDataAndRenderChart(selectedExerciseName, userId);
+                });
+            });
+
+            function fetchDataAndRenderChart(exerciseName, userId) {
+                const baseUrl = 'https://localhost:44389/api/fetchedExercise';
+                const baseUrlDate = 'https://localhost:44389/api/fetchedExerciseDate';
+
+                const url = new URL(baseUrl);
+                const urlDate = new URL(baseUrlDate);
+
+                url.searchParams.append('exerciseName', exerciseName);
+                url.searchParams.append('userId', userId);
+
+                urlDate.searchParams.append('exerciseName', exerciseName);
+                urlDate.searchParams.append('userId', userId);
+
+                const fetchOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+
+                // Fetch data from both URLs concurrently
+                Promise.all([
+                    fetch(url, fetchOptions).then(response => response.json()),
+                    fetch(urlDate, fetchOptions).then(response => response.json())
+                ])
+                    .then(([data, dateData]) => {
+                        console.log('Exercise Data:', data);
+                        console.log('Date Data:', dateData);
+
+                        // Pass data and dateData as separate parameters to updateChart function
+                        updateChart(data, dateData);
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+
+            let myChart;  // Global variable to hold the chart instance
+
+            function updateChart(data, dateData) {
+                const ctx = document.getElementById('myChart').getContext('2d');
+
+                // If a chart instance already exists, destroy it
+                if (myChart) {
+                    myChart.destroy();
+                }
+
+
+                var barColors = ["red", "green", "blue", "orange", "brown"];
+
+                // Create a new chart instance and assign it to the global variable
+                myChart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: dateData,
+                        datasets: [{
+                            label: 'Dataset',
+                            data: data
+                        }]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: "World Wine Production 2018"
+                        }
+                    }
+                });
+            }
+
+
+        </script>
+    }
+    }
+</body>
