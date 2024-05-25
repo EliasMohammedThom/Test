@@ -1,0 +1,46 @@
+﻿@page
+@model Web.Pages.PowerliftingProgression
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Dynamic Chart";
+    var user = await UserManager.GetUserAsync(User);
+    var strongmanValues = Model.Powerlifting.TableLists;
+}
+
+<head>
+    <title>Dynamic Chart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <select id="datasetSelect">
+        @foreach (var item in strongmanValues)
+        {
+            <option value="@item.ExerciseName">@item.ExerciseName</option>
+        }
+    </select>
+
+    <canvas id="myChart"></canvas>
+
+    @section Scripts {
+        <script>
+            let selectElement;
+            let myChart;
+            document.addEventListener("DOMContentLoaded", function () {
+                selectElement = document.getElementById("datasetSelect");
+                const defaultExerciseName = selectElement.value;
+                const userId = '@user.Id';  // Get user ID from the model
+
+                fetchDataAndRenderChart(defaultExerciseName, userId);
+
+                selectElement.addEventListener("change", function () {
+                    const selectedExerciseName = selectElement.value;
+                    fetchDataAndRenderChart(selectedExerciseName, userId);
+                });
+            });
+        </script>
+
+    }
+    <script src="~/js/chart.js"></script>
+    }
+</body>

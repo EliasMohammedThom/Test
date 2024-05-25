@@ -32,7 +32,7 @@ namespace Web.Controllers
         }
 
         [HttpGet]
-        public List<DateOnly?>? Get(string? exerciseName, string? userId)
+        public List<DateOnly?>? Get(string exerciseName, string? userId)
         {
             List<Workout> workouts;
             int? scheduleId;

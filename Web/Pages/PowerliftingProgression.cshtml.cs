@@ -10,26 +10,19 @@ using System.Reflection;
 
 namespace Web.Pages
 {
-    public class YourProgressionModel : PageModel
+    public class PowerliftingProgression : PageModel
     {
         ApplicationDbContext ApplicationDbContext { get; set; }
         public List<Workout>? Workouts { get; set; }
         public IWorkoutService _WorkoutService { get; set; }
         public IScheduleService _scheduleservice { get; set; }
         public IdentityUser? IdentityUser { get; set; }
-
         private readonly UserManager<IdentityUser>? _userManager;
         public List<FetchedExercises>? ExerciseList { get; set; }
-        public TypeList? Cardio { get; set; } = new TypeList{Name="Cardio"};
-        public TypeList? Olympic { get; set; } = new TypeList{Name="Olympic"};
-        public TypeList? Plyometrics { get; set; } = new TypeList{Name="Plyometrics"};
-        public TypeList? Powerlifting { get; set; } = new TypeList{Name="PowerLifting"};
-        public TypeList? Strength { get; set; } = new TypeList{Name="Strength"};
-        public TypeList? Stretching { get; set; } = new TypeList{Name="Stretching"};
-        public TypeList? Strongman { get; set; } = new TypeList{Name="Strongman"};
+        public TypeList? Powerlifting { get; set; } = new TypeList{Name="powerlifting"};
         public List<TypeList>? Types { get; set; }
 
-        public YourProgressionModel
+        public PowerliftingProgression
             (
             ApplicationDbContext applicationDbContext,
             IWorkoutService workoutService,
@@ -41,8 +34,6 @@ namespace Web.Pages
             _WorkoutService = workoutService;
             _userManager = userManager;
             _scheduleservice = scheduleService;
-
-    
         }
 
 
@@ -58,18 +49,12 @@ namespace Web.Pages
 
             var filteredExercises = ExerciseList.Where(exercise => workoutIds.Contains(exercise.WorkoutId)).ToList();
 
-            Cardio.Exercises = filteredExercises.Where(X=>X.Type == "cardio").ToList();
-            Olympic.Exercises = filteredExercises.Where(X=>X.Type == "olympic_weightlifting").ToList();
-            Plyometrics.Exercises = filteredExercises.Where(X=>X.Type == "plyometrics").ToList();
             Powerlifting.Exercises = filteredExercises.Where(X=>X.Type == "powerlifting").ToList();
-            Strength.Exercises = filteredExercises.Where(X=>X.Type == "strength").ToList();
-            Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
-            Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
 
-              foreach(var exercise in Strongman.Exercises)
+              foreach(var exercise in Powerlifting.Exercises)
            {
                 // Check if a TableList already exists for this exercise
-                TableList existingTableList = Strongman.TableLists.FirstOrDefault(tl => tl.ExerciseName == exercise.Name);
+                TableList existingTableList = Powerlifting.TableLists.FirstOrDefault(tl => tl.ExerciseName == exercise.Name);
     
                 if(existingTableList == null)
                 {
@@ -78,48 +63,16 @@ namespace Web.Pages
                     newTableList.ExerciseName = exercise.Name;
                     newTableList.TableValues.Add((int)exercise.Weight);
         
-                    Strongman.TableLists.Add(newTableList);
+                    Powerlifting.TableLists.Add(newTableList);
                 }
                 else
                 {
                     // If a TableList already exists for this exercise, add weight to its TableValues
                     existingTableList.TableValues.Add((int)exercise.Weight);
                 }
-
-
-           }
-
-
-              foreach(var exercise in Powerlifting.Exercises)
-            {
-
-                Tablevalues tablevalues = new();
-
-               
-                tablevalues.Weight = (int)exercise.Weight;
-                
-                Powerlifting.Tablevalues.Add(tablevalues);
-            }
-
-               foreach(var exercise in Strength.Exercises)
-               {
-                Tablevalues tablevalues = new();
-
-               
-                tablevalues.Weight = (int)exercise.Weight;
-                
-                Strength.Tablevalues.Add(tablevalues);
-               }
-
-            
-
+              }
 
             return Page();
-
-            //hämta alla workouts 
-            //Dela upp exercises baserat på deras type
-            
-            
         }
     }
 }

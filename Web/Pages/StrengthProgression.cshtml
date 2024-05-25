@@ -1,11 +1,11 @@
 ﻿@page
-@model Web.Pages.YourProgressionModel
+@model Web.Pages.StrengthProgression
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 @{
     ViewData["Title"] = "Dynamic Chart";
     var user = await UserManager.GetUserAsync(User);
-    var strongmanValues = Model.Strongman.TableLists;
+    var strongmanValues = Model.Strength.TableLists;
 }
 
 <head>
@@ -38,11 +38,7 @@
                     fetchDataAndRenderChart(selectedExerciseName, userId);
                 });
             });
-
-
-
         </script>
-
 
     }
     <script src="~/js/chart.js"></script>
