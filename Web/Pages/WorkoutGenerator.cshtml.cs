@@ -154,7 +154,7 @@ namespace Web.Pages
                         catch (Exception ex)
                         {
                             transaction.Rollback();
-                            // Handle exception
+                           
                         }
                     }
                 }
