@@ -48,7 +48,7 @@ namespace WorkoutApp.Tests.Integrationstests
 
     {
         // Arrange
-        var muscles = ListValue.WorkoutTypes;
+        var muscles = ListValue.MuscleCategories;
 
         //Act & Assert
         FilteredExercisesByMuscle(muscles);
