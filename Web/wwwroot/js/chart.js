@@ -33,30 +33,48 @@
                     .catch(error => console.error('Error:', error));
             }
 
-            function updateChart(data, dateData) {
-                const ctx = document.getElementById('myChart').getContext('2d');
+    function updateChart(data, dateData) {
+    const ctx = document.getElementById('myChart').getContext('2d');
 
-                // If a chart instance already exists, destroy it
-                if (myChart) {
-                    myChart.destroy();
-                }
+    // If a chart instance already exists, destroy it
+    if (myChart) {
+        myChart.destroy();
+    }
 
-                // Create a new chart instance and assign it to the global variable
-                myChart = new Chart(ctx, {
-                    type: "bar",
-                    data: {
-                        labels: dateData,
-                        datasets: [{
-                            label: 'Dataset',
-                            data: data
-                        }]
+    // Create a new chart instance and assign it to the global variable
+    myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: dateData,
+            datasets: [{
+                label: 'Weight(kg)',
+                data: data,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)', // Example bar color
+                borderColor: 'rgba(0, 123, 255, 1)', // Example border color
+                borderWidth: 1
+            }]
+        },
+        options: {
+            
+            scales: {
+                x: {
+                    grid: {
+                        color: 'white' // Set the grid color to white
                     },
-                    options: {
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: "World Wine Production 2018"
-                        }
+                    ticks: {
+                        color: 'white' // Optional: Set the color of x-axis labels
                     }
-                });
+                },
+                y: {
+                    grid: {
+                        color: 'white' // Set the grid color to white
+                    },
+                    ticks: {
+                        color: 'white' // Optional: Set the color of y-axis labels
+                    }
+                }
             }
+        }
+    });
+}
+
