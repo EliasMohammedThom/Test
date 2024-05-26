@@ -16,7 +16,6 @@ namespace Web.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        // GET: api/<OrderController>
         public ExerciseListController(ApplicationDbContext applicationDbContext)
         {
             _context = applicationDbContext;
@@ -25,10 +24,9 @@ namespace Web.Controllers
         [HttpGet]
         public IEnumerable<ExerciseList> Get(string? difficulty, string? type, string? muscle, string? equipment)
         {
-            // Assuming Order is your model/entity class representing orders
             IQueryable<ExerciseList> query = _context.ExerciseLists;
 
-            // Filter orders based on query parameters if provided
+           
             if (!difficulty.IsNullOrEmpty())
             {
                 query = query.Where(o => o.Difficulty == difficulty);

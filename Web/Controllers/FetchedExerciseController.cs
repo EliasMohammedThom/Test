@@ -32,10 +32,10 @@ namespace Web.Controllers
         {
             List<Workout> workouts;
             int? scheduleId;
-            // Assuming Order is your model/entity class representing orders
+
             IQueryable<FetchedExercises> query = _context.FetchedExercises;
 
-            // Filter orders based on query parameters if provided
+
             if (!exerciseName.IsNullOrEmpty())
             {
                 query = query.Where(o => o.Name == exerciseName);
@@ -44,37 +44,24 @@ namespace Web.Controllers
 
             if (!userId.IsNullOrEmpty())
             {
-            scheduleId = _scheduleService.GetScheduleByUserId(userId).Id;
-            workouts = _workoutService.GetWorkoutsByScheduleId(scheduleId);
-            // Extract the WorkoutId values from the workouts list
-            var workoutIds = workouts.Select(w => w.Id).ToList();
+                scheduleId = _scheduleService.GetScheduleByUserId(userId).Id;
+                workouts = _workoutService.GetWorkoutsByScheduleId(scheduleId);
 
-            // Filter the query based on the extracted WorkoutId values
-            query = query.Where(o => workoutIds.Contains(o.WorkoutId));
+                var workoutIds = workouts.Select(w => w.Id).ToList();
 
+                query = query.Where(o => workoutIds.Contains(o.WorkoutId));
             }
 
             List<int?> weightData = new List<int?>();
 
-            foreach (var weights in query) 
-                {
+            foreach (var weights in query)
+            {
                 weightData.Add(weights.Weight);
-                }
+            }
 
 
             return weightData;
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 
