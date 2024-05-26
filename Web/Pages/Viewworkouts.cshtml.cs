@@ -54,7 +54,7 @@ namespace Web.Pages
                 exercise.Weight = Weight;
 
                 // Save changes to the database
-                _ = _context.SaveChanges();
+                 _context.SaveChanges();
             }
 
             // Redirect to the same page to reflect the changes

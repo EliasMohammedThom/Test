@@ -75,29 +75,69 @@ else
                 {
                     @foreach (var workout in workoutsForCurrentDate)
                     {
-
-                        <div id="myModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close">&times;</span>
-                                <p>
-                                    @foreach (var exercise in workout.Exercises)
-                                    {
-                                        <li class="exercise-item">
-                                            @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
-                                        </li>
-                                    }
-                                </p>
-                            </div>
+                       <div>
+                        <strong>Title: @workout.Title</strong>
                         </div>
 
+                        <div>
+                        <strong >Date: @workout.Date</strong>
+                        </div>
+                        
+
+                        @foreach (var exercise in workout.Exercises)
+                        {
+                            <li class="exercise-item">
+                                @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                            </li>
+                        }
+
+
+
+                        <form method="post">
+                            <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
+                            <button type="submit" class="btn btn-outline-danger">X</button>
+                        </form>
+                    }
+                }
+                else
+                {
+                    <div class="workout-box">
+                        <strong>Empty</strong>
+                        <p>No workout scheduled for @currentDate</p>
+                    </div>
+                }
+            </div>
+        }
+
+
+
+    </div>
+
+
+    <div class="schedule-list">
+        @for (int i = 1; i <= Model.NextMonth; i++)
+        {
+
+            var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month + 1, i);
+            var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
+
+            <div class="js-day">
+                @if (workoutsForCurrentDate.Any())
+                {
+                    @foreach (var workout in workoutsForCurrentDate)
+                    {
+
+                        <strong>@workout.Title</strong>
+                        <p>@workout.Date</p>
+                        <p>@workout.Description</p>
+
                         <ul class="exercise-list">
-
-                            <strong class="workout-item">@workout.Title</strong>
-                            <strong class="workout-item">@workout.Date</strong>
-                            <h6 class="workout-item">@workout.Description</h6>
-
-
-                            <button id="openModalBtn" style="text-align:center;">More Information</button>
+                            @foreach (var exercise in workout.Exercises)
+                            {
+                                <li class="exercise-item">
+                                    @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
+                                </li>
+                            }
                         </ul>
 
 
@@ -116,81 +156,7 @@ else
                 }
             </div>
         }
-        
-       
-
     </div>
 
 
-     <div class="schedule-list">
-    @for (int i = 1; i <= Model.NextMonth; i++)
-    {
-
-        var currentDate = new DateOnly(DateTime.Today.Year, DateTime.Today.Month +1, i);
-        var workoutsForCurrentDate = Model.SortedWorkoutList.Where(w => w.Date == currentDate).ToList();
-
-        <div class="js-day">
-            @if (workoutsForCurrentDate.Any())
-            {
-                @foreach (var workout in workoutsForCurrentDate)
-                {
-
-                    <strong>@workout.Title</strong>
-                    <p>@workout.Date</p>
-                    <p>@workout.Description</p>
-
-                    <ul class="exercise-list">
-                        @foreach (var exercise in workout.Exercises)
-                        {
-                            <li class="exercise-item">
-                                @exercise.Name - Sets: @exercise.Sets - Repetitions: @exercise.Repetitions
-                            </li>
-                        }
-                    </ul>
-
-
-                    <form method="post">
-                        <input type="hidden" name="SelectedWorkoutToRemove" value="@workout.Id" />
-                        <button type="submit" class="btn btn-outline-danger">X</button>
-                    </form>
-                }
-            }
-            else
-            {
-                <div class="workout-box">
-                    <strong>Empty</strong>
-                    <p>No workout scheduled for @currentDate</p>
-                </div>
-            }
-        </div>
-    }
-    </div>
-
-    <script>
-        // Get the modal
-        var modal = document.getElementById("myModal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("openModalBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 }

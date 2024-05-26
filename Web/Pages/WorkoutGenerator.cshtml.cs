@@ -119,8 +119,8 @@ namespace Web.Pages
 
                             _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
 
-                            _ = _ApplicationDbContext.Workouts.Add(newWorkout);
-                            _ = _ApplicationDbContext.SaveChanges();
+                             _ApplicationDbContext.Workouts.Add(newWorkout);
+                             _ApplicationDbContext.SaveChanges();
 
                             foreach (ExerciseList exercise in sortedExercises)
                             {
@@ -141,8 +141,8 @@ namespace Web.Pages
 
                                 GeneratedExercises.Add(fetchedExercise);
 
-                                _ = _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
-                                _ = _ApplicationDbContext.SaveChanges();
+                                 _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                                 _ApplicationDbContext.SaveChanges();
                             }
 
                             _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
@@ -157,12 +157,12 @@ namespace Web.Pages
                     }
                 }
 
-                _ = _ApplicationDbContext.SaveChanges();
+                 _ApplicationDbContext.SaveChanges();
 
                 List<FetchedExercises> exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
                 _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
 
-                _ = _ApplicationDbContext.SaveChanges();
+                 _ApplicationDbContext.SaveChanges();
 
                 return RedirectToPage("/ShowSchedule");
 
