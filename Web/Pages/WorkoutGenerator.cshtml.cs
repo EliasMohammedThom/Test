@@ -105,7 +105,6 @@ namespace Web.Pages
                     return Page();
                 }
 
-
                 for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
                 {
                     Workout? newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
@@ -118,9 +117,8 @@ namespace Web.Pages
                             List<Workout> workoutList = _ApplicationDbContext.Workouts.ToList();
 
                             _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
-
-                             _ApplicationDbContext.Workouts.Add(newWorkout);
-                             _ApplicationDbContext.SaveChanges();
+                            _ApplicationDbContext.Workouts.Add(newWorkout);
+                            _ApplicationDbContext.SaveChanges();
 
                             foreach (ExerciseList exercise in sortedExercises)
                             {
@@ -141,8 +139,8 @@ namespace Web.Pages
 
                                 GeneratedExercises.Add(fetchedExercise);
 
-                                 _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
-                                 _ApplicationDbContext.SaveChanges();
+                                _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                                _ApplicationDbContext.SaveChanges();
                             }
 
                             _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
@@ -153,20 +151,16 @@ namespace Web.Pages
                     catch (Exception)
                     {
                         transaction.Rollback();
-
                     }
                 }
-
-                 _ApplicationDbContext.SaveChanges();
+                _ApplicationDbContext.SaveChanges();
 
                 List<FetchedExercises> exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
                 _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
 
-                 _ApplicationDbContext.SaveChanges();
+                _ApplicationDbContext.SaveChanges();
 
                 return RedirectToPage("/ShowSchedule");
-
-
             }
 
             else

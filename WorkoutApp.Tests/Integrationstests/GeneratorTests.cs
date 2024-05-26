@@ -56,6 +56,7 @@ namespace WorkoutApp.Tests.Integrationstests
             Assert.Null(result);
             Assert.NotEmpty(secondResult);
         }
+
         [Fact]
         public void FindEmptyWorkoutDaysInSchedule_ShouldFindEmptyDay()
         {
