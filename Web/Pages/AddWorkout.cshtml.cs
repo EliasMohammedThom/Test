@@ -1,12 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.CodeDom;
-using System.Reflection.Metadata;
+using Core.Interfaces.ModelServices;
 using Core.Models;
 using Microsoft.AspNetCore.Identity;
-using Core.Interfaces.ModelServices;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using ProfanityFilter.Interfaces;
-using NuGet.ContentModel;
 
 namespace Web.Pages
 {
@@ -20,7 +17,7 @@ namespace Web.Pages
 
         [BindProperty]
         public string ReplyToUser { get; set; } = default!;
-        
+
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser currentUser;
 
@@ -32,7 +29,7 @@ namespace Web.Pages
 
         }
 
-        public async Task <IActionResult> OnGetAsync()
+        public IActionResult OnGet()
 
         {
             return Page();
@@ -43,7 +40,7 @@ namespace Web.Pages
         {
             currentUser = await _userManager.GetUserAsync(User);
 
-            if ( _profanityFilter.IsProfanity(workout.Title) )
+            if (_profanityFilter.IsProfanity(workout.Title))
             {
                 ReplyToUser = "Profanities are not allowed";
                 TempData["ErrorMessage"] = ReplyToUser;

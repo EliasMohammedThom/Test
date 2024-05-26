@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages
@@ -7,6 +6,7 @@ namespace Web.Pages
     {
         public void OnGet()
         {
+            // Method intentionally left empty.
         }
     }
 }

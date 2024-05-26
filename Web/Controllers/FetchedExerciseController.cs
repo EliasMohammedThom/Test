@@ -47,14 +47,14 @@ namespace Web.Controllers
                 scheduleId = _scheduleService.GetScheduleByUserId(userId).Id;
                 workouts = _workoutService.GetWorkoutsByScheduleId(scheduleId);
 
-                var workoutIds = workouts.Select(w => w.Id).ToList();
+                List<int?> workoutIds = workouts.Select(w => w.Id).ToList();
 
                 query = query.Where(o => workoutIds.Contains(o.WorkoutId));
             }
 
-            List<int?> weightData = new List<int?>();
+            List<int?> weightData = [];
 
-            foreach (var weights in query)
+            foreach (FetchedExercises weights in query)
             {
                 weightData.Add(weights.Weight);
             }

@@ -1,18 +1,16 @@
 using Core.Interfaces.ModelServices;
 using Core.Models;
 using Infrastructure.Data;
-using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace Web.Pages
 {
     public class StrongmanProgressionModel : PageModel
     {
-        ApplicationDbContext ApplicationDbContext { get; set; }
+        private ApplicationDbContext ApplicationDbContext { get; set; }
         public List<Workout>? Workouts { get; set; }
         public IWorkoutService _WorkoutService { get; set; }
         public IScheduleService _scheduleservice { get; set; }
@@ -20,13 +18,13 @@ namespace Web.Pages
 
         private readonly UserManager<IdentityUser>? _userManager;
         public List<FetchedExercises>? ExerciseList { get; set; }
-        public TypeList? Cardio { get; set; } = new TypeList{Name="Cardio"};
-        public TypeList? Olympic { get; set; } = new TypeList{Name="Olympic"};
-        public TypeList? Plyometrics { get; set; } = new TypeList{Name="Plyometrics"};
-        public TypeList? Powerlifting { get; set; } = new TypeList{Name="PowerLifting"};
-        public TypeList? Strength { get; set; } = new TypeList{Name="Strength"};
-        public TypeList? Stretching { get; set; } = new TypeList{Name="Stretching"};
-        public TypeList? Strongman { get; set; } = new TypeList{Name="Strongman"};
+        public TypeList? Cardio { get; set; } = new TypeList { Name = "Cardio" };
+        public TypeList? Olympic { get; set; } = new TypeList { Name = "Olympic" };
+        public TypeList? Plyometrics { get; set; } = new TypeList { Name = "Plyometrics" };
+        public TypeList? Powerlifting { get; set; } = new TypeList { Name = "PowerLifting" };
+        public TypeList? Strength { get; set; } = new TypeList { Name = "Strength" };
+        public TypeList? Stretching { get; set; } = new TypeList { Name = "Stretching" };
+        public TypeList? Strongman { get; set; } = new TypeList { Name = "Strongman" };
         public List<TypeList>? Types { get; set; }
 
         public StrongmanProgressionModel
@@ -42,7 +40,7 @@ namespace Web.Pages
             _userManager = userManager;
             _scheduleservice = scheduleService;
 
-    
+
         }
 
 
@@ -50,34 +48,36 @@ namespace Web.Pages
         {
             ExerciseList = await ApplicationDbContext.FetchedExercises.ToListAsync();
             IdentityUser = await _userManager.GetUserAsync(User);
-            var CurrentUserScheduleId = _scheduleservice.GetScheduleByUserId(IdentityUser.Id).Id;
+            int CurrentUserScheduleId = _scheduleservice.GetScheduleByUserId(IdentityUser.Id).Id;
 
             Workouts = _WorkoutService.GetWorkoutsByScheduleId(CurrentUserScheduleId);
 
-            var workoutIds = Workouts.Select(workout => workout.Id).ToList();
+            List<int?> workoutIds = Workouts.Select(workout => workout.Id).ToList();
 
-            var filteredExercises = ExerciseList.Where(exercise => workoutIds.Contains(exercise.WorkoutId)).ToList();
+            List<FetchedExercises> filteredExercises = ExerciseList.Where(exercise => workoutIds.Contains(exercise.WorkoutId)).ToList();
 
-            Cardio.Exercises = filteredExercises.Where(X=>X.Type == "cardio").ToList();
-            Olympic.Exercises = filteredExercises.Where(X=>X.Type == "olympic_weightlifting").ToList();
-            Plyometrics.Exercises = filteredExercises.Where(X=>X.Type == "plyometrics").ToList();
-            Powerlifting.Exercises = filteredExercises.Where(X=>X.Type == "powerlifting").ToList();
-            Strength.Exercises = filteredExercises.Where(X=>X.Type == "strength").ToList();
-            Stretching.Exercises = filteredExercises.Where(X=>X.Type == "stretching").ToList();
-            Strongman.Exercises = filteredExercises.Where(X=>X.Type == "strongman").ToList();
+            Cardio.Exercises = filteredExercises.Where(X => X.Type == "cardio").ToList();
+            Olympic.Exercises = filteredExercises.Where(X => X.Type == "olympic_weightlifting").ToList();
+            Plyometrics.Exercises = filteredExercises.Where(X => X.Type == "plyometrics").ToList();
+            Powerlifting.Exercises = filteredExercises.Where(X => X.Type == "powerlifting").ToList();
+            Strength.Exercises = filteredExercises.Where(X => X.Type == "strength").ToList();
+            Stretching.Exercises = filteredExercises.Where(X => X.Type == "stretching").ToList();
+            Strongman.Exercises = filteredExercises.Where(X => X.Type == "strongman").ToList();
 
-              foreach(var exercise in Strongman.Exercises)
-           {
+            foreach (FetchedExercises exercise in Strongman.Exercises)
+            {
                 // Check if a TableList already exists for this exercise
                 TableList existingTableList = Strongman.TableLists.FirstOrDefault(tl => tl.ExerciseName == exercise.Name);
-    
-                if(existingTableList == null)
+
+                if (existingTableList == null)
                 {
                     // If no TableList exists for this exercise, create a new one
-                    TableList newTableList = new TableList();
-                    newTableList.ExerciseName = exercise.Name;
+                    TableList newTableList = new()
+                    {
+                        ExerciseName = exercise.Name
+                    };
                     newTableList.TableValues.Add((int)exercise.Weight);
-        
+
                     Strongman.TableLists.Add(newTableList);
                 }
                 else
@@ -87,39 +87,39 @@ namespace Web.Pages
                 }
 
 
-           }
+            }
 
 
-              foreach(var exercise in Powerlifting.Exercises)
+            foreach (FetchedExercises exercise in Powerlifting.Exercises)
             {
 
-                Tablevalues tablevalues = new();
+                Tablevalues tablevalues = new()
+                {
+                    Weight = (int)exercise.Weight
+                };
 
-               
-                tablevalues.Weight = (int)exercise.Weight;
-                
                 Powerlifting.Tablevalues.Add(tablevalues);
             }
 
-               foreach(var exercise in Strength.Exercises)
-               {
-                Tablevalues tablevalues = new();
+            foreach (FetchedExercises exercise in Strength.Exercises)
+            {
+                Tablevalues tablevalues = new()
+                {
+                    Weight = (int)exercise.Weight
+                };
 
-               
-                tablevalues.Weight = (int)exercise.Weight;
-                
                 Strength.Tablevalues.Add(tablevalues);
-               }
+            }
 
-            
+
 
 
             return Page();
 
             //hämta alla workouts 
             //Dela upp exercises baserat på deras type
-            
-            
+
+
         }
     }
 }

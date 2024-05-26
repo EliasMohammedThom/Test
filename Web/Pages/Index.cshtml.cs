@@ -14,7 +14,7 @@ namespace Web.Pages
         public bool IsScheduleNull => Schedule == null;
         public string ScheduleClass => IsScheduleNull ? " disabled-link" : "";
 
-        [BindProperty] 
+        [BindProperty]
         public Schedule? Schedule { get; set; }
 
         public IndexModel(IScheduleService scheduleService, UserManager<IdentityUser>? userManager)
@@ -23,28 +23,28 @@ namespace Web.Pages
             _userManager = userManager;
         }
 
-        public async Task <IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
-            if(identityUser != null)
+            if (identityUser != null)
             {
                 Schedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
             }
-          
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPost() 
+        public async Task<IActionResult> OnPost()
         {
             IdentityUser? identityUser = await _userManager.GetUserAsync(User);
 
-            var singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
+            Schedule? singledSchedule = _scheduleService.GetScheduleByUserId(identityUser.Id);
 
             if (singledSchedule is null)
             {
-                Schedule schedule = new Schedule
+                Schedule schedule = new()
                 {
-                   UserId = identityUser.Id,
+                    UserId = identityUser.Id,
                 };
                 _scheduleService.AddSchedule(schedule);
             }

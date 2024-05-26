@@ -13,13 +13,11 @@ namespace Web.Pages
         public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 
         //SonarcloudFix
-        public ILogger<ErrorModel> Logger => _logger;
-
-        private readonly ILogger<ErrorModel> _logger;
+        public ILogger<ErrorModel> Logger { get; }
 
         public ErrorModel(ILogger<ErrorModel> logger)
         {
-            _logger = logger;
+            Logger = logger;
         }
 
         public void OnGet()

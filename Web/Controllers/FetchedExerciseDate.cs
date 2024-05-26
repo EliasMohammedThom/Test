@@ -29,9 +29,9 @@ namespace Web.Controllers
         {
             List<Workout> workouts;
             int? scheduleId;
-           
+
             IQueryable<FetchedExercises> query = _context.FetchedExercises;
-           
+
             if (!exerciseName.IsNullOrEmpty())
             {
                 query = query.Where(o => o.Name == exerciseName);
@@ -39,22 +39,22 @@ namespace Web.Controllers
 
             if (!userId.IsNullOrEmpty())
             {
-            scheduleId = _scheduleService.GetScheduleByUserId(userId).Id;
-            workouts = _workoutService.GetWorkoutsByScheduleId(scheduleId);
-            
-            var workoutIds = workouts.Select(w => w.Id).ToList();
+                scheduleId = _scheduleService.GetScheduleByUserId(userId).Id;
+                workouts = _workoutService.GetWorkoutsByScheduleId(scheduleId);
 
-            
-            query = query.Where(o => workoutIds.Contains(o.WorkoutId));
+                List<int?> workoutIds = workouts.Select(w => w.Id).ToList();
+
+
+                query = query.Where(o => workoutIds.Contains(o.WorkoutId));
 
             }
 
-            List<DateOnly?>? dateData = new List<DateOnly?>();
+            List<DateOnly?>? dateData = [];
 
-            foreach (var date in query) 
-                {
+            foreach (FetchedExercises date in query)
+            {
                 dateData.Add(date.Date);
-                }
+            }
 
             return dateData;
         }

@@ -2,8 +2,6 @@
 
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -26,7 +24,7 @@ namespace Web.Controllers
         {
             IQueryable<ExerciseList> query = _context.ExerciseLists;
 
-           
+
             if (!difficulty.IsNullOrEmpty())
             {
                 query = query.Where(o => o.Difficulty == difficulty);
@@ -49,23 +47,9 @@ namespace Web.Controllers
             {
                 query = query.Where(o => o.Equipment == equipment);
             }
-            
-           
-
 
             return query.ToList();
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }
 
