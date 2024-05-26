@@ -47,7 +47,7 @@ namespace Web.Pages
 
             if (AllWorkoutsByCurrentUser != null)
             {
-                foreach (var item in AllWorkoutsByCurrentUser)
+                foreach (Workout item in AllWorkoutsByCurrentUser)
                 {
                     item.Exercises = _exerciseService.GetExercisesByWorkoutId(item.Id);
                 }
@@ -60,7 +60,7 @@ namespace Web.Pages
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             _exerciseService.RemoveExerciseById(SelectedExerciseToRemove);
 

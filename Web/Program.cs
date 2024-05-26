@@ -1,18 +1,14 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Core.Commands.Exercises;
+using Core.Helpers;
+using Core.Interfaces.Commands.Exercises;
+using Core.Interfaces.Helpers;
+using Core.Interfaces.ModelServices;
 using Infrastructure.Data;
 using Infrastructure.Services;
-using Core.Interfaces.ModelServices;
-using Core.Interfaces.Commands;
-using Core.Interfaces.Commands.Exercises;
-using Core.Commands.Exercises;
-using Core.Interfaces.Helpers;
-using Core.Helpers;
-using ProfanityFilter;
-using ProfanityFilter.Interfaces;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
-using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ProfanityFilter.Interfaces;
 
 namespace Web
 {
@@ -22,16 +18,16 @@ namespace Web
 
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            string connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(connectionString));
+               options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+               .AddEntityFrameworkStores<ApplicationDbContext>();
             builder.Services.AddRazorPages();
 
 
@@ -49,17 +45,17 @@ namespace Web
             builder.Services.AddHealthChecks();
 
             builder.Services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-            });
+           {
+               options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+           });
 
 
 
 
-            var app = builder.Build();
+            WebApplication app = builder.Build();
             app.MapControllerRoute(
-                    name:"default",
-                    pattern:"{controller=Home}/{action=Index}/{id?}");
+                   name: "default",
+                   pattern: "{controller=Home}/{action=Index}/{id?}");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -73,12 +69,12 @@ namespace Web
                 app.UseHsts();
             }
 
-           
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
             app.UseRouting();
-            
+
             app.UseAuthorization();
 
             app.MapRazorPages();

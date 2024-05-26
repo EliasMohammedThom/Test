@@ -1,16 +1,9 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Text.Json;
-using Core;
-using Newtonsoft.Json;
+using Core.Interfaces.Commands.Exercises;
+using Core.Interfaces.ModelServices;
 using Core.Models;
 using Microsoft.AspNetCore.Identity;
-using Core.Commands.Exercises;
-
-using Microsoft.AspNetCore.Http.HttpResults;
-using Core.Interfaces.ModelServices;
-using Core.Interfaces.Commands.Exercises;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Web.Pages
 {
@@ -22,7 +15,7 @@ namespace Web.Pages
         private readonly IImportValues _importValues;
         private readonly UserManager<IdentityUser> _userManager;
         private IdentityUser? currentUser;
-        
+
         [BindProperty]
         public List<ExerciseList>? Exercises { get; set; }
 
@@ -56,20 +49,20 @@ namespace Web.Pages
         public async Task<IActionResult> OnGetAsync()
         {
             currentUser = await _userManager.GetUserAsync(User);
-           
+
             WorkoutList = _workoutService.GetWorkoutsByUserId(currentUser.Id);
-            
-            Exercises =  _exerciseListService.GetAllExerciseLists();
-        
+
+            Exercises = _exerciseListService.GetAllExerciseLists();
+
             return Page();
         }
-            
+
         public async Task<IActionResult> OnPostAsync()
         {
             currentUser = await _userManager.GetUserAsync(User);
             ChosenWorkout = _workoutService.GetWorkoutByTitle(SelectedItemWorkout, currentUser.Id);
             Exercises = _exerciseListService.GetAllExerciseLists();
-            SelectedExercise= _exerciseListService.GetExerciseListByName(SelectedExerciseName);
+            SelectedExercise = _exerciseListService.GetExerciseListByName(SelectedExerciseName);
             ExerciseToAdd = _importValues.AssignValuesToNewExercise(ExerciseToAdd, SelectedExercise, ChosenWorkout);
 
             _exerciseService.AddExercise(ExerciseToAdd);

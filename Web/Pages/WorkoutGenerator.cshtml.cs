@@ -68,7 +68,7 @@ namespace Web.Pages
             _userManager = userManager;
             _generatorService = generatorService;
             InputValues = new();
-            GeneratedExercises = new();
+            GeneratedExercises = [];
             Listvalues = new();
             IdentityUser = new();
         }
@@ -81,7 +81,7 @@ namespace Web.Pages
 
             if (UserSchedule == null)
             {
-                var newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule, IdentityUser.Id);
+                Schedule newlyCreatedSchedule = _scheduleService.CreateIfScheduleIfUserHasNone(UserSchedule, Schedule, IdentityUser.Id);
                 UserSchedule = newlyCreatedSchedule;
             }
             return Page();
@@ -108,63 +108,61 @@ namespace Web.Pages
 
                 for (int i = 0; i < InputValues.AmountOfWorkouts; i++)
                 {
-                    var newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
+                    Workout? newWorkout = _generatorService.CreateNewWorkout(UserSchedule.Id, InputValues, IdentityUser.Id);
 
-                    using (var transaction = _ApplicationDbContext.Database.BeginTransaction())
+                    using Microsoft.EntityFrameworkCore.Storage.IDbContextTransaction transaction = _ApplicationDbContext.Database.BeginTransaction();
+                    try
                     {
-                        try
+                        if (sortedExercises.Count > 0)
                         {
-                            if (sortedExercises.Count > 0)
+                            List<Workout> workoutList = _ApplicationDbContext.Workouts.ToList();
+
+                            _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
+
+                             _ApplicationDbContext.Workouts.Add(newWorkout);
+                             _ApplicationDbContext.SaveChanges();
+
+                            foreach (ExerciseList exercise in sortedExercises)
                             {
-                                var workoutList = _ApplicationDbContext.Workouts.ToList();
-
-                                _generatorService.FindEmptyWorkoutDaysInSchedule(workoutList, newWorkout, UserSchedule.Id);
-
-                                _ApplicationDbContext.Workouts.Add(newWorkout);
-                                _ApplicationDbContext.SaveChanges();
-
-                                foreach (var exercise in sortedExercises)
+                                FetchedExercises fetchedExercise = new()
                                 {
-                                    var fetchedExercise = new FetchedExercises
-                                    {
-                                        Difficulty = exercise.Difficulty,
-                                        Equipment = exercise.Equipment,
-                                        Muscle = exercise.Muscle,
-                                        Type = exercise.Type,
-                                        Instructions = exercise.Instructions,
-                                        Name = exercise.Name,
-                                        UserId = IdentityUser.Id,
-                                        Sets = InputValues.AmountOfSets,
-                                        Repetitions = InputValues.AmountOfRepetitions,
-                                        Date = newWorkout.Date,
-                                        Weight = 1
-                                    };
+                                    Difficulty = exercise.Difficulty,
+                                    Equipment = exercise.Equipment,
+                                    Muscle = exercise.Muscle,
+                                    Type = exercise.Type,
+                                    Instructions = exercise.Instructions,
+                                    Name = exercise.Name,
+                                    UserId = IdentityUser.Id,
+                                    Sets = InputValues.AmountOfSets,
+                                    Repetitions = InputValues.AmountOfRepetitions,
+                                    Date = newWorkout.Date,
+                                    Weight = 1
+                                };
 
-                                    GeneratedExercises.Add(fetchedExercise);
+                                GeneratedExercises.Add(fetchedExercise);
 
-                                    _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
-                                    _ApplicationDbContext.SaveChanges();
-                                }
-
-                                _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
+                                 _ApplicationDbContext.FetchedExercises.Add(fetchedExercise);
+                                 _ApplicationDbContext.SaveChanges();
                             }
 
-                            transaction.Commit();
+                            _generatorService.AddExercisesToWorkout(InputValues, GeneratedExercises, newWorkout);
                         }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-                           
-                        }
+
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+
                     }
                 }
 
-                _ApplicationDbContext.SaveChanges();
+                 _ApplicationDbContext.SaveChanges();
 
-                var exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
+                List<FetchedExercises> exerciseswithoutworkout = _ApplicationDbContext.FetchedExercises.Where(X => X.WorkoutId == null).ToList();
                 _ApplicationDbContext.FetchedExercises.RemoveRange(exerciseswithoutworkout);
 
-                _ApplicationDbContext.SaveChanges();
+                 _ApplicationDbContext.SaveChanges();
 
                 return RedirectToPage("/ShowSchedule");
 

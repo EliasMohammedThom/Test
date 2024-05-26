@@ -1,7 +1,6 @@
 using Core.Interfaces.Helpers;
 using Core.Interfaces.ModelServices;
 using Core.Models;
-using Humanizer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -41,14 +40,14 @@ namespace Web.Pages
 
         [BindProperty]
         public List<FetchedExercises> SortedExercise { get; set; }
-      
+
         public List<Workout> workouts { get; set; }
 
         [BindProperty]
         public int CurrentMonth { get; set; }
-          [BindProperty]
+        [BindProperty]
         public int NextMonth { get; set; }
-      
+
 
         [BindProperty]
         public List<string>? Weekdays { get; set; }
@@ -66,20 +65,20 @@ namespace Web.Pages
             _exerciseService = exerciseService;
             _extensionService = extensions;
 
-          
-           
+
+
             int currentMonth = DateTime.Today.Month;
             int nextMonth = currentMonth == 12 ? 1 : currentMonth + 1;
             int nextYear = currentMonth == 12 ? DateTime.Today.Year + 1 : DateTime.Today.Year;
             int daysInNextMonth = DateTime.DaysInMonth(nextYear, nextMonth);
-            
-
-           CurrentMonth =  DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month); 
-           NextMonth = daysInNextMonth;
 
 
-            Weekdays = new List<string>();
-            Weekdays = new List<string> { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+            CurrentMonth = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
+            NextMonth = daysInNextMonth;
+
+
+            Weekdays = [];
+            Weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
         }
         public async Task<IActionResult> OnGet()
@@ -90,19 +89,19 @@ namespace Web.Pages
 
             SortedWorkoutList = _workoutService.GetWorkoutsByScheduleId(CurrentUserScheduleId);
 
-            foreach(var workout in SortedWorkoutList)
+            foreach (Workout workout in SortedWorkoutList)
             {
                 workout.Exercises = _exerciseService.GetExercisesByWorkoutId(workout.Id);
-                workout.Description = _extensionService.LimitLength(workout.Description,40) + "...";
+                workout.Description = _extensionService.LimitLength(workout.Description, 40) + "...";
             }
             return Page();
         }
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             _workoutService.UpdateWorkoutScheduleIDToNull(SelectedWorkoutToRemove, Workouts);
-           
+
             return Redirect("/ShowSchedule");
         }
-       
+
     }
 }
