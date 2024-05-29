@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreatingDB : Migration
+    public partial class addtolocaldb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -226,7 +226,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExercisesAPIs",
+                name: "FetchedExercises",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -239,13 +239,19 @@ namespace Infrastructure.Migrations
                     Difficulty = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Instructions = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Sets = table.Column<int>(type: "int", nullable: true),
-                    Repetitions = table.Column<int>(type: "int", nullable: true)
+                    Repetitions = table.Column<int>(type: "int", nullable: true),
+                    Generated = table.Column<bool>(type: "bit", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Weight = table.Column<int>(type: "int", nullable: true),
+                    Distance = table.Column<float>(type: "real", nullable: true),
+                    Time = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExercisesAPIs", x => x.Id);
+                    table.PrimaryKey("PK_FetchedExercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExercisesAPIs_Workouts_WorkoutId",
+                        name: "FK_FetchedExercises_Workouts_WorkoutId",
                         column: x => x.WorkoutId,
                         principalTable: "Workouts",
                         principalColumn: "Id");
@@ -291,8 +297,8 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExercisesAPIs_WorkoutId",
-                table: "ExercisesAPIs",
+                name: "IX_FetchedExercises_WorkoutId",
+                table: "FetchedExercises",
                 column: "WorkoutId");
         }
 
@@ -318,7 +324,7 @@ namespace Infrastructure.Migrations
                 name: "ExerciseLists");
 
             migrationBuilder.DropTable(
-                name: "ExercisesAPIs");
+                name: "FetchedExercises");
 
             migrationBuilder.DropTable(
                 name: "Nutritions");

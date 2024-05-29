@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240502072247_updatedInputValues")]
-    partial class updatedInputValues
+    [Migration("20240528105757_addtolocaldb")]
+    partial class addtolocaldb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -69,6 +69,9 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly?>("Date")
+                        .HasColumnType("date");
 
                     b.Property<string>("Difficulty")
                         .HasColumnType("nvarchar(max)")
@@ -206,15 +209,13 @@ namespace Infrastructure.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ScheduleId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
